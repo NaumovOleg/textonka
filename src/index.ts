@@ -1,35 +1,30 @@
-import { Telegraf } from 'telegraf';
-import dotenv from 'dotenv';
+import bot from '@bot';
 
-dotenv.config();
+// if (!token) {
+//   throw new Error('BOT_TOKEN is not set in .env');
+// }
 
-const token = process.env.BOT_TOKEN;
+// const bot = new Telegraf(token);
 
-if (!token) {
-  throw new Error('BOT_TOKEN is not set in .env');
-}
+// bot.start((ctx) => {
+//   console.log('ddddd');
 
-const bot = new Telegraf(token);
+//   const user = ctx.from;
+//   console.log('User info:', user);
 
-bot.start((ctx) => {
-  console.log('ddddd');
+//   ctx.reply('👋 Hello!');
+// });
+// bot.help((ctx) => ctx.reply('Just say hi!'));
+// bot.on('text', (ctx) => {
+//   const user = ctx.from;
+//   console.log('User info:', user);
 
-  const user = ctx.from;
-  console.log('User info:', user);
+//   ctx.reply(`You said: ${ctx.message.text}`);
+// });
 
-  ctx.reply('👋 Hello!');
-});
-bot.help((ctx) => ctx.reply('Just say hi!'));
-bot.on('text', (ctx) => {
-  const user = ctx.from;
-  console.log('User info:', user);
+// bot.launch().then(() => {
+//   console.log('🚀 Bot started');
+// });
 
-  ctx.reply(`You said: ${ctx.message.text}`);
-});
-
-bot.launch().then(() => {
-  console.log('🚀 Bot started');
-});
-
-process.once('SIGINT', () => bot.stop('SIGINT'));
-process.once('SIGTERM', () => bot.stop('SIGTERM'));
+// process.once('SIGINT', () => bot.stop('SIGINT'));
+// process.once('SIGTERM', () => bot.stop('SIGTERM'));
