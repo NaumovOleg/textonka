@@ -1,18 +1,18 @@
-import { UserRepositoryPort } from '@src/app/domains/repositoryPorts';
 import { User } from '@entities';
+import { UserRepositoryPort } from '@src/app/domains/repositoryPorts';
 
 export class CreateUserUseCase {
   constructor(private userRepo: UserRepositoryPort) {}
 
-  async execute(name: string, email: string): Promise<User> {
-    return await this.userRepo.create({ name, email });
+  async execute(data: Omit<User, 'id'>) {
+    return await this.userRepo.create(data);
   }
 }
 
 export class FindUserUseCase {
   constructor(private userRepo: UserRepositoryPort) {}
 
-  async execute(name: string, email: string): Promise<User> {
-    return await this.userRepo.create({ name, email });
+  async execute(searchData: Partial<User>) {
+    return await this.userRepo.findOne(searchData);
   }
 }

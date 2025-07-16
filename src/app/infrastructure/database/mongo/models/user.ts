@@ -1,11 +1,12 @@
-import { Entity, Column } from 'typeorm';
+import { IsBoolean, IsNumber, IsString } from 'class-validator';
+import { Column, Entity, Index } from 'typeorm';
 import { BaseEntity } from './base';
-import { IsNumber, IsString, IsBoolean } from 'class-validator';
 
 @Entity('user')
 export class UserEntity extends BaseEntity {
   @Column('number')
   @IsNumber()
+  @Index('telegram_id')
   telegram_id: number;
   @IsBoolean()
   @Column('boolean')
@@ -14,6 +15,18 @@ export class UserEntity extends BaseEntity {
   @Column('text')
   first_name: string;
   @IsString()
-  @Column('text')
-  language_code: string;
+  @Column('text', { nullable: true })
+  language_code?: string;
+  @IsString()
+  @Column('text', { nullable: true })
+  added_to_attachment_menu?: boolean;
+  @IsString()
+  @Column('text', { nullable: true })
+  username?: string;
+  @IsString()
+  @Column('text', { nullable: true })
+  is_premium?: boolean;
+  @IsString()
+  @Column('text', { nullable: true })
+  last_name?: string;
 }

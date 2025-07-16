@@ -1,9 +1,4 @@
-import {
-  DataSource,
-  type EntityTarget,
-  type MongoRepository,
-  type ObjectLiteral,
-} from 'typeorm';
+import { DataSource, type MongoRepository, type ObjectLiteral } from 'typeorm';
 
 export class BaseRepository<T extends ObjectLiteral> {
   private readonly repo: MongoRepository<T>;
@@ -15,16 +10,14 @@ export class BaseRepository<T extends ObjectLiteral> {
     this.entity = entity;
   }
 
-  async findOne(id: string): Promise<T | null> {
-    const response = await this.repo.findOneBy({ _id: id });
+  async findOne(searchData: Partial<T>): Promise<T | null> {
+    const response = await this.repo.findOne({ where: searchData });
     return response?.toJson();
   }
 
   async create(data: T): Promise<T> {
     const entity = this.repo.create(data);
     const resp = await this.repo.save(entity);
-
-    console.log('___+++++', data, entity, resp);
 
     return resp.toJson();
   }

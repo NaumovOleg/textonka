@@ -4,4 +4,8 @@ export type UserT = {
   first_name: string;
   language_code: string;
   id: string;
+  added_to_attachment_menu?: boolean;
+  username?: string;
+  is_premium?: boolean;
+  last_name?: string;
 };

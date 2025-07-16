@@ -12,7 +12,7 @@ const typeormSession = () => {
       return found?.data || {};
     },
 
-    async set(key: string, value: any) {
+    async set(key: string, value: object) {
       const repo = AppDataSource.getMongoRepository(SessionEntity);
       const existing = await repo.findOne({ where: { key } });
 
