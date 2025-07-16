@@ -5,7 +5,6 @@ export class BaseRepository<T extends ObjectLiteral> {
   private readonly entity: { new (args: T): T };
 
   constructor(datasource: DataSource, entity: { new (): T }) {
-    console.log(entity);
     this.repo = datasource.getMongoRepository(entity);
     this.entity = entity;
   }

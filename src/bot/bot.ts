@@ -1,10 +1,9 @@
 import Config from '@conf';
-import { typeormSession } from '@infrastructure';
 import { SessionT } from '@util';
 import { Telegraf, session, type Context } from 'telegraf';
 import type {} from 'telegraf/session';
 import type { Update } from 'telegraf/types';
-import { userMiddleware } from './middlewares';
+import { locales, typeormSession, userMiddleware } from './middlewares';
 
 interface MyContext<U extends Update = Update> extends Context<U> {
   session: SessionT;
@@ -13,6 +12,7 @@ interface MyContext<U extends Update = Update> extends Context<U> {
 export class Textonka extends Telegraf<MyContext> {
   init() {
     this.use(session({ store: typeormSession() }));
+    this.use(locales.middleware());
     this.use(userMiddleware);
     if (Config.LAUNCH_STATE === 'local') {
       this.launch();
@@ -31,6 +31,11 @@ export class Textonka extends Telegraf<MyContext> {
     this.start((ctx) =>
       ctx.reply('Привіт! Я Telegram бот через AWS Lambda Webhook!'),
     );
+    this.telegram.setMyCommands([
+      { command: 'start', description: 'Почати' },
+      { command: 'menu', description: 'Меню' },
+      { command: 'help', description: 'Допомога' },
+    ]);
     process.once('SIGINT', () => this.stop('SIGINT'));
     process.once('SIGTERM', () => this.stop('SIGTERM'));
   }
