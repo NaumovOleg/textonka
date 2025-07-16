@@ -1,5 +1,5 @@
 import { DataSource } from 'typeorm';
-import { UserEntity } from './models';
+import { UserEntity, SessionEntity } from './models';
 import { getMongoUrl } from '@util';
 
 export const AppDataSource = new DataSource({
@@ -8,5 +8,5 @@ export const AppDataSource = new DataSource({
   database: 'cleanarchdb',
   synchronize: true,
   logging: true,
-  entities: [UserEntity],
+  entities: [UserEntity, SessionEntity],
 });
