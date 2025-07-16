@@ -1,5 +1,6 @@
 import Config from '@conf';
 import { Telegraf } from 'telegraf';
+import { AppDataSource } from '@infrastructure';
 
 export class Textonka extends Telegraf {
   init() {
@@ -11,6 +12,10 @@ export class Textonka extends Telegraf {
       await ctx.telegram.leaveChat(ctx.message.chat.id);
       await ctx.leaveChat();
     });
-    this.start((ctx) => ctx.reply('Привіт! Я Telegram бот через AWS Lambda Webhook!'));
+    this.start((ctx) =>
+      ctx.reply('Привіт! Я Telegram бот через AWS Lambda Webhook!'),
+    );
+    process.once('SIGINT', () => this.stop('SIGINT'));
+    process.once('SIGTERM', () => this.stop('SIGTERM'));
   }
 }

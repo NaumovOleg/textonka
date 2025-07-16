@@ -7,10 +7,12 @@ import {
 
 export class BaseRepository<T extends ObjectLiteral> {
   private readonly repo: MongoRepository<T>;
-  private readonly entity: EntityTarget<T>;
+  private readonly entity: { new (args: T): T };
 
-  constructor(datasource: DataSource, entity: EntityTarget<T>) {
+  constructor(datasource: DataSource, entity: { new (): T }) {
+    console.log(entity);
     this.repo = datasource.getMongoRepository(entity);
+    this.entity = entity;
   }
 
   async findOne(id: string): Promise<T | null> {
@@ -19,7 +21,11 @@ export class BaseRepository<T extends ObjectLiteral> {
   }
 
   async create(data: T): Promise<T> {
-    const response = await this.repo.create(data);
-    return response?.toJson();
+    const entity = this.repo.create(data);
+    const resp = await this.repo.save(entity);
+
+    console.log('___+++++', data, entity, resp);
+
+    return resp.toJson();
   }
 }

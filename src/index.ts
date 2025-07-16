@@ -1,30 +1,20 @@
+import 'reflect-metadata';
 import bot from '@bot';
+import { AppDataSource } from '@infrastructure';
+import { createUserUC } from '@useCases';
 
-// if (!token) {
-//   throw new Error('BOT_TOKEN is not set in .env');
-// }
+async function main() {
+  const resp = await AppDataSource.initialize();
+  console.log('✅ Data source initialized');
 
-// const bot = new Telegraf(token);
+  await createUserUC.execute('test', 'test');
+  bot.start((ctx) => ctx.reply(`Привет, ${ctx.from.first_name}`));
 
-// bot.start((ctx) => {
-//   console.log('ddddd');
+  // Локальный запуск через polling
+  if (!process.env.AWS_LAMBDA_FUNCTION_NAME) {
+    await bot.launch();
+    console.log('🚀 Bot launched locally');
+  }
+}
 
-//   const user = ctx.from;
-//   console.log('User info:', user);
-
-//   ctx.reply('👋 Hello!');
-// });
-// bot.help((ctx) => ctx.reply('Just say hi!'));
-// bot.on('text', (ctx) => {
-//   const user = ctx.from;
-//   console.log('User info:', user);
-
-//   ctx.reply(`You said: ${ctx.message.text}`);
-// });
-
-// bot.launch().then(() => {
-//   console.log('🚀 Bot started');
-// });
-
-// process.once('SIGINT', () => bot.stop('SIGINT'));
-// process.once('SIGTERM', () => bot.stop('SIGTERM'));
+main();

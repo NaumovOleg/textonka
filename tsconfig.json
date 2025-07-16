@@ -31,6 +31,12 @@
       "@repositories_ports": [
         "src/app/domains/repositoryPorts/index.ts",
       ],
+      "@infrastructure": [
+        "src/app/infrastructure/index.ts",
+      ],
+      "@useCases": [
+        "src/app/useCases/index.ts",
+      ],
     }
   }
 }

@@ -1,9 +1,10 @@
-import { Entity, Column, type ObjectId } from 'typeorm';
+import { Entity, Column, PrimaryColumn, ObjectIdColumn } from 'typeorm';
+import { BaseEntity } from './base';
 
-@Entity()
-export class UserEntity {
-  _id: ObjectId;
+import { ObjectId } from 'mongodb';
 
+@Entity('user')
+export class UserEntity extends BaseEntity {
   @Column()
   name!: string;
 

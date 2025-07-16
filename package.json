@@ -7,7 +7,7 @@
   "type": "commonjs",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon --config ./nodemon.json",
+    "dev": "NODE_ENV=dev nodemon --config ./nodemon.json",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "devDependencies": {
@@ -29,6 +29,8 @@
   "dependencies": {
     "dotenv": "^17.2.0",
     "express": "^5.1.0",
+    "mongodb": "^6.17.0",
+    "reflect-metadata": "^0.2.2",
     "serverless-http": "^3.2.0",
     "telegraf": "^4.16.3",
     "tsconfig-paths": "^4.2.0",
