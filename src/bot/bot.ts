@@ -7,6 +7,10 @@ export class Textonka extends Telegraf {
       this.launch();
       console.log('Bot launched in polling mode');
     }
+    this.command('quit', async (ctx) => {
+      await ctx.telegram.leaveChat(ctx.message.chat.id);
+      await ctx.leaveChat();
+    });
     this.start((ctx) => ctx.reply('Привіт! Я Telegram бот через AWS Lambda Webhook!'));
   }
 }

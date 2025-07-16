@@ -9,11 +9,28 @@
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "strictPropertyInitialization": false,
-    "typeRoots": ["./node_modules/@types"],
+    "typeRoots": [
+      "./node_modules/@types"
+    ],
     "paths": {
-      "@src/*": ["src/*"],
-      "@conf": ["src/config.ts"],
-      "@bot": ["src/bot/index.ts"]
+      "@src/*": [
+        "src/*"
+      ],
+      "@conf": [
+        "src/config.ts"
+      ],
+      "@bot": [
+        "src/bot/index.ts"
+      ],
+      "@util": [
+        "src/util/index.ts"
+      ],
+      "@entities": [
+        "src/app/domains/entities/index.ts",
+      ],
+      "@repositories_ports": [
+        "src/app/domains/repositoryPorts/index.ts",
+      ],
     }
   }
 }

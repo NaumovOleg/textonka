@@ -12,7 +12,33 @@ export default defineConfig([
     plugins: { js, prettier, '@typescript-eslint': typescriptEslint },
     extends: ['js/recommended'],
     rules: {
+      'max-len': ['error', { code: 100 }],
+      ...typescriptEslint.configs.rules,
       'prettier/prettier': 'error',
+      'brace-style': ['error', '1tbs', { allowSingleLine: true }],
+      'no-duplicate-imports': 'error',
+      'unused-imports/no-unused-imports': 'error',
+      'simple-import-sort/imports': 'error',
+      'simple-import-sort/exports': 'error',
+      'import/first': 'error',
+      'import/no-duplicates': 'error',
+      '@typescript-eslint/no-empty-object-type': 'warn',
+      '@typescript-eslint/no-explicit-any': [
+        'error',
+        {
+          ignoreRestArgs: true,
+        },
+      ],
+      'lines-between-class-members': [
+        'error',
+        {
+          enforce: [
+            { blankLine: 'never', prev: '*', next: 'field' },
+            { blankLine: 'never', prev: 'field', next: '*' },
+            { blankLine: 'always', prev: '*', next: 'method' },
+          ],
+        },
+      ],
       '@typescript-eslint/no-unused-vars': [
         'error',
         {
