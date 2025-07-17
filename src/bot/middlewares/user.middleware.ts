@@ -1,5 +1,5 @@
 import { User } from '@entities';
-import { createUserUC, findUserUC } from '@useCases';
+import { createUserUC, findUserUC } from '@shared/useCases';
 import { MiddlewareFn, type Context } from 'telegraf';
 
 interface CustomState {

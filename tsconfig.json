@@ -40,6 +40,9 @@
       "@services": [
         "src/app/services/index.ts",
       ],
+      "@shared/*": [
+        "src/app/shared/*",
+      ],
     }
   }
 }
