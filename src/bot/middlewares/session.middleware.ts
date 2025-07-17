@@ -1,11 +1,4 @@
-import {
-  AppDataSource,
-  SessionEntity,
-  UserEntity,
-  UserRepositoryImpl,
-} from '@infrastructure';
-
-const userRepositoryImpl = new UserRepositoryImpl(AppDataSource, UserEntity);
+import { AppDataSource, SessionEntity } from '@infrastructure';
 
 const typeormSession = () => {
   return {
@@ -35,4 +28,4 @@ const typeormSession = () => {
   };
 };
 
-export { AppDataSource, typeormSession, userRepositoryImpl };
+export { AppDataSource, typeormSession };

@@ -1,12 +1,10 @@
 import { DataSource, type MongoRepository, type ObjectLiteral } from 'typeorm';
 
-export class BaseRepository<T extends ObjectLiteral> {
+export class BaseDataSource<T extends ObjectLiteral> {
   private readonly repo: MongoRepository<T>;
-  private readonly entity: { new (args: T): T };
 
   constructor(datasource: DataSource, entity: { new (): T }) {
     this.repo = datasource.getMongoRepository(entity);
-    this.entity = entity;
   }
 
   async findOne(searchData: Partial<T>): Promise<T | null> {

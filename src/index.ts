@@ -1,7 +1,6 @@
-import 'reflect-metadata';
 import bot from '@bot';
 import { AppDataSource } from '@infrastructure';
-import { createUserUC } from '@useCases';
+import 'reflect-metadata';
 
 async function main() {
   await AppDataSource.initialize();

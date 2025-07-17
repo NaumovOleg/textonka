@@ -37,6 +37,9 @@
       "@useCases": [
         "src/app/useCases/index.ts",
       ],
+      "@services": [
+        "src/app/services/index.ts",
+      ],
     }
   }
 }

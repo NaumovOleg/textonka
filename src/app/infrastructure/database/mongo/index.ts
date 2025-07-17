@@ -1,9 +1,9 @@
 import { AppDataSource } from './dataSource';
+import { UserDatasource } from './dataSources';
 import { UserEntity } from './models';
-import { UserRepositoryImpl } from './repositories';
 
-const userRepositoryImpl = new UserRepositoryImpl(AppDataSource, UserEntity);
+const userDatasource = new UserDatasource(AppDataSource, UserEntity);
 
+export * from './dataSources';
 export * from './models';
-export * from './repositories';
-export { AppDataSource, userRepositoryImpl };
+export { AppDataSource, userDatasource };

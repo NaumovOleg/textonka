@@ -1,16 +1,16 @@
 import { User } from '@entities';
-import { UserRepositoryPort } from '@src/app/domains/repositoryPorts';
+import { UserService } from '@services';
 
 export class CreateUserUseCase {
-  constructor(private userRepo: UserRepositoryPort) {}
+  constructor(private userService: UserService) {}
 
   async execute(data: Omit<User, 'id'>) {
-    return await this.userRepo.create(data);
+    return await this.userService.create(data);
   }
 }
 
 export class FindUserUseCase {
-  constructor(private userRepo: UserRepositoryPort) {}
+  constructor(private userRepo: UserService) {}
 
   async execute(searchData: Partial<User>) {
     return await this.userRepo.findOne(searchData);
