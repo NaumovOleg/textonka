@@ -9,19 +9,22 @@ export const PostWizard = new Scenes.WizardScene<BotContext>(
 
   selectType,
   async (ctx) => {
-    if (!ctx.has(callbackQuery('data'))) {
-      return ctx.scene.leave();
+    console.log(
+      '=======',
+      JSON.stringify(ctx.callbackQuery, null, 2),
+      JSON.stringify(ctx.message, null, 2),
+    );
+
+    if (ctx.has(callbackQuery('data'))) {
+      // return ctx.scene.leave();
+      console.log(ctx.callbackQuery?.data);
     }
 
-    console.log('dddddddddddd');
+    // const callbackData = ctx.callbackQuery.data;
 
-    const callbackData = ctx.callbackQuery.data;
+    // console.log(callbackData);
 
-    if (callbackData.startsWith('platform_')) {
-      const selected = callbackData.replace('platform_', '');
-      // ctx.wizard.state.platform = selected;
-      await ctx.reply(`✅ Вы выбрали: ${selected}`);
-    }
+    // await ctx.reply(`✅ Вы выбрали: ${callbackData}`);
 
     return ctx.scene.leave();
   },

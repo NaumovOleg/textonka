@@ -1,7 +1,8 @@
 import Config from '@conf';
-import { BotContext, WizardType } from '@util';
+import { BotContext } from '@util';
 import { Telegraf, session } from 'telegraf';
 import { locales, typeormSession, userMiddleware } from './middlewares';
+import RootRouter from './roots';
 import { stage } from './wizards';
 
 export class Textonka extends Telegraf<BotContext> {
@@ -9,19 +10,9 @@ export class Textonka extends Telegraf<BotContext> {
     this.use(session({ store: typeormSession() }));
     this.use(locales.middleware());
     this.use(stage.middleware());
+    this.use(RootRouter);
     this.use(userMiddleware);
-    if (Config.LAUNCH_STATE === 'local') {
-      this.launch();
-      console.log('Bot launched in polling mode');
-    }
 
-    this.command('quit', async (ctx) => {
-      await ctx.telegram.leaveChat(ctx.message.chat.id);
-      await ctx.leaveChat();
-    });
-    this.command('start', async (ctx) => {
-      await ctx.scene.enter(WizardType.post_wizard);
-    });
     this.start((ctx) =>
       ctx.reply('Привіт! Я Telegram бот через AWS Lambda Webhook!'),
     );
@@ -30,6 +21,11 @@ export class Textonka extends Telegraf<BotContext> {
       { command: 'menu', description: 'Меню' },
       { command: 'help', description: 'Допомога' },
     ]);
+
+    if (Config.LAUNCH_STATE === 'local') {
+      this.launch();
+      console.log('Bot launched in polling mode');
+    }
     process.once('SIGINT', () => this.stop('SIGINT'));
     process.once('SIGTERM', () => this.stop('SIGTERM'));
   }
