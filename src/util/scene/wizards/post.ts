@@ -1,3 +1,5 @@
+export const PostWizardName = 'post-wizard';
+
 export enum PostWizardType {
   personal = 'personal',
   productPromotion = 'productPromotion',
@@ -50,3 +52,14 @@ export type PostWizardSession = Partial<{
   keyDetails?: string;
   extra: Partial<PostWizardEmoji>;
 }>;
+
+export const PostWizardButtons = {
+  type: {
+    [PostWizardType.personal]: `${PostWizardName}_type_${PostWizardType.personal}`,
+    [PostWizardType.productPromotion]: `${PostWizardName}_type_${PostWizardType.productPromotion}`,
+    [PostWizardType.announcement]: `${PostWizardName}_type_${PostWizardType.announcement}`,
+    [PostWizardType.opinion]: `${PostWizardName}_type_${PostWizardType.opinion}`,
+    [PostWizardType.educational]: `${PostWizardName}_type_${PostWizardType.educational}`,
+    [PostWizardType.caption]: `${PostWizardName}_type_${PostWizardType.caption}`,
+  },
+};

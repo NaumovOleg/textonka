@@ -7,7 +7,7 @@ import { stage } from './wizards';
 export class Textonka extends Telegraf<BotContext> {
   init() {
     this.use(session({ store: typeormSession() }));
-    this.use(locales.middleware());
+    this.use(locales);
     this.use(stage.middleware());
     this.use(userMiddleware);
     if (Config.LAUNCH_STATE === 'local') {
@@ -20,7 +20,7 @@ export class Textonka extends Telegraf<BotContext> {
       await ctx.leaveChat();
     });
     this.command('start', async (ctx) => {
-      await ctx.scene.enter(WizardType.post);
+      await ctx.scene.enter(WizardType.post_wizard);
     });
     this.start((ctx) =>
       ctx.reply('Привіт! Я Telegram бот через AWS Lambda Webhook!'),

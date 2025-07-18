@@ -1,17 +1,35 @@
-import { BotContext, WizardType } from '@util';
+import {
+  BotContext,
+  PostWizardButtons,
+  PostWizardName,
+  PostWizardSession,
+  WizardType,
+} from '@util';
 import { Markup } from 'telegraf';
 
-export const selectType = async (ctx: BotContext) => {
-  if (!ctx.scene.session[WizardType.post]) {
-    ctx.scene.session[WizardType.post] = {};
-  }
+const getButtonsTranslatePrefix = (
+  buttonGroup: keyof PostWizardSession,
+  value: string,
+) => {
+  return `buttons.${PostWizardName}.${buttonGroup}.${value}`;
+};
 
+export const selectType = async (ctx: BotContext) => {
+  ctx.scene.session[WizardType.post_wizard] = {};
+
+  console.log(ctx.t(getButtonsTranslatePrefix('type', 'value')));
+
+  const typeButtons = Object.entries(PostWizardButtons.type).map(
+    ([key, value]) => [
+      Markup.button.callback(
+        ctx.t(getButtonsTranslatePrefix('type', value)),
+        key,
+      ),
+    ],
+  );
   await ctx.reply(
-    '📱 Выберите платформу:',
-    Markup.inlineKeyboard([
-      [Markup.button.callback('Instagram', 'platform_instagram')],
-      [Markup.button.callback('Telegram', 'platform_telegram')],
-    ]),
+    '📱 Выберите ',
+    Markup.keyboard(typeButtons).resize().oneTime(),
   );
   return ctx.wizard.next();
 };

@@ -1,3 +1,4 @@
+import { type I18nFlavor } from '@grammyjs/i18n';
 import type { Context, Scenes } from 'telegraf';
 import { WizardSession } from './wizard';
 
@@ -6,8 +7,9 @@ export type Session = {
   [key: string]: any;
 };
 
-export interface BotContext extends Context {
-  session: Session;
-  scene: Scenes.SceneContextScene<BotContext, WizardSession>;
-  wizard: Scenes.WizardContextWizard<BotContext>;
-}
+export type BotContext = Context &
+  I18nFlavor & {
+    session: Session;
+    scene: Scenes.SceneContextScene<BotContext, WizardSession>;
+    wizard: Scenes.WizardContextWizard<BotContext>;
+  };

@@ -5,7 +5,7 @@ import { selectType } from './handlers';
 import { callbackQuery } from 'telegraf/filters';
 
 export const PostWizard = new Scenes.WizardScene<BotContext>(
-  WizardType.post,
+  WizardType.post_wizard,
 
   selectType,
   async (ctx) => {
@@ -13,11 +13,13 @@ export const PostWizard = new Scenes.WizardScene<BotContext>(
       return ctx.scene.leave();
     }
 
+    console.log('dddddddddddd');
+
     const callbackData = ctx.callbackQuery.data;
 
     if (callbackData.startsWith('platform_')) {
       const selected = callbackData.replace('platform_', '');
-      ctx.wizard.state.platform = selected;
+      // ctx.wizard.state.platform = selected;
       await ctx.reply(`✅ Вы выбрали: ${selected}`);
     }
 

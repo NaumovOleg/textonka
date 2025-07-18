@@ -1,10 +1,10 @@
 import type { Scenes } from 'telegraf';
-import { PostWizardSession } from './wizards';
+import { PostWizardName, PostWizardSession } from './wizards';
 
 export enum WizardType {
-  'post' = 'post',
+  post_wizard = PostWizardName,
 }
 
 export interface WizardSession extends Scenes.WizardSessionData {
-  [WizardType.post]: PostWizardSession;
+  [WizardType.post_wizard]: PostWizardSession;
 }
