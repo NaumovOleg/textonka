@@ -1,3 +1,3 @@
-export * from './wrapper';
 export * from './helpers';
-export * from './types';
+export * from './scene';
+export * from './wrapper';

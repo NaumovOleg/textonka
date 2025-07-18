@@ -1,6 +1,6 @@
 import bot from '@bot';
-import http from 'serverless-http';
 import { AppDataSource } from '@infrastructure';
+import http from 'serverless-http';
 
 export const handler = async (event: any, context: any) => {
   if (!AppDataSource.isInitialized) {
@@ -9,12 +9,8 @@ export const handler = async (event: any, context: any) => {
       console.log('✅ Data source initialized');
     } catch (err) {
       console.error('❌ DB initialization failed:', err);
-      return {
-        statusCode: 500,
-        body: 'DB init error',
-      };
+      return { statusCode: 500, body: 'DB init error' };
     }
-
-    return http(bot.webhookCallback('/telegraf'));
   }
+  return http(bot.webhookCallback('/telegraf'));
 };
