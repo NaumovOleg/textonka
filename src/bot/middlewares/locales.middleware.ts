@@ -1,8 +1,9 @@
-import { I18n } from '@grammyjs/i18n';
 import path from 'path';
+import I18n from 'telegraf-i18n';
 
 export const locales = new I18n({
-  defaultLocale: 'en',
+  defaultLanguage: 'en',
+  defaultLanguageOnMissing: true,
   useSession: true,
   directory: path.resolve(__dirname, '../../locales'),
 });

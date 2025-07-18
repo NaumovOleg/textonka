@@ -7,7 +7,7 @@ import { stage } from './wizards';
 export class Textonka extends Telegraf<BotContext> {
   init() {
     this.use(session({ store: typeormSession() }));
-    this.use(locales);
+    this.use(locales.middleware());
     this.use(stage.middleware());
     this.use(userMiddleware);
     if (Config.LAUNCH_STATE === 'local') {

@@ -17,12 +17,12 @@ const getButtonsTranslatePrefix = (
 export const selectType = async (ctx: BotContext) => {
   ctx.scene.session[WizardType.post_wizard] = {};
 
-  console.log(ctx.t(getButtonsTranslatePrefix('type', 'value')));
+  console.log(ctx.i18n.t(getButtonsTranslatePrefix('type', 'value')));
 
   const typeButtons = Object.entries(PostWizardButtons.type).map(
     ([key, value]) => [
       Markup.button.callback(
-        ctx.t(getButtonsTranslatePrefix('type', value)),
+        ctx.i18n.t(getButtonsTranslatePrefix('type', value)),
         key,
       ),
     ],
