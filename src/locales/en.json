@@ -4,15 +4,20 @@
     "next": "➡️ Next",
     "prev": "⬅️ Back"
   },
-  "buttons": {
+
+  "wizards": {
     "post-wizard": {
-      "type": {
-        "post-wizard_type_personal": "Personal",
-        "post-wizard_type_productPromotion": "Product Promotion",
-        "post-wizard_type_announcement": "Announcement",
-        "post-wizard_type_opinion": "Opinion",
-        "post-wizard_type_educational": "Educational",
-        "post-wizard_type_caption": "Caption"
+      "buttons": {
+        "post-wizard": {
+          "type": {
+            "post-wizard_type_personal": "🙋 Personal",
+            "post-wizard_type_productPromotion": "🛍️ Product Promotion",
+            "post-wizard_type_announcement": "📢 Announcement",
+            "post-wizard_type_opinion": "💬 Opinion",
+            "post-wizard_type_educational": "🎓 Educational",
+            "post-wizard_type_caption": "📸 Caption"
+          }
+        }
       }
     }
   }

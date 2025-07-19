@@ -3,5 +3,49 @@
     "title": "Choose an option",
     "next": "➡️ Next",
     "prev": "⬅️ Back"
+  },
+  "wizards": {
+    "post-wizard": {
+      "text": {
+        "type": "🟡 Привіт! Я допоможу тобі швидко написати класний пост. Давай почнемо. Про що  ти хочеш написати",
+        "goal": "🟠 Чого бажаєш від читача після  прочитання поста",
+        "mainIdea": "🔵 Окей! А тепер в двух словах про що пост",
+        "emotion": "🔴 Який настрій має бути в поста"
+      },
+      "buttons": {
+        "type": {
+          "post-wizard_type_personal": "🙋 Про себе",
+          "post-wizard_type_productPromotion": "🛍️ Реклама товару",
+          "post-wizard_type_announcement": "📢 Анонс/запуск",
+          "post-wizard_type_opinion": "💬 Думка/роздум",
+          "post-wizard_type_educational": "🎓 Освітній/поради",
+          "post-wizard_type_caption": "📸 Допис"
+        },
+        "goal": {
+          "post-wizard_goal_likeOrSave": "❤️ Поставити лайк",
+          "post-wizard_goal_leaveComment": "✍️ Залишити коментар",
+          "post-wizard_goal_followLink": "🔗 Перейти по посиланню",
+          "post-wizard_goal_sendMessage": "📩 Відповісти в особисті",
+          "post-wizard_goal_subscribe": "🚀 Підписатися",
+          "post-wizard_goal_justRead": "👀 Прочитати"
+        },
+        "style": {
+          "post-wizard_style_friendly": "🤝 Доброзичливо",
+          "post-wizard_style_confident": "🎯 Впевнено/по справі",
+          "post-wizard_style_heartfelt": "🫶 Душевно/серця",
+          "post-wizard_style_analytical": "🧠 Розумно/аналітично",
+          "post-wizard_style_bold": "😏 Зухвало/сміливо",
+          "post-wizard_style_humorous": "🤪 З приколами"
+        },
+        "emotion": {
+          "post-wizard_emotion_emotional": "🥹 Емоції",
+          "post-wizard_emotion_inspirational": "😍 Натхнення",
+          "post-wizard_emotion_wowEffect": "🤯 Вау-ефект",
+          "post-wizard_emotion_thoughtful": "🤔 Задуманість",
+          "post-wizard_emotion_provocative": "😠 Провокація",
+          "post-wizard_emotion_smile": "😅 Посмішка"
+        }
+      }
+    }
   }
 }
