@@ -14,6 +14,32 @@ const getButtonsTranslatePrefix = (
   value: string,
 ) => `wizards.${PostWizardName}.buttons.${buttonGroup}.${value}`;
 
+async function getButtonsValue<
+  K extends keyof typeof PostWizardButtons,
+  V extends keyof BotContext['scene']['session'][typeof WizardType.post_wizard],
+  T extends BotContext['scene']['session'][typeof WizardType.post_wizard][V],
+>(ctx: BotContext, data: { category: K; sessionKey: V }) {
+  if (!ctx.has(callbackQuery('data'))) {
+    return false;
+  }
+
+  const selectedKey = ctx.callbackQuery
+    ?.data as keyof (typeof PostWizardButtons)[K];
+
+  if (!selectedKey || !(selectedKey in PostWizardButtons[data.category])) {
+    return ctx.scene.leave();
+  }
+
+  await ctx.editMessageReplyMarkup(undefined).catch(() => {});
+  const value = PostWizardButtons[data.category][selectedKey] as T;
+
+  console.log('==========', data.category, data.sessionKey, value);
+
+  ctx.scene.session[WizardType.post_wizard][data.sessionKey] = value;
+
+  return true;
+}
+
 export const selectTypeHandler = async (ctx: BotContext) => {
   ctx.scene.session[WizardType.post_wizard] = {};
 
@@ -31,19 +57,14 @@ export const selectTypeHandler = async (ctx: BotContext) => {
 };
 
 export const selectGoalHandler = async (ctx: BotContext) => {
-  if (!ctx.has(callbackQuery('data'))) {
+  const response = await getButtonsValue(ctx, {
+    sessionKey: 'type',
+    category: 'type',
+  });
+
+  if (!response) {
     return ctx.scene.leave();
   }
-  await ctx.answerCbQuery();
-  const selectedKey = ctx.callbackQuery.data;
-  if (!selectedKey || !(selectedKey in PostWizardButtons.type)) {
-    return ctx.scene.leave();
-  }
-
-  const type =
-    PostWizardButtons.type[selectedKey as keyof typeof PostWizardButtons.type];
-  ctx.scene.session[WizardType.post_wizard].type = type;
-
   await ctx.editMessageReplyMarkup(undefined).catch(() => {});
 
   const goalButtons = Object.keys(PostWizardButtons.goal).map((key) =>
@@ -61,19 +82,14 @@ export const selectGoalHandler = async (ctx: BotContext) => {
 };
 
 export const writeIdea = async (ctx: BotContext) => {
-  if (!ctx.has(callbackQuery('data'))) {
-    return ctx.scene.leave();
-  }
-  await ctx.answerCbQuery();
-  const selectedKey = ctx.callbackQuery.data;
-  if (!selectedKey || !(selectedKey in PostWizardButtons.goal)) {
-    return ctx.scene.leave();
-  }
+  const response = await getButtonsValue(ctx, {
+    sessionKey: 'goal',
+    category: 'goal',
+  });
 
-  await ctx.editMessageReplyMarkup(undefined).catch(() => {});
-  const goal =
-    PostWizardButtons.goal[selectedKey as keyof typeof PostWizardButtons.goal];
-  ctx.scene.session[WizardType.post_wizard].goal = goal;
+  if (!response) {
+    return ctx.scene.leave();
+  }
 
   await ctx.reply(ctx.i18n.t(`wizards.post-wizard.text.mainIdea`));
 
@@ -81,10 +97,7 @@ export const writeIdea = async (ctx: BotContext) => {
 };
 
 export const selectStyle = async (ctx: BotContext) => {
-  if (!ctx.message) {
-    await ctx.reply('⛔️ Пожалуйста, отправьте текстовое сообщение.');
-    return ctx.scene.leave();
-  }
+  // const userText = ctx.message.text;
 
   const styleButtons = Object.keys(PostWizardButtons.style).map((key) =>
     Markup.button.callback(
@@ -93,7 +106,7 @@ export const selectStyle = async (ctx: BotContext) => {
     ),
   );
   await ctx.reply(
-    ctx.i18n.t(`wizards.post-wizard.text.goal`),
+    ctx.i18n.t(`wizards.post-wizard.text.style`),
     Markup.inlineKeyboard(splitByChunks(styleButtons, 2)),
   );
 
@@ -101,10 +114,22 @@ export const selectStyle = async (ctx: BotContext) => {
 };
 
 export const selectEmotion = async (ctx: BotContext) => {
-  if (!ctx.message) {
-    await ctx.reply('⛔️ Пожалуйста, отправьте текстовое сообщение.');
+  await ctx.answerCbQuery();
+  if (!ctx.has(callbackQuery('data'))) {
     return ctx.scene.leave();
   }
+
+  const selectedKey = ctx.callbackQuery.data;
+  if (!selectedKey || !(selectedKey in PostWizardButtons.style)) {
+    return ctx.scene.leave();
+  }
+
+  await ctx.editMessageReplyMarkup(undefined).catch(() => {});
+  const style =
+    PostWizardButtons.style[
+      selectedKey as keyof typeof PostWizardButtons.style
+    ];
+  ctx.scene.session[WizardType.post_wizard].style = style;
 
   const emotionButtons = Object.keys(PostWizardButtons.emotion).map((key) =>
     Markup.button.callback(
@@ -117,5 +142,27 @@ export const selectEmotion = async (ctx: BotContext) => {
     Markup.inlineKeyboard(splitByChunks(emotionButtons, 2)),
   );
 
-  return ctx.scene.leave();
+  return ctx.wizard.next();
+};
+
+export const writeDetails = async (ctx: BotContext) => {
+  await ctx.answerCbQuery();
+  if (!ctx.has(callbackQuery('data'))) {
+    return ctx.scene.leave();
+  }
+
+  const selectedKey = ctx.callbackQuery.data;
+  if (!selectedKey || !(selectedKey in PostWizardButtons.emotion)) {
+    return ctx.scene.leave();
+  }
+
+  await ctx.editMessageReplyMarkup(undefined).catch(() => {});
+  const emotion =
+    PostWizardButtons.emotion[
+      selectedKey as keyof typeof PostWizardButtons.emotion
+    ];
+  ctx.scene.session[WizardType.post_wizard].emotion = emotion;
+  await ctx.reply(ctx.i18n.t(`wizards.post-wizard.text.keyDetails`));
+
+  return ctx.wizard.next();
 };
