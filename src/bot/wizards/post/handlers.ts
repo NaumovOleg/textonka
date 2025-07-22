@@ -48,8 +48,6 @@ async function processText<
     return null;
   }
 
-  await ctx.answerCbQuery();
-
   const inputText = ctx.message.text;
 
   ctx.scene.session[WizardType.post_wizard][property] = inputText;
@@ -184,64 +182,71 @@ const checklistItems: (keyof PostWizardEmoji)[] = [
 const getCheckboxPrefix = (key: keyof PostWizardEmoji) =>
   `wizards.${PostWizardName}.buttons.extra.${key}`;
 
-async function renderChecklist(ctx: any) {
-  const extra = ctx.scene.session[WizardType.post_wizard].extra ?? {};
+const buildChecklistText = (
+  extra: Partial<PostWizardEmoji>,
+  t: (key: string) => string,
+) => {
   const lines = checklistItems.map((key) => {
-    return `${extra[key] ? '☑️' : '⬜️'} ${ctx.i18n.t(getCheckboxPrefix(key))}`;
+    const prefix = extra[key] ? '☑️' : '⬜️';
+    return `${prefix} ${t(getCheckboxPrefix(key))}`;
   });
 
+  return `🧩 ${t(`wizards.${PostWizardName}.text.extra`)}\n\n${lines.join('\n')}`;
+};
+
+const buildChecklistButtons = (
+  extra: Partial<PostWizardEmoji>,
+  t: (key: string) => string,
+) => {
   const buttons = checklistItems.map((key) => {
-    const label = ctx.i18n.t(getCheckboxPrefix(key));
-    const checked = extra[key];
-    return [Markup.button.callback(`${checked ? '☑️' : '⬜️'} ${label}`, key)];
+    const label = t(getCheckboxPrefix(key));
+    const checked = extra[key] ? '☑️' : '⬜️';
+    return [Markup.button.callback(`${checked} ${label}`, key)];
   });
 
   buttons.push([Markup.button.callback('✔️ Submit', '__submit_extra')]);
+  return buttons;
+};
 
-  const text = `🧩 ${ctx.i18n.t(`wizards.post-wizard.text.extra`)}\n\n${lines.join('\n')}`;
+export async function renderChecklist(ctx: BotContext) {
+  console.log('renderChecklist');
+  const session = ctx.scene.session[WizardType.post_wizard];
+  console.log(session);
+  const extra = session.extra ?? {};
+  const t = ctx.i18n.t.bind(ctx.i18n);
 
-  await ctx.reply(text, {
-    parse_mode: 'Markdown',
-    ...Markup.inlineKeyboard(buttons),
-  });
-  await ctx.wizard.next();
+  const text = buildChecklistText(extra, t);
+  const buttons = buildChecklistButtons(extra, t);
+
+  await ctx[ctx.updateType === 'callback_query' ? 'editMessageText' : 'reply'](
+    text,
+    { parse_mode: 'Markdown', ...Markup.inlineKeyboard(buttons) },
+  ).catch();
+
+  return ctx.wizard.next();
 }
 
 export const handleExtraSelection = async (ctx: BotContext) => {
   if (!ctx.has(callbackQuery('data'))) return;
 
-  const extra = ctx.scene.session[WizardType.post_wizard].extra!;
+  const data = ctx.callbackQuery.data as string;
+  const session = ctx.scene.session[WizardType.post_wizard];
+  const extra = (session.extra ??= {});
 
-  if (ctx.callbackQuery.data === '__submit_extra') {
-    await ctx.answerCbQuery();
-    await ctx.reply(ctx.i18n.t(`wizards.post-wizard.text.submitted_extra`));
+  await ctx.answerCbQuery();
+
+  if (data === '__submit_extra') {
+    await ctx.reply(
+      ctx.i18n.t(`wizards.${PostWizardName}.text.submitted_extra`),
+    );
     return ctx.wizard.next();
   }
 
-  const data = ctx.callbackQuery.data as keyof Partial<PostWizardEmoji>;
-  const isAnyExtraSelected = Object.values(extra).some((v) => v);
+  if (checklistItems.includes(data as keyof PostWizardEmoji)) {
+    const key = data as keyof PostWizardEmoji;
+    extra[key] = !extra[key];
 
-  if (checklistItems.includes(data)) {
-    extra[data] = !extra[data];
-    console.log('=======', extra);
-    await ctx.answerCbQuery();
-    await renderChecklist(ctx);
-    return ctx.wizard.selectStep(ctx.wizard.cursor - 1);
+    await ctx.wizard.selectStep(ctx.wizard.cursor - 1);
+    return renderChecklist(ctx);
   }
-};
-
-export const selectExtraOptions = async (ctx: BotContext) => {
-  if (!ctx.scene.session[WizardType.post_wizard]) {
-    ctx.scene.session[WizardType.post_wizard] = {};
-  }
-  if (!ctx.scene.session[WizardType.post_wizard].extra) {
-    ctx.scene.session[WizardType.post_wizard].extra = {
-      emoji: false,
-      hashtags: false,
-      cta: false,
-      clean: false,
-    };
-  }
-
-  return renderChecklist(ctx);
 };
