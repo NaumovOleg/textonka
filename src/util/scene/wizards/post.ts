@@ -44,6 +44,8 @@ export type PostWizardEmoji = {
 };
 
 export type PostWizardSession = Partial<{
+  language: string;
+  attachmentUrl: string;
   type: PostWizardType;
   mainIdea: string;
   goal: PostWizardGoal;

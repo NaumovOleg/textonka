@@ -12,9 +12,16 @@
         "mainIdea": "🔵 Окей! А тепер в двух словах про що пост",
         "emotion": "🔴 Який настрій має бути в поста",
         "keyDetails": "🔴 keyDetails",
-        "style": "🔴 style"
+        "style": "🔴 style",
+        "extra": "Select extra options to include in your post"
       },
       "buttons": {
+        "extra": {
+          "emoji": "Emojis 😄",
+          "hashtags": "Hashtags #️⃣",
+          "cta": "Call to action 🎯",
+          "clean": "No extras 🧽"
+        },
         "type": {
           "post-wizard_type_personal": "🙋 Про себе",
           "post-wizard_type_productPromotion": "🛍️ Реклама товару",

@@ -1,6 +1,7 @@
 import {
   BotContext,
   PostWizardButtons,
+  PostWizardEmoji,
   PostWizardName,
   PostWizardSession,
   WizardType,
@@ -14,30 +15,46 @@ const getButtonsTranslatePrefix = (
   value: string,
 ) => `wizards.${PostWizardName}.buttons.${buttonGroup}.${value}`;
 
-async function getButtonsValue<
+async function processButtons<
   K extends keyof typeof PostWizardButtons,
   V extends keyof BotContext['scene']['session'][typeof WizardType.post_wizard],
   T extends BotContext['scene']['session'][typeof WizardType.post_wizard][V],
->(ctx: BotContext, data: { category: K; sessionKey: V }) {
+>(ctx: BotContext, data: { buttonGroup: K; sessionKey: V }) {
   if (!ctx.has(callbackQuery('data'))) {
-    return false;
+    return null;
   }
+
+  await ctx.answerCbQuery();
 
   const selectedKey = ctx.callbackQuery
     ?.data as keyof (typeof PostWizardButtons)[K];
 
-  if (!selectedKey || !(selectedKey in PostWizardButtons[data.category])) {
-    return ctx.scene.leave();
+  if (!selectedKey || !(selectedKey in PostWizardButtons[data.buttonGroup])) {
+    return null;
   }
 
   await ctx.editMessageReplyMarkup(undefined).catch(() => {});
-  const value = PostWizardButtons[data.category][selectedKey] as T;
-
-  console.log('==========', data.category, data.sessionKey, value);
+  const value = PostWizardButtons[data.buttonGroup][selectedKey] as T;
 
   ctx.scene.session[WizardType.post_wizard][data.sessionKey] = value;
 
-  return true;
+  return value;
+}
+
+async function processText<
+  T extends keyof Pick<PostWizardSession, 'mainIdea' | 'keyDetails'>,
+>(ctx: BotContext, property: T) {
+  if (!ctx.message || !('text' in ctx.message)) {
+    return null;
+  }
+
+  await ctx.answerCbQuery();
+
+  const inputText = ctx.message.text;
+
+  ctx.scene.session[WizardType.post_wizard][property] = inputText;
+
+  return inputText;
 }
 
 export const selectTypeHandler = async (ctx: BotContext) => {
@@ -49,22 +66,25 @@ export const selectTypeHandler = async (ctx: BotContext) => {
       key,
     ),
   );
+
   await ctx.reply(
     ctx.i18n.t(`wizards.post-wizard.text.type`),
     Markup.inlineKeyboard(splitByChunks(typeButtons, 2)),
   );
+
   return ctx.wizard.next();
 };
 
 export const selectGoalHandler = async (ctx: BotContext) => {
-  const response = await getButtonsValue(ctx, {
+  const type = await processButtons(ctx, {
     sessionKey: 'type',
-    category: 'type',
+    buttonGroup: 'type',
   });
 
-  if (!response) {
+  if (!type) {
     return ctx.scene.leave();
   }
+
   await ctx.editMessageReplyMarkup(undefined).catch(() => {});
 
   const goalButtons = Object.keys(PostWizardButtons.goal).map((key) =>
@@ -82,12 +102,12 @@ export const selectGoalHandler = async (ctx: BotContext) => {
 };
 
 export const writeIdea = async (ctx: BotContext) => {
-  const response = await getButtonsValue(ctx, {
+  const goal = await processButtons(ctx, {
     sessionKey: 'goal',
-    category: 'goal',
+    buttonGroup: 'goal',
   });
 
-  if (!response) {
+  if (!goal) {
     return ctx.scene.leave();
   }
 
@@ -97,8 +117,10 @@ export const writeIdea = async (ctx: BotContext) => {
 };
 
 export const selectStyle = async (ctx: BotContext) => {
-  // const userText = ctx.message.text;
-
+  const idea = await processText(ctx, 'mainIdea');
+  if (!idea) {
+    return ctx.scene.leave();
+  }
   const styleButtons = Object.keys(PostWizardButtons.style).map((key) =>
     Markup.button.callback(
       ctx.i18n.t(getButtonsTranslatePrefix('style', key)),
@@ -114,22 +136,14 @@ export const selectStyle = async (ctx: BotContext) => {
 };
 
 export const selectEmotion = async (ctx: BotContext) => {
-  await ctx.answerCbQuery();
-  if (!ctx.has(callbackQuery('data'))) {
+  const style = processButtons(ctx, {
+    buttonGroup: 'style',
+    sessionKey: 'style',
+  });
+
+  if (!style) {
     return ctx.scene.leave();
   }
-
-  const selectedKey = ctx.callbackQuery.data;
-  if (!selectedKey || !(selectedKey in PostWizardButtons.style)) {
-    return ctx.scene.leave();
-  }
-
-  await ctx.editMessageReplyMarkup(undefined).catch(() => {});
-  const style =
-    PostWizardButtons.style[
-      selectedKey as keyof typeof PostWizardButtons.style
-    ];
-  ctx.scene.session[WizardType.post_wizard].style = style;
 
   const emotionButtons = Object.keys(PostWizardButtons.emotion).map((key) =>
     Markup.button.callback(
@@ -146,23 +160,88 @@ export const selectEmotion = async (ctx: BotContext) => {
 };
 
 export const writeDetails = async (ctx: BotContext) => {
-  await ctx.answerCbQuery();
-  if (!ctx.has(callbackQuery('data'))) {
+  const emotion = await processButtons(ctx, {
+    buttonGroup: 'emotion',
+    sessionKey: 'emotion',
+  });
+
+  if (!emotion) {
     return ctx.scene.leave();
   }
 
-  const selectedKey = ctx.callbackQuery.data;
-  if (!selectedKey || !(selectedKey in PostWizardButtons.emotion)) {
-    return ctx.scene.leave();
-  }
-
-  await ctx.editMessageReplyMarkup(undefined).catch(() => {});
-  const emotion =
-    PostWizardButtons.emotion[
-      selectedKey as keyof typeof PostWizardButtons.emotion
-    ];
-  ctx.scene.session[WizardType.post_wizard].emotion = emotion;
   await ctx.reply(ctx.i18n.t(`wizards.post-wizard.text.keyDetails`));
 
   return ctx.wizard.next();
+};
+
+const checklistItems: (keyof PostWizardEmoji)[] = [
+  'emoji',
+  'hashtags',
+  'cta',
+  'clean',
+];
+
+const getCheckboxPrefix = (key: keyof PostWizardEmoji) =>
+  `wizards.${PostWizardName}.buttons.extra.${key}`;
+
+async function renderChecklist(ctx: any) {
+  const extra = ctx.scene.session[WizardType.post_wizard].extra ?? {};
+  const lines = checklistItems.map((key) => {
+    return `${extra[key] ? '☑️' : '⬜️'} ${ctx.i18n.t(getCheckboxPrefix(key))}`;
+  });
+
+  const buttons = checklistItems.map((key) => {
+    const label = ctx.i18n.t(getCheckboxPrefix(key));
+    const checked = extra[key];
+    return [Markup.button.callback(`${checked ? '☑️' : '⬜️'} ${label}`, key)];
+  });
+
+  buttons.push([Markup.button.callback('✔️ Submit', '__submit_extra')]);
+
+  const text = `🧩 ${ctx.i18n.t(`wizards.post-wizard.text.extra`)}\n\n${lines.join('\n')}`;
+
+  await ctx.reply(text, {
+    parse_mode: 'Markdown',
+    ...Markup.inlineKeyboard(buttons),
+  });
+  await ctx.wizard.next();
+}
+
+export const handleExtraSelection = async (ctx: BotContext) => {
+  if (!ctx.has(callbackQuery('data'))) return;
+
+  const extra = ctx.scene.session[WizardType.post_wizard].extra!;
+
+  if (ctx.callbackQuery.data === '__submit_extra') {
+    await ctx.answerCbQuery();
+    await ctx.reply(ctx.i18n.t(`wizards.post-wizard.text.submitted_extra`));
+    return ctx.wizard.next();
+  }
+
+  const data = ctx.callbackQuery.data as keyof Partial<PostWizardEmoji>;
+  const isAnyExtraSelected = Object.values(extra).some((v) => v);
+
+  if (checklistItems.includes(data)) {
+    extra[data] = !extra[data];
+    console.log('=======', extra);
+    await ctx.answerCbQuery();
+    await renderChecklist(ctx);
+    return ctx.wizard.selectStep(ctx.wizard.cursor - 1);
+  }
+};
+
+export const selectExtraOptions = async (ctx: BotContext) => {
+  if (!ctx.scene.session[WizardType.post_wizard]) {
+    ctx.scene.session[WizardType.post_wizard] = {};
+  }
+  if (!ctx.scene.session[WizardType.post_wizard].extra) {
+    ctx.scene.session[WizardType.post_wizard].extra = {
+      emoji: false,
+      hashtags: false,
+      cta: false,
+      clean: false,
+    };
+  }
+
+  return renderChecklist(ctx);
 };

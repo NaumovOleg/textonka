@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryColumn, ObjectIdColumn } from 'typeorm';
+import { Entity, ObjectIdColumn, PrimaryColumn } from 'typeorm';
 
 import { ObjectId } from 'mongodb';
 
@@ -7,7 +7,6 @@ export abstract class BaseEntity {
   @PrimaryColumn()
   @ObjectIdColumn()
   _id: ObjectId = new ObjectId();
-
   id: string;
 
   constructor(data?: Partial<BaseEntity>) {
@@ -21,7 +20,7 @@ export abstract class BaseEntity {
     }
   }
 
-  toJson(): Record<string, any> {
+  toJson(): Record<string, unknown> {
     const { _id, ...rest } = this;
     return { ...rest, id: _id?.toString() };
   }
