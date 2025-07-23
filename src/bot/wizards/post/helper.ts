@@ -101,15 +101,18 @@ export const drawCurrentStep = async (ctx: BotContext) => {
     const stepMessage = await ctx.reply('Step 1/10').catch();
     ctx.scene.session[WizardType.post_wizard].stepMessageId =
       stepMessage.message_id;
+    return stepMessage;
   } else {
-    await ctx.telegram
+    return ctx.telegram
       .editMessageText(
         ctx?.chat?.id,
         ctx.scene.session[WizardType.post_wizard].stepMessageId,
         undefined,
         `Step ${ctx.wizard.cursor + 1}/10`,
       )
-      .catch();
+      .catch((e) => {
+        if (!e.message.includes('message is not modified')) throw e;
+      });
   }
 };
 
