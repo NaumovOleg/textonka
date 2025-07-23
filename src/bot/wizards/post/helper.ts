@@ -10,6 +10,7 @@ import {
 } from '@util';
 import { Markup } from 'telegraf';
 import { callbackQuery } from 'telegraf/filters';
+import { Convenience as tt } from 'telegraf/types';
 
 export const extraPostChecklistItems: (keyof PostWizardEmoji)[] = [
   'emoji',
@@ -96,11 +97,6 @@ export async function processText<
 }
 
 export const drawCurrentStep = async (ctx: BotContext) => {
-  console.log(
-    '===========',
-    ctx.scene.session[WizardType.post_wizard].stepMessageId,
-    `Step ${ctx.wizard.cursor}/10`,
-  );
   if (!ctx.scene.session[WizardType.post_wizard].stepMessageId) {
     const stepMessage = await ctx.reply('Step 1/10').catch();
     ctx.scene.session[WizardType.post_wizard].stepMessageId =
@@ -143,3 +139,13 @@ export async function renderChecklist(ctx: BotContext) {
       .catch();
   }
 }
+
+export const editOrReplyMessage = async (
+  ctx: BotContext,
+  text: string,
+  options?: tt.ExtraEditMessageText,
+) => {
+  return ctx
+    .editMessageText(text, options)
+    .catch(() => ctx.reply(text, options));
+};

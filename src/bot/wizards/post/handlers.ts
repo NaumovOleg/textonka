@@ -14,6 +14,7 @@ import {
   buildChecklistButtons,
   buildChecklistText,
   drawCurrentStep,
+  editOrReplyMessage,
   getButtonsTranslatePrefix,
   isBackButtonPressed,
   processButtons,
@@ -33,7 +34,8 @@ export const selectTypeHandler = async (ctx: BotContext) => {
   await ctx.reply(ctx.i18n.t(`wizards.post-wizard.text.welcome`));
   await drawCurrentStep(ctx);
 
-  await ctx.reply(
+  await editOrReplyMessage(
+    ctx,
     ctx.i18n.t(`wizards.post-wizard.text.type`),
     Markup.inlineKeyboard(splitByChunks(typeButtons, 2)),
   );
@@ -42,18 +44,20 @@ export const selectTypeHandler = async (ctx: BotContext) => {
 };
 
 export const selectGoalHandler = async (ctx: BotContext) => {
-  const type = await processButtons(ctx, {
+  console.log('=====================> selectGoalHandler', ctx.updateType);
+  if (ctx.updateType !== 'callback_query') {
+    return;
+  }
+  await processButtons(ctx, {
     sessionKey: 'type',
     buttonGroup: 'type',
   });
 
-  if (!type) {
-    return ctx.scene.leave();
+  if (isBackButtonPressed(ctx)) {
+    const resp = await ctx.wizard.back();
+    return resp;
   }
 
-  if (isBackButtonPressed(ctx)) {
-    return ctx.wizard.selectStep(ctx.wizard.cursor - 1);
-  }
   const goalButtons = Object.keys(PostWizardButtons.goal).map((key) =>
     Markup.button.callback(
       ctx.i18n.t(getButtonsTranslatePrefix('goal', key)),
@@ -62,7 +66,8 @@ export const selectGoalHandler = async (ctx: BotContext) => {
   );
 
   await drawCurrentStep(ctx);
-  await ctx.editMessageText(
+  await editOrReplyMessage(
+    ctx,
     ctx.i18n.t(`wizards.post-wizard.text.goal`),
     Markup.inlineKeyboard(splitByChunks(goalButtons, 2)),
   );
@@ -71,6 +76,10 @@ export const selectGoalHandler = async (ctx: BotContext) => {
 };
 
 export const writeIdea = async (ctx: BotContext) => {
+  console.log('=====================> writeIdea', ctx.updateType);
+  if (ctx.updateType !== 'callback_query') {
+    return;
+  }
   const goal = await processButtons(ctx, {
     sessionKey: 'goal',
     buttonGroup: 'goal',
@@ -85,12 +94,19 @@ export const writeIdea = async (ctx: BotContext) => {
   }
 
   await drawCurrentStep(ctx);
-  await ctx.editMessageText(ctx.i18n.t(`wizards.post-wizard.text.mainIdea`));
+  await editOrReplyMessage(
+    ctx,
+    ctx.i18n.t(`wizards.post-wizard.text.mainIdea`),
+  );
 
   return ctx.wizard.next();
 };
 
 export const selectStyle = async (ctx: BotContext) => {
+  console.log('=====================> selectStyle', ctx.updateType);
+  if (ctx.updateType !== 'message') {
+    return;
+  }
   await processText(ctx, 'mainIdea');
 
   if (isBackButtonPressed(ctx)) {
@@ -114,14 +130,12 @@ export const selectStyle = async (ctx: BotContext) => {
 };
 
 export const selectEmotion = async (ctx: BotContext) => {
-  const style = processButtons(ctx, {
-    buttonGroup: 'style',
-    sessionKey: 'style',
-  });
-
-  if (!style) {
-    return ctx.scene.leave();
+  console.log('=====================> selectEmotion');
+  await processButtons(ctx, { buttonGroup: 'style', sessionKey: 'style' });
+  if (ctx.updateType !== 'callback_query') {
+    return;
   }
+
   if (isBackButtonPressed(ctx)) {
     return ctx.wizard.selectStep(ctx.wizard.cursor - 1);
   }
@@ -133,7 +147,8 @@ export const selectEmotion = async (ctx: BotContext) => {
     ),
   );
   await drawCurrentStep(ctx);
-  await ctx.editMessageText(
+  await editOrReplyMessage(
+    ctx,
     ctx.i18n.t(`wizards.post-wizard.text.emotion`),
     Markup.inlineKeyboard(splitByChunks(emotionButtons, 2)),
   );
@@ -142,19 +157,25 @@ export const selectEmotion = async (ctx: BotContext) => {
 };
 
 export const writeDetails = async (ctx: BotContext) => {
-  const emotion = await processButtons(ctx, {
+  console.log('=====================> writeDetails');
+  await processButtons(ctx, {
     buttonGroup: 'emotion',
     sessionKey: 'emotion',
   });
 
-  if (!emotion) {
-    return ctx.scene.leave();
+  if (ctx.updateType !== 'callback_query') {
+    return;
   }
+
   if (isBackButtonPressed(ctx)) {
     return ctx.wizard.selectStep(ctx.wizard.cursor - 1);
   }
+
   await drawCurrentStep(ctx);
-  await ctx.editMessageText(ctx.i18n.t(`wizards.post-wizard.text.keyDetails`));
+  await editOrReplyMessage(
+    ctx,
+    ctx.i18n.t(`wizards.post-wizard.text.keyDetails`),
+  );
 
   return ctx.wizard.next();
 };
@@ -163,6 +184,10 @@ export const handleExtraSelection = async (ctx: BotContext) => {
   let data;
   if (ctx.has(callbackQuery('data'))) {
     data = ctx.callbackQuery.data as string;
+  }
+
+  if (ctx.updateType === 'message') {
+    return;
   }
 
   const session = ctx.scene.session[WizardType.post_wizard];
@@ -195,4 +220,8 @@ export const handleExtraSelection = async (ctx: BotContext) => {
     await drawCurrentStep(ctx);
     return ctx.reply(text, options);
   }
+};
+
+export const generateResponse = async (ctx: BotContext) => {
+  return ctx.scene.leave();
 };
