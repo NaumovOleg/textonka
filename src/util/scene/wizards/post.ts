@@ -40,7 +40,6 @@ export type PostWizardEmoji = {
   emoji: boolean;
   hashtags: boolean;
   cta: boolean;
-  clean: boolean;
 };
 
 export type PostWizardSession = Partial<{
@@ -53,7 +52,13 @@ export type PostWizardSession = Partial<{
   emotion: PostWizardEmotion;
   keyDetails?: string;
   extra: Partial<PostWizardEmoji>;
+  stepMessageId?: number;
 }>;
+
+export enum PostWizardGeneralButtons {
+  submit_extra = `${PostWizardName}_extra_submit`,
+  previous_step = `${PostWizardName}_prev`,
+}
 
 export const PostWizardButtons = {
   type: {
