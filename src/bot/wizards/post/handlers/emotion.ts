@@ -1,9 +1,12 @@
 import { BotContext } from '@util';
-import { isBackButtonPressed, processButtons } from '../helper';
+import {
+  clearMessageText,
+  isBackButtonPressed,
+  processButtons,
+} from '../helper';
 import { DetailsContent, EmotionContent, StyleContent } from './content.drawer';
 
 export const selectEmotionHandler = async (ctx: BotContext) => {
-  console.log('=====================> selectEmotion');
   const emotion = await processButtons(ctx, {
     buttonGroup: 'emotion',
     sessionKey: 'emotion',
@@ -12,6 +15,7 @@ export const selectEmotionHandler = async (ctx: BotContext) => {
     ctx.wizard.next();
     return DetailsContent(ctx);
   }
+  await clearMessageText(ctx);
 
   if (isBackButtonPressed(ctx)) {
     ctx.wizard.back();

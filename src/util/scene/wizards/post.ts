@@ -53,7 +53,6 @@ export type PostWizardSession = Partial<{
   keyDetails?: string;
   extra: Partial<PostWizardEmoji>;
   stepMessageId?: number;
-  messagesToDelete: number[];
   rootMessageId: number;
 }>;
 

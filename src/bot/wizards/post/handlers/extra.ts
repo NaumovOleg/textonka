@@ -1,6 +1,6 @@
 import { BotContext, PostWizardGeneralButtons, PostWizardName } from '@util';
 import { callbackQuery } from 'telegraf/filters';
-import { isBackButtonPressed } from '../helper';
+import { clearMessageText, isBackButtonPressed } from '../helper';
 import { DetailsContent, ExtraContent } from './content.drawer';
 
 export const handleExtraSelection = async (ctx: BotContext) => {
@@ -8,6 +8,8 @@ export const handleExtraSelection = async (ctx: BotContext) => {
   if (ctx.has(callbackQuery('data'))) {
     data = ctx.callbackQuery.data as string;
   }
+
+  await clearMessageText(ctx);
 
   if (ctx.updateType === 'message') {
     return;

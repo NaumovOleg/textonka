@@ -1,5 +1,5 @@
 import { BotContext, WizardType } from '@util';
-import { processButtons } from '../helper';
+import { clearMessageText, processButtons } from '../helper';
 import { GoalContent, TypeContent } from './content.drawer';
 
 export const selectTypeHandler = async (ctx: BotContext) => {
@@ -14,5 +14,7 @@ export const selectTypeHandler = async (ctx: BotContext) => {
     ctx.wizard.next();
     return GoalContent(ctx);
   }
+
+  await clearMessageText(ctx);
   return TypeContent(ctx);
 };

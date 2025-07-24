@@ -157,7 +157,6 @@ export const editOrReplyMessage = async (
       options,
     )
     .catch((err) => {
-      console.log(err);
       if (!err?.description?.includes('message is not modified')) {
         return ctx.reply(text, options);
       }
@@ -175,4 +174,11 @@ export const getNavigationButtons = (ctx: BotContext) => {
       PostWizardGeneralButtons.finish_wizard,
     ),
   ];
+};
+
+export const clearMessageText = async (ctx: BotContext) => {
+  if (ctx.chat?.id && ctx.message?.message_id) {
+    return ctx.telegram.deleteMessage(ctx.chat.id, ctx.message.message_id);
+  }
+  return null;
 };

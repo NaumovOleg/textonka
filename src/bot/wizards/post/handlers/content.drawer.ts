@@ -50,7 +50,7 @@ export const GoalContent = async (ctx: BotContext) => {
   const buttons = splitByChunks(goalButtons, 2);
   buttons.push(getNavigationButtons(ctx));
 
-  await editOrReplyMessage(
+  return editOrReplyMessage(
     ctx,
     ctx.i18n.t(`wizards.post-wizard.text.goal`),
     Markup.inlineKeyboard(buttons),
@@ -68,7 +68,7 @@ export const StyleContent = async (ctx: BotContext) => {
   await drawCurrentStep(ctx);
   const buttons = splitByChunks(styleButtons, 2);
   buttons.push(getNavigationButtons(ctx));
-  await editOrReplyMessage(
+  return editOrReplyMessage(
     ctx,
     ctx.i18n.t(`wizards.post-wizard.text.style`),
     Markup.inlineKeyboard(buttons),
@@ -135,10 +135,7 @@ export const ExtraContent = async (ctx: BotContext) => {
     ...Markup.inlineKeyboard(buttons),
   };
 
-  if (ctx.updateType === 'callback_query') {
-    return ctx.editMessageText(text, options);
-  } else {
-    await drawCurrentStep(ctx);
-    return ctx.reply(text, options);
-  }
+  await drawCurrentStep(ctx);
+
+  return editOrReplyMessage(ctx, text, options);
 };

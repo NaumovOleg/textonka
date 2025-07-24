@@ -1,13 +1,13 @@
 import { BotContext, WizardType } from '@util';
 import { Message } from 'telegraf/types';
-import { TypeContent } from './content.drawer';
+import { TypeContent, WelcomeContent } from './content.drawer';
 
 export const welcomeHandler = async (ctx: BotContext) => {
-  ctx.scene.session[WizardType.post_wizard] ??= {
-    messagesToDelete: [],
-  };
+  ctx.scene.session[WizardType.post_wizard] ??= {};
 
   ctx.wizard.next();
+
+  await WelcomeContent(ctx);
   const message = await TypeContent(ctx);
   ctx.scene.session[WizardType.post_wizard].rootMessageId = (
     message as Message.TextMessage
