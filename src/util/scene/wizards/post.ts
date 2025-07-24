@@ -53,11 +53,14 @@ export type PostWizardSession = Partial<{
   keyDetails?: string;
   extra: Partial<PostWizardEmoji>;
   stepMessageId?: number;
+  messagesToDelete: number[];
+  rootMessageId: number;
 }>;
 
 export enum PostWizardGeneralButtons {
   submit_extra = `${PostWizardName}_extra_submit`,
   previous_step = `${PostWizardName}_prev`,
+  finish_wizard = `${PostWizardName}_finish_wizard`,
 }
 
 export const PostWizardButtons = {

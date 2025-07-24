@@ -14,7 +14,14 @@ import {
   drawCurrentStep,
   editOrReplyMessage,
   getButtonsTranslatePrefix,
+  getNavigationButtons,
 } from '../helper';
+
+export const WelcomeContent = async (ctx: BotContext) => {
+  console.log('WelcomeContent');
+  await ctx.reply(ctx.i18n.t(`wizards.post-wizard.text.welcome`));
+  return await drawCurrentStep(ctx);
+};
 
 export const TypeContent = async (ctx: BotContext) => {
   const typeButtons = Object.keys(PostWizardButtons.type).map((key) =>
@@ -24,13 +31,29 @@ export const TypeContent = async (ctx: BotContext) => {
     ),
   );
 
-  await ctx.reply(ctx.i18n.t(`wizards.post-wizard.text.welcome`));
   await drawCurrentStep(ctx);
-
-  await editOrReplyMessage(
+  return editOrReplyMessage(
     ctx,
     ctx.i18n.t(`wizards.post-wizard.text.type`),
     Markup.inlineKeyboard(splitByChunks(typeButtons, 2)),
+  );
+};
+export const GoalContent = async (ctx: BotContext) => {
+  const goalButtons = Object.keys(PostWizardButtons.goal).map((key) =>
+    Markup.button.callback(
+      ctx.i18n.t(getButtonsTranslatePrefix('goal', key)),
+      key,
+    ),
+  );
+
+  await drawCurrentStep(ctx);
+  const buttons = splitByChunks(goalButtons, 2);
+  buttons.push(getNavigationButtons(ctx));
+
+  await editOrReplyMessage(
+    ctx,
+    ctx.i18n.t(`wizards.post-wizard.text.goal`),
+    Markup.inlineKeyboard(buttons),
   );
 };
 
@@ -43,33 +66,22 @@ export const StyleContent = async (ctx: BotContext) => {
   );
 
   await drawCurrentStep(ctx);
-  await ctx.reply(
-    ctx.i18n.t(`wizards.post-wizard.text.style`),
-    Markup.inlineKeyboard(splitByChunks(styleButtons, 2)),
-  );
-};
-
-export const GoalContent = async (ctx: BotContext) => {
-  const goalButtons = Object.keys(PostWizardButtons.goal).map((key) =>
-    Markup.button.callback(
-      ctx.i18n.t(getButtonsTranslatePrefix('goal', key)),
-      key,
-    ),
-  );
-
-  await drawCurrentStep(ctx);
+  const buttons = splitByChunks(styleButtons, 2);
+  buttons.push(getNavigationButtons(ctx));
   await editOrReplyMessage(
     ctx,
-    ctx.i18n.t(`wizards.post-wizard.text.goal`),
-    Markup.inlineKeyboard(splitByChunks(goalButtons, 2)),
+    ctx.i18n.t(`wizards.post-wizard.text.style`),
+    Markup.inlineKeyboard(buttons),
   );
 };
 
 export const IdeaContent = async (ctx: BotContext) => {
   await drawCurrentStep(ctx);
-  await editOrReplyMessage(
+
+  return editOrReplyMessage(
     ctx,
     ctx.i18n.t(`wizards.post-wizard.text.mainIdea`),
+    Markup.inlineKeyboard(getNavigationButtons(ctx)),
   );
 };
 
@@ -81,10 +93,12 @@ export const EmotionContent = async (ctx: BotContext) => {
     ),
   );
   await drawCurrentStep(ctx);
+  const buttons = splitByChunks(emotionButtons, 2);
+  buttons.push(getNavigationButtons(ctx));
   await editOrReplyMessage(
     ctx,
     ctx.i18n.t(`wizards.post-wizard.text.emotion`),
-    Markup.inlineKeyboard(splitByChunks(emotionButtons, 2)),
+    Markup.inlineKeyboard(buttons),
   );
 };
 
@@ -93,6 +107,7 @@ export const DetailsContent = async (ctx: BotContext) => {
   await editOrReplyMessage(
     ctx,
     ctx.i18n.t(`wizards.post-wizard.text.keyDetails`),
+    Markup.inlineKeyboard(getNavigationButtons(ctx)),
   );
 };
 
@@ -113,9 +128,11 @@ export const ExtraContent = async (ctx: BotContext) => {
 
   const t = ctx.i18n.t.bind(ctx.i18n);
   const text = buildChecklistText(extra, t);
+  const buttons = buildChecklistButtons(extra, t);
+  buttons.push(getNavigationButtons(ctx));
   const options: tt.ExtraEditMessageText = {
     parse_mode: 'Markdown',
-    ...Markup.inlineKeyboard(buildChecklistButtons(extra, t)),
+    ...Markup.inlineKeyboard(buttons),
   };
 
   if (ctx.updateType === 'callback_query') {

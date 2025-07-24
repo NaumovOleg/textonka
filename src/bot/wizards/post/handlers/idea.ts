@@ -1,19 +1,31 @@
-import { BotContext } from '@util';
+import { BotContext, WizardType } from '@util';
 import { isBackButtonPressed, processText } from '../helper';
-import { IdeaContent, StyleContent } from './content.drawer';
+import { GoalContent, IdeaContent, StyleContent } from './content.drawer';
 
-export const writeIdea = async (ctx: BotContext) => {
+export const writeIdeaHandler = async (ctx: BotContext) => {
   console.log('=====================> writeIdea', ctx.updateType);
 
   const idea = await processText(ctx, 'mainIdea');
 
   if (idea) {
+    if (ctx.chat?.id && ctx.message?.message_id) {
+      await ctx.telegram.deleteMessage(ctx.chat.id, ctx.message.message_id);
+    }
+
     ctx.wizard.next();
     return StyleContent(ctx);
   }
+
   if (isBackButtonPressed(ctx)) {
-    return ctx.wizard.selectStep(ctx.wizard.cursor - 1);
+    ctx.wizard.back();
+    return GoalContent(ctx);
   }
 
-  return IdeaContent(ctx);
+  const message = await IdeaContent(ctx);
+  console.log(message);
+  if (message && typeof message !== 'boolean' && message?.message_id) {
+    ctx.scene.session[WizardType.post_wizard].messagesToDelete?.push(
+      message.message_id,
+    );
+  }
 };

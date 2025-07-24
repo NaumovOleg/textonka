@@ -98,7 +98,7 @@ export async function processText<
 
 export const drawCurrentStep = async (ctx: BotContext) => {
   if (!ctx.scene.session[WizardType.post_wizard].stepMessageId) {
-    const stepMessage = await ctx.reply('Step 1/10').catch();
+    const stepMessage = await ctx.reply('Step 0/10').catch();
     ctx.scene.session[WizardType.post_wizard].stepMessageId =
       stepMessage.message_id;
     return stepMessage;
@@ -108,7 +108,7 @@ export const drawCurrentStep = async (ctx: BotContext) => {
         ctx?.chat?.id,
         ctx.scene.session[WizardType.post_wizard].stepMessageId,
         undefined,
-        `Step ${ctx.wizard.cursor + 1}/10`,
+        `Step ${ctx.wizard.cursor}/10`,
       )
       .catch((e) => {
         if (!e.message.includes('message is not modified')) throw e;
@@ -148,7 +148,31 @@ export const editOrReplyMessage = async (
   text: string,
   options?: tt.ExtraEditMessageText,
 ) => {
-  return ctx
-    .editMessageText(text, options)
-    .catch(() => ctx.reply(text, options));
+  return ctx.telegram
+    .editMessageText(
+      ctx.chat?.id,
+      ctx.scene.session[WizardType.post_wizard].rootMessageId,
+      undefined,
+      text,
+      options,
+    )
+    .catch((err) => {
+      console.log(err);
+      if (!err?.description?.includes('message is not modified')) {
+        return ctx.reply(text, options);
+      }
+    });
+};
+
+export const getNavigationButtons = (ctx: BotContext) => {
+  return [
+    Markup.button.callback(
+      ctx.i18n.t(`wizards.${PostWizardName}.buttons.general.previous_step`),
+      PostWizardGeneralButtons.previous_step,
+    ),
+    Markup.button.callback(
+      ctx.i18n.t(`wizards.${PostWizardName}.buttons.general.finish`),
+      PostWizardGeneralButtons.finish_wizard,
+    ),
+  ];
 };

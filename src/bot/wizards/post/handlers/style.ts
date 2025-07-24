@@ -1,6 +1,6 @@
-import { BotContext } from '@util';
+import { BotContext, WizardType } from '@util';
 import { isBackButtonPressed, processButtons } from '../helper';
-import { EmotionContent, StyleContent } from './content.drawer';
+import { EmotionContent, IdeaContent, StyleContent } from './content.drawer';
 
 export const selectStyleHandler = async (ctx: BotContext) => {
   console.log('=====================> selectStyle', ctx.updateType);
@@ -15,8 +15,21 @@ export const selectStyleHandler = async (ctx: BotContext) => {
     return EmotionContent(ctx);
   }
 
+  for (const id of ctx.scene.session[WizardType.post_wizard].messagesToDelete ??
+    []) {
+    try {
+      if (ctx.chat?.id) {
+        console.log('ssssssssssssssss', id);
+        await ctx.telegram.deleteMessage(ctx.chat.id, id);
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
   if (isBackButtonPressed(ctx)) {
-    return ctx.wizard.selectStep(ctx.wizard.cursor - 1);
+    ctx.wizard.back();
+    return IdeaContent(ctx);
   }
 
   await StyleContent(ctx);

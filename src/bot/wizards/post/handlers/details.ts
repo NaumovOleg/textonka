@@ -1,8 +1,8 @@
 import { BotContext } from '@util';
 import { isBackButtonPressed, processText } from '../helper';
-import { DetailsContent, ExtraContent } from './content.drawer';
+import { DetailsContent, EmotionContent, ExtraContent } from './content.drawer';
 
-export const writeDetails = async (ctx: BotContext) => {
+export const writeDetailsHandler = async (ctx: BotContext) => {
   const details = await processText(ctx, 'keyDetails');
 
   if (details) {
@@ -11,7 +11,8 @@ export const writeDetails = async (ctx: BotContext) => {
   }
 
   if (isBackButtonPressed(ctx)) {
-    return ctx.wizard.selectStep(ctx.wizard.cursor - 1);
+    ctx.wizard.back();
+    return EmotionContent(ctx);
   }
 
   return DetailsContent(ctx);

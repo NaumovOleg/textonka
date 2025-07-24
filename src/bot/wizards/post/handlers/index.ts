@@ -6,3 +6,4 @@ export * from './goal';
 export * from './idea';
 export * from './style';
 export * from './type';
+export * from './welcome';

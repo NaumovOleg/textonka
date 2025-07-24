@@ -1,6 +1,7 @@
 import { BotContext, PostWizardGeneralButtons, PostWizardName } from '@util';
 import { callbackQuery } from 'telegraf/filters';
-import { ExtraContent } from './content.drawer';
+import { isBackButtonPressed } from '../helper';
+import { DetailsContent, ExtraContent } from './content.drawer';
 
 export const handleExtraSelection = async (ctx: BotContext) => {
   let data;
@@ -10,6 +11,11 @@ export const handleExtraSelection = async (ctx: BotContext) => {
 
   if (ctx.updateType === 'message') {
     return;
+  }
+
+  if (isBackButtonPressed(ctx)) {
+    ctx.wizard.back();
+    return DetailsContent(ctx);
   }
 
   if (data === PostWizardGeneralButtons.submit_extra) {

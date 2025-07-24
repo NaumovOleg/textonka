@@ -19,7 +19,8 @@
       },
       "buttons": {
         "general": {
-          "previous_step": "<<<Назад"
+          "previous_step": "<<<Назад",
+          "finish": "Завершити"
         },
         "extra": {
           "emoji": "Emojis 😄",

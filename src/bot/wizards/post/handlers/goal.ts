@@ -1,6 +1,6 @@
 import { BotContext } from '@util';
 import { isBackButtonPressed, processButtons } from '../helper';
-import { GoalContent, IdeaContent } from './content.drawer';
+import { GoalContent, IdeaContent, TypeContent } from './content.drawer';
 
 export const selectGoalHandler = async (ctx: BotContext) => {
   console.log(
@@ -20,7 +20,8 @@ export const selectGoalHandler = async (ctx: BotContext) => {
   }
 
   if (isBackButtonPressed(ctx)) {
-    return;
+    ctx.wizard.back();
+    return TypeContent(ctx);
   }
 
   return GoalContent(ctx);
