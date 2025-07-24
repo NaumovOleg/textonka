@@ -7,16 +7,69 @@
 
   "wizards": {
     "post-wizard": {
+      "common": {
+        "step": "✅ Step ${step}/${max}"
+      },
+      "text": {
+        "language": "🌐 What language should the post be generated in?",
+        "welcome": "Hey there! 👋\nReady to create an awesome post? I’ll help you do it quickly and easily.\nLet’s go! 🚀",
+        "type": "📌 What do you want to write about? Choose the topic of your post.",
+        "goal": "🎯 What action do you expect from the reader after reading?",
+        "mainIdea": "💡 Great! Now briefly — what’s the post about? For example: “launching a course”, “new clothing collection”, “a useful hack for Stories”...",
+        "emotion": "🎭 What emotion or mood should your post create?",
+        "keyDetails": "📎 Add key details: product name, date, link, or anything important.",
+        "style": "🗣️ What tone do you prefer? Friendly, formal, humorous?",
+        "extra": "✨ What should I add to style the post? Pick extras like emojis, CTA, hashtags, or keep it clean.",
+        "finalStep": "✅ Done! Generating your post — just a few seconds..."
+      },
       "buttons": {
-        "post-wizard": {
-          "type": {
-            "post-wizard_type_personal": "🙋 Personal",
-            "post-wizard_type_productPromotion": "🛍️ Product Promotion",
-            "post-wizard_type_announcement": "📢 Announcement",
-            "post-wizard_type_opinion": "💬 Opinion",
-            "post-wizard_type_educational": "🎓 Educational",
-            "post-wizard_type_caption": "📸 Caption"
-          }
+        "general": {
+          "previous_step": "<<< Back",
+          "finish": "Finish"
+        },
+        "extra": {
+          "emoji": "Emojis 😄",
+          "hashtags": "Hashtags #️⃣",
+          "cta": "Call to action 🎯",
+          "clean": "No extras 🧽"
+        },
+        "type": {
+          "post-wizard_type_personal": "🙋 About me",
+          "post-wizard_type_productPromotion": "🛍️ Product promotion",
+          "post-wizard_type_announcement": "📢 Announcement / launch",
+          "post-wizard_type_opinion": "💬 Opinion / thoughts",
+          "post-wizard_type_educational": "🎓 Educational / tips",
+          "post-wizard_type_caption": "📸 Photo / video caption"
+        },
+        "goal": {
+          "post-wizard_goal_likeOrSave": "❤️ Like / Save",
+          "post-wizard_goal_leaveComment": "✍️ Leave a comment",
+          "post-wizard_goal_followLink": "🔗 Follow the link",
+          "post-wizard_goal_sendMessage": "📩 Send a message",
+          "post-wizard_goal_subscribe": "🚀 Subscribe",
+          "post-wizard_goal_justRead": "👀 Just read"
+        },
+        "style": {
+          "post-wizard_style_friendly": "🤝 Friendly",
+          "post-wizard_style_confident": "🎯 Confident / direct",
+          "post-wizard_style_heartfelt": "🫶 Heartfelt / sincere",
+          "post-wizard_style_analytical": "🧠 Smart / analytical",
+          "post-wizard_style_bold": "😏 Bold / edgy",
+          "post-wizard_style_humorous": "🤪 With humor"
+        },
+        "emotion": {
+          "post-wizard_emotion_emotional": "🥹 Emotional",
+          "post-wizard_emotion_inspirational": "😍 Inspirational",
+          "post-wizard_emotion_wowEffect": "🤯 Wow effect",
+          "post-wizard_emotion_thoughtful": "🤔 Thoughtful",
+          "post-wizard_emotion_provocative": "😠 Provocative",
+          "post-wizard_emotion_smile": "😅 With a smile"
+        },
+        "language": {
+          "post-wizard_language_uk": "🇺🇦 Ukrainian",
+          "post-wizard_language_ru": "🇷🇺 Russian",
+          "post-wizard_language_en": "🇬🇧 English",
+          "post-wizard_language_pl": "🇵🇱 Poland"
         }
       }
     }

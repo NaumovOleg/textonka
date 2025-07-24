@@ -3,6 +3,7 @@ import { Scenes } from 'telegraf';
 import {
   aiGenerationHandler,
   handleExtraSelection,
+  languageHandler,
   selectEmotionHandler,
   selectGoalHandler,
   selectStyleHandler,
@@ -16,6 +17,7 @@ export const PostWizard = new Scenes.WizardScene<BotContext>(
   WizardType.post_wizard,
 
   welcomeHandler,
+  languageHandler,
   selectTypeHandler,
   selectGoalHandler,
   writeIdeaHandler,

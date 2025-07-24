@@ -96,19 +96,22 @@ export async function processText<
   return inputText;
 }
 
-export const drawCurrentStep = async (ctx: BotContext) => {
-  if (!ctx.scene.session[WizardType.post_wizard].stepMessageId) {
-    const stepMessage = await ctx.reply('Step 0/10').catch();
-    ctx.scene.session[WizardType.post_wizard].stepMessageId =
-      stepMessage.message_id;
+export const drawCurrentStep = async (ctx: BotContext, max: number) => {
+  const text = ctx.i18n.t(`wizards.${PostWizardName}.common.step`, {
+    step: ctx.wizard.cursor,
+    max,
+  });
+  if (!ctx.scene.state.stepMessageId) {
+    const stepMessage = await ctx.reply(text).catch();
+    ctx.scene.state.stepMessageId = stepMessage.message_id;
     return stepMessage;
   } else {
     return ctx.telegram
       .editMessageText(
         ctx?.chat?.id,
-        ctx.scene.session[WizardType.post_wizard].stepMessageId,
+        ctx.scene.state.stepMessageId,
         undefined,
-        `Step ${ctx.wizard.cursor}/10`,
+        text,
       )
       .catch((e) => {
         if (!e.message.includes('message is not modified')) throw e;
@@ -151,7 +154,7 @@ export const editOrReplyMessage = async (
   return ctx.telegram
     .editMessageText(
       ctx.chat?.id,
-      ctx.scene.session[WizardType.post_wizard].rootMessageId,
+      ctx.scene.state.rootMessageId,
       undefined,
       text,
       options,

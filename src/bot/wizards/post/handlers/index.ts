@@ -4,6 +4,7 @@ export * from './emotion';
 export * from './extra';
 export * from './goal';
 export * from './idea';
+export * from './language';
 export * from './style';
 export * from './type';
 export * from './welcome';

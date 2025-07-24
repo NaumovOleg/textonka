@@ -1,4 +1,11 @@
 export const PostWizardName = 'post-wizard';
+export const POST_STEPS_COUNT = 10;
+export enum POST_LANGUAGES {
+  ru = 'ru',
+  en = 'en',
+  uk = 'uk',
+  pl = 'pl',
+}
 
 export enum PostWizardType {
   personal = 'personal',
@@ -52,8 +59,6 @@ export type PostWizardSession = Partial<{
   emotion: PostWizardEmotion;
   keyDetails?: string;
   extra: Partial<PostWizardEmoji>;
-  stepMessageId?: number;
-  rootMessageId: number;
 }>;
 
 export enum PostWizardGeneralButtons {
@@ -61,6 +66,11 @@ export enum PostWizardGeneralButtons {
   previous_step = `${PostWizardName}_prev`,
   finish_wizard = `${PostWizardName}_finish_wizard`,
 }
+
+export type PostSceneState = {
+  stepMessageId?: number;
+  rootMessageId: number;
+};
 
 export const PostWizardButtons = {
   type: {
@@ -117,5 +127,11 @@ export const PostWizardButtons = {
       PostWizardEmotion.provocative,
     [`${PostWizardName}_emotion_${PostWizardEmotion.smile}`]:
       PostWizardEmotion.smile,
+  },
+  language: {
+    [`${PostWizardName}_language_${POST_LANGUAGES.en}`]: POST_LANGUAGES.en,
+    [`${PostWizardName}_language_${POST_LANGUAGES.ru}`]: POST_LANGUAGES.ru,
+    [`${PostWizardName}_language_${POST_LANGUAGES.uk}`]: POST_LANGUAGES.uk,
+    [`${PostWizardName}_language_${POST_LANGUAGES.pl}`]: POST_LANGUAGES.pl,
   },
 };

@@ -1,5 +1,7 @@
 import type { Scenes } from 'telegraf';
-import { PostWizardName, PostWizardSession } from './wizards';
+import { PostSceneState, PostWizardName, PostWizardSession } from './wizards';
+
+export type SceneState = PostSceneState;
 
 export enum WizardType {
   post_wizard = PostWizardName,

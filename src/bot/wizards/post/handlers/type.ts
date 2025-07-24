@@ -1,6 +1,10 @@
 import { BotContext, WizardType } from '@util';
-import { clearMessageText, processButtons } from '../helper';
-import { GoalContent, TypeContent } from './content.drawer';
+import {
+  clearMessageText,
+  isBackButtonPressed,
+  processButtons,
+} from '../helper';
+import { GoalContent, LanguageContent, TypeContent } from './content.drawer';
 
 export const selectTypeHandler = async (ctx: BotContext) => {
   ctx.scene.session[WizardType.post_wizard] ??= {};
@@ -16,5 +20,11 @@ export const selectTypeHandler = async (ctx: BotContext) => {
   }
 
   await clearMessageText(ctx);
+
+  if (isBackButtonPressed(ctx)) {
+    ctx.wizard.back();
+    return LanguageContent(ctx);
+  }
+
   return TypeContent(ctx);
 };

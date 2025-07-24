@@ -1,5 +1,6 @@
 import {
   BotContext,
+  POST_STEPS_COUNT,
   PostWizardButtons,
   PostWizardEmoji,
   splitByChunks,
@@ -18,9 +19,24 @@ import {
 } from '../helper';
 
 export const WelcomeContent = async (ctx: BotContext) => {
-  console.log('WelcomeContent');
   await ctx.reply(ctx.i18n.t(`wizards.post-wizard.text.welcome`));
-  return await drawCurrentStep(ctx);
+  return await drawCurrentStep(ctx, POST_STEPS_COUNT);
+};
+
+export const LanguageContent = async (ctx: BotContext) => {
+  const typeButtons = Object.keys(PostWizardButtons.language).map((key) =>
+    Markup.button.callback(
+      ctx.i18n.t(getButtonsTranslatePrefix('language', key)),
+      key,
+    ),
+  );
+
+  await drawCurrentStep(ctx, POST_STEPS_COUNT);
+  return editOrReplyMessage(
+    ctx,
+    ctx.i18n.t(`wizards.post-wizard.text.language`),
+    Markup.inlineKeyboard(splitByChunks(typeButtons, 2)),
+  );
 };
 
 export const TypeContent = async (ctx: BotContext) => {
@@ -31,11 +47,13 @@ export const TypeContent = async (ctx: BotContext) => {
     ),
   );
 
-  await drawCurrentStep(ctx);
+  await drawCurrentStep(ctx, POST_STEPS_COUNT);
+  const buttons = splitByChunks(typeButtons, 2);
+  buttons.push(getNavigationButtons(ctx));
   return editOrReplyMessage(
     ctx,
     ctx.i18n.t(`wizards.post-wizard.text.type`),
-    Markup.inlineKeyboard(splitByChunks(typeButtons, 2)),
+    Markup.inlineKeyboard(buttons),
   );
 };
 export const GoalContent = async (ctx: BotContext) => {
@@ -46,7 +64,7 @@ export const GoalContent = async (ctx: BotContext) => {
     ),
   );
 
-  await drawCurrentStep(ctx);
+  await drawCurrentStep(ctx, POST_STEPS_COUNT);
   const buttons = splitByChunks(goalButtons, 2);
   buttons.push(getNavigationButtons(ctx));
 
@@ -65,7 +83,7 @@ export const StyleContent = async (ctx: BotContext) => {
     ),
   );
 
-  await drawCurrentStep(ctx);
+  await drawCurrentStep(ctx, POST_STEPS_COUNT);
   const buttons = splitByChunks(styleButtons, 2);
   buttons.push(getNavigationButtons(ctx));
   return editOrReplyMessage(
@@ -76,7 +94,7 @@ export const StyleContent = async (ctx: BotContext) => {
 };
 
 export const IdeaContent = async (ctx: BotContext) => {
-  await drawCurrentStep(ctx);
+  await drawCurrentStep(ctx, POST_STEPS_COUNT);
 
   return editOrReplyMessage(
     ctx,
@@ -92,7 +110,7 @@ export const EmotionContent = async (ctx: BotContext) => {
       key,
     ),
   );
-  await drawCurrentStep(ctx);
+  await drawCurrentStep(ctx, POST_STEPS_COUNT);
   const buttons = splitByChunks(emotionButtons, 2);
   buttons.push(getNavigationButtons(ctx));
   await editOrReplyMessage(
@@ -103,7 +121,7 @@ export const EmotionContent = async (ctx: BotContext) => {
 };
 
 export const DetailsContent = async (ctx: BotContext) => {
-  await drawCurrentStep(ctx);
+  await drawCurrentStep(ctx, POST_STEPS_COUNT);
   await editOrReplyMessage(
     ctx,
     ctx.i18n.t(`wizards.post-wizard.text.keyDetails`),
@@ -135,7 +153,7 @@ export const ExtraContent = async (ctx: BotContext) => {
     ...Markup.inlineKeyboard(buttons),
   };
 
-  await drawCurrentStep(ctx);
+  await drawCurrentStep(ctx, POST_STEPS_COUNT);
 
   return editOrReplyMessage(ctx, text, options);
 };
