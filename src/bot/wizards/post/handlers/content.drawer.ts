@@ -110,6 +110,7 @@ export const EmotionContent = async (ctx: BotContext) => {
       key,
     ),
   );
+
   await drawCurrentStep(ctx, POST_STEPS_COUNT);
   const buttons = splitByChunks(emotionButtons, 2);
   buttons.push(getNavigationButtons(ctx));
@@ -156,4 +157,10 @@ export const ExtraContent = async (ctx: BotContext) => {
   await drawCurrentStep(ctx, POST_STEPS_COUNT);
 
   return editOrReplyMessage(ctx, text, options);
+};
+
+export const AIContent = async (ctx: BotContext, text: string) => {
+  return editOrReplyMessage(ctx, text, {
+    parse_mode: 'HTML',
+  });
 };

@@ -29,7 +29,7 @@ export const buildChecklistText = (
     (key) => `${extra[key] ? '☑️' : '⬜️'} ${t(getCheckboxPrefix(key))}`,
   );
 
-  return `🧩 ${t(`wizards.${PostWizardName}.text.extra`)}\n\n${lines.join('\n')}`;
+  return `${t(`wizards.${PostWizardName}.text.extra`)}\n\n${lines.join('\n')}`;
 };
 
 export const buildChecklistButtons = (

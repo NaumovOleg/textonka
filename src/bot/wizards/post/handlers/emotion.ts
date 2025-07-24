@@ -15,6 +15,7 @@ export const selectEmotionHandler = async (ctx: BotContext) => {
     ctx.wizard.next();
     return DetailsContent(ctx);
   }
+
   await clearMessageText(ctx);
 
   if (isBackButtonPressed(ctx)) {

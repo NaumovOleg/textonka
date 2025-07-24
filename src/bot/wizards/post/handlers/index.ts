@@ -1,4 +1,3 @@
-export * from './ai';
 export * from './details';
 export * from './emotion';
 export * from './extra';

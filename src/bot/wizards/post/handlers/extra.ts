@@ -1,7 +1,11 @@
 import { BotContext, PostWizardGeneralButtons, PostWizardName } from '@util';
 import { callbackQuery } from 'telegraf/filters';
-import { clearMessageText, isBackButtonPressed } from '../helper';
-import { DetailsContent, ExtraContent } from './content.drawer';
+import {
+  clearMessageText,
+  editOrReplyMessage,
+  isBackButtonPressed,
+} from '../helper';
+import { AIContent, DetailsContent, ExtraContent } from './content.drawer';
 
 export const handleExtraSelection = async (ctx: BotContext) => {
   let data;
@@ -10,7 +14,6 @@ export const handleExtraSelection = async (ctx: BotContext) => {
   }
 
   await clearMessageText(ctx);
-
   if (ctx.updateType === 'message') {
     return;
   }
@@ -21,10 +24,16 @@ export const handleExtraSelection = async (ctx: BotContext) => {
   }
 
   if (data === PostWizardGeneralButtons.submit_extra) {
-    await ctx.reply(
-      ctx.i18n.t(`wizards.${PostWizardName}.text.submitted_extra`),
+    await editOrReplyMessage(
+      ctx,
+      ctx.i18n.t(`wizards.${PostWizardName}.text.finalStep`),
     );
-    return ctx.wizard.next();
+
+    const text =
+      'Tap the copy button to copy the below address.\n\n<pre><code>The Address To Be Copied</code></pre>';
+
+    await AIContent(ctx, text);
+    return ctx.scene.leave();
   }
 
   return ExtraContent(ctx);

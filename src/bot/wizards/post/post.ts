@@ -1,7 +1,6 @@
 import { BotContext, WizardType } from '@util';
 import { Scenes } from 'telegraf';
 import {
-  aiGenerationHandler,
   handleExtraSelection,
   languageHandler,
   selectEmotionHandler,
@@ -25,5 +24,4 @@ export const PostWizard = new Scenes.WizardScene<BotContext>(
   selectEmotionHandler,
   writeDetailsHandler,
   handleExtraSelection,
-  aiGenerationHandler,
 );
