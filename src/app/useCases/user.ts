@@ -10,9 +10,9 @@ export class CreateUserUseCase {
 }
 
 export class FindUserUseCase {
-  constructor(private userRepo: UserService) {}
+  constructor(private userService: UserService) {}
 
   async execute(searchData: Partial<User>) {
-    return await this.userRepo.findOne(searchData);
+    return await this.userService.findOne(searchData);
   }
 }

@@ -1,16 +1,8 @@
-import { User } from '@entities';
 import { createUserUC, findUserUC } from '@shared/useCases';
-import { MiddlewareFn, type Context } from 'telegraf';
+import { BotContext } from '@util';
+import { MiddlewareFn } from 'telegraf';
 
-interface CustomState {
-  user?: User;
-}
-
-export interface MyContext extends Context {
-  state: CustomState;
-}
-
-export const userMiddleware: MiddlewareFn<MyContext> = async (ctx, next) => {
+export const userMiddleware: MiddlewareFn<BotContext> = async (ctx, next) => {
   if (!ctx.from) return next();
 
   let user = await findUserUC.execute({ telegram_id: ctx.from.id });

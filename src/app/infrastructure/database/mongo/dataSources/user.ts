@@ -1,7 +1,7 @@
-import { UserT } from '@util';
+import { User } from '@util';
 import { IUserDataSource } from '../../../interfaces';
 import { BaseDataSource } from './base';
 
 export class UserDatasource
-  extends BaseDataSource<UserT>
-  implements IUserDataSource<UserT> {}
+  extends BaseDataSource<User>
+  implements IUserDataSource<User> {}

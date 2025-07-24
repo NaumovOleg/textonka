@@ -1,4 +1,4 @@
-import { UserT } from '@util';
+import { User as UserT } from '@util';
 
 export class User {
   telegram_id: number;

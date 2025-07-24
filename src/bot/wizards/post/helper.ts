@@ -46,7 +46,10 @@ export const buildChecklistButtons = (
   const buttons = splitByChunks(buttonsList, 2);
 
   buttons.push([
-    Markup.button.callback('✔️ Submit', PostWizardGeneralButtons.submit_extra),
+    Markup.button.callback(
+      t(`wizards.${PostWizardName}.buttons.general.submit`),
+      PostWizardGeneralButtons.submit_extra,
+    ),
   ]);
   return buttons;
 };
@@ -64,8 +67,6 @@ export async function processButtons<
   if (!ctx.has(callbackQuery('data'))) {
     return null;
   }
-
-  await ctx.answerCbQuery();
 
   const selectedKey = ctx.callbackQuery
     ?.data as keyof (typeof PostWizardButtons)[K];

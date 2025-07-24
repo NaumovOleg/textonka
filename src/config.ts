@@ -8,6 +8,9 @@ class Config {
   DATABASE_PASSWORD = process.env.DATABASE_PASSWORD ?? '';
   DATABASE_URL = process.env.DATABASE_URL ?? '';
   DATABASE_NAME = `textonica_${process.env.NODE_ENV}`;
+  POST_WIZARD_FREE_GENERATIONS = parseInt(
+    process.env.POST_WIZARD_FREE_GENERATIONS ?? '5',
+  );
 }
 
 export default new Config();

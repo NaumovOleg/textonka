@@ -1,4 +1,4 @@
-export type UserT = {
+export type User = {
   telegram_id: number;
   is_bot: boolean;
   first_name: string;

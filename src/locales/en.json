@@ -25,7 +25,8 @@
       "buttons": {
         "general": {
           "previous_step": "<<< Back",
-          "finish": "Finish"
+          "finish": "Finish",
+          "submit": "✔️ Submit"
         },
         "extra": {
           "emoji": "Emojis 😄",

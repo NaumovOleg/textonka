@@ -25,7 +25,8 @@
       "buttons": {
         "general": {
           "previous_step": "<<< Назад",
-          "finish": "Завершить"
+          "finish": "Завершить",
+          "submit": "✔️ Подтвердить"
         },
         "extra": {
           "emoji": "Эмодзи 😄",

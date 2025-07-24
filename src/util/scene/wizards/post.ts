@@ -1,5 +1,5 @@
 export const PostWizardName = 'post-wizard';
-export const POST_STEPS_COUNT = 10;
+export const POST_STEPS_COUNT = 8;
 export enum POST_LANGUAGES {
   ru = 'ru',
   en = 'en',
