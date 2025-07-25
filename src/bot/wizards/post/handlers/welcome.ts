@@ -1,9 +1,14 @@
 import { findSubscriptionUC } from '@shared/useCases';
 import { BotContext, PostWizardName, WizardType } from '@util';
 import { Message } from 'telegraf/types';
-import { LanguageContent, WelcomeContent } from './content.drawer';
+import { isFinishButtonPressed } from '../helper';
+import { ByeContent, LanguageContent, WelcomeContent } from './content.drawer';
 
 export const welcomeHandler = async (ctx: BotContext) => {
+  if (isFinishButtonPressed(ctx)) {
+    await ByeContent(ctx);
+    return ctx.scene.leave();
+  }
   ctx.scene.session[WizardType.post_wizard] ??= {};
 
   const subscription = await findSubscriptionUC.execute({

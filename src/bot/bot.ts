@@ -12,20 +12,17 @@ import { stage } from './wizards';
 
 export class Textonka extends Telegraf<BotContext> {
   init() {
-    this.use(session({ store: typeormSession() }));
     this.use(locales.middleware());
+    this.use(session({ store: typeormSession() }));
     this.use(userMiddleware);
     this.use(subscriptionMiddleware);
     this.use(stage.middleware());
     this.use(RootRouter);
 
-    this.start((ctx) =>
-      ctx.reply('Привіт! Я Telegram бот через AWS Lambda Webhook!'),
-    );
     this.telegram.setMyCommands([
-      { command: 'start', description: 'Почати' },
-      { command: 'menu', description: 'Меню' },
-      { command: 'help', description: 'Допомога' },
+      { command: 'start', description: 'Start' },
+      { command: 'samples', description: 'Samples' },
+      { command: 'help', description: 'Help' },
     ]);
 
     if (Config.LAUNCH_STATE === 'local') {

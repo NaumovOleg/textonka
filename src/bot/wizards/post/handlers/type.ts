@@ -1,14 +1,22 @@
-import { BotContext, WizardType } from '@util';
+import { BotContext } from '@util';
 import {
   clearMessageText,
   isBackButtonPressed,
+  isFinishButtonPressed,
   processButtons,
 } from '../helper';
-import { GoalContent, LanguageContent, TypeContent } from './content.drawer';
+import {
+  ByeContent,
+  GoalContent,
+  LanguageContent,
+  TypeContent,
+} from './content.drawer';
 
 export const selectTypeHandler = async (ctx: BotContext) => {
-  ctx.scene.session[WizardType.post_wizard] ??= {};
-
+  if (isFinishButtonPressed(ctx)) {
+    await ByeContent(ctx);
+    return ctx.scene.leave();
+  }
   const type = await processButtons(ctx, {
     sessionKey: 'type',
     buttonGroup: 'type',

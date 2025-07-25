@@ -3,6 +3,8 @@ import {
   POST_STEPS_COUNT,
   PostWizardButtons,
   PostWizardEmoji,
+  PostWizardGeneralButtons,
+  PostWizardName,
   splitByChunks,
   WizardType,
 } from '@util';
@@ -24,7 +26,7 @@ export const WelcomeContent = async (ctx: BotContext) => {
 };
 
 export const LanguageContent = async (ctx: BotContext) => {
-  const typeButtons = Object.keys(PostWizardButtons.language).map((key) =>
+  const languageButtons = Object.keys(PostWizardButtons.language).map((key) =>
     Markup.button.callback(
       ctx.i18n.t(getButtonsTranslatePrefix('language', key)),
       key,
@@ -32,10 +34,18 @@ export const LanguageContent = async (ctx: BotContext) => {
   );
 
   await drawCurrentStep(ctx, POST_STEPS_COUNT);
+  await drawCurrentStep(ctx, POST_STEPS_COUNT);
+  const buttons = splitByChunks(languageButtons, 2);
+  buttons.push([
+    Markup.button.callback(
+      ctx.i18n.t(`wizards.${PostWizardName}.buttons.general.finish`),
+      PostWizardGeneralButtons.finish_wizard,
+    ),
+  ]);
   return editOrReplyMessage(
     ctx,
     ctx.i18n.t(`wizards.post-wizard.text.language`),
-    Markup.inlineKeyboard(splitByChunks(typeButtons, 2)),
+    Markup.inlineKeyboard(buttons),
   );
 };
 
@@ -163,4 +173,9 @@ export const AIContent = async (ctx: BotContext, text: string) => {
   return editOrReplyMessage(ctx, text, {
     parse_mode: 'HTML',
   });
+};
+
+export const ByeContent = (ctx: BotContext) => {
+  const text = `<b>${ctx.i18n.t(`wizards.${PostWizardName}.common.bye`)}</b>`;
+  return editOrReplyMessage(ctx, text, { parse_mode: 'HTML' });
 };

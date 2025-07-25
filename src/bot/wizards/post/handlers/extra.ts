@@ -6,13 +6,24 @@ import {
   clearMessageText,
   editOrReplyMessage,
   isBackButtonPressed,
+  isFinishButtonPressed,
 } from '../helper';
-import { AIContent, DetailsContent, ExtraContent } from './content.drawer';
+import {
+  AIContent,
+  ByeContent,
+  DetailsContent,
+  ExtraContent,
+} from './content.drawer';
 
 export const handleExtraSelection = async (ctx: BotContext) => {
   let data;
   if (ctx.has(callbackQuery('data'))) {
     data = ctx.callbackQuery.data as string;
+  }
+
+  if (isFinishButtonPressed(ctx)) {
+    await ByeContent(ctx);
+    return ctx.scene.leave();
   }
 
   await clearMessageText(ctx);

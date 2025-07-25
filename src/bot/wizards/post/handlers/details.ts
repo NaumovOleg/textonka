@@ -1,8 +1,22 @@
 import { BotContext } from '@util';
-import { clearMessageText, isBackButtonPressed, processText } from '../helper';
-import { DetailsContent, EmotionContent, ExtraContent } from './content.drawer';
+import {
+  clearMessageText,
+  isBackButtonPressed,
+  isFinishButtonPressed,
+  processText,
+} from '../helper';
+import {
+  ByeContent,
+  DetailsContent,
+  EmotionContent,
+  ExtraContent,
+} from './content.drawer';
 
 export const writeDetailsHandler = async (ctx: BotContext) => {
+  if (isFinishButtonPressed(ctx)) {
+    await ByeContent(ctx);
+    return ctx.scene.leave();
+  }
   const details = await processText(ctx, 'keyDetails');
 
   if (details) {

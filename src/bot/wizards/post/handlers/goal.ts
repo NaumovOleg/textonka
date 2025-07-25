@@ -2,11 +2,21 @@ import { BotContext } from '@util';
 import {
   clearMessageText,
   isBackButtonPressed,
+  isFinishButtonPressed,
   processButtons,
 } from '../helper';
-import { GoalContent, IdeaContent, TypeContent } from './content.drawer';
+import {
+  ByeContent,
+  GoalContent,
+  IdeaContent,
+  TypeContent,
+} from './content.drawer';
 
 export const selectGoalHandler = async (ctx: BotContext) => {
+  if (isFinishButtonPressed(ctx)) {
+    await ByeContent(ctx);
+    return ctx.scene.leave();
+  }
   const goal = await processButtons(ctx, {
     sessionKey: 'goal',
     buttonGroup: 'goal',

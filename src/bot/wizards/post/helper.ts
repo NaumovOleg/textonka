@@ -127,6 +127,13 @@ export function isBackButtonPressed(ctx: BotContext) {
   return false;
 }
 
+export function isFinishButtonPressed(ctx: BotContext) {
+  if (ctx.has(callbackQuery('data'))) {
+    return PostWizardGeneralButtons.finish_wizard === ctx.callbackQuery?.data;
+  }
+  return false;
+}
+
 export async function renderChecklist(ctx: BotContext) {
   await processText(ctx, 'keyDetails');
 

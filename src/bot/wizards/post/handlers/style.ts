@@ -2,11 +2,21 @@ import { BotContext } from '@util';
 import {
   clearMessageText,
   isBackButtonPressed,
+  isFinishButtonPressed,
   processButtons,
 } from '../helper';
-import { EmotionContent, IdeaContent, StyleContent } from './content.drawer';
+import {
+  ByeContent,
+  EmotionContent,
+  IdeaContent,
+  StyleContent,
+} from './content.drawer';
 
 export const selectStyleHandler = async (ctx: BotContext) => {
+  if (isFinishButtonPressed(ctx)) {
+    await ByeContent(ctx);
+    return ctx.scene.leave();
+  }
   const style = await processButtons(ctx, {
     buttonGroup: 'style',
     sessionKey: 'style',

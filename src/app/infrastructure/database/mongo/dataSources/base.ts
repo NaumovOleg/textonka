@@ -14,6 +14,9 @@ export class BaseDataSource<T extends ObjectLiteral, E extends ObjectLiteral>
   }
 
   async findOne(searchData: Partial<T>): Promise<T | null> {
+    if (searchData.id) {
+      Object.assign(searchData, { _id: searchData.id });
+    }
     const response = await this.repo.findOne({
       where: deepParseObjectId(searchData),
     });
@@ -21,9 +24,7 @@ export class BaseDataSource<T extends ObjectLiteral, E extends ObjectLiteral>
   }
 
   async create(data: T): Promise<T> {
-    const newData = new this.entity(data);
-    const entity = this.repo.create(newData);
-    const resp = await this.repo.save(entity);
+    const resp = await this.repo.save(new this.entity(data));
 
     return resp.toJson();
   }

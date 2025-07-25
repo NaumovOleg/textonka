@@ -2,11 +2,21 @@ import { BotContext } from '@util';
 import {
   clearMessageText,
   isBackButtonPressed,
+  isFinishButtonPressed,
   processButtons,
 } from '../helper';
-import { DetailsContent, EmotionContent, StyleContent } from './content.drawer';
+import {
+  ByeContent,
+  DetailsContent,
+  EmotionContent,
+  StyleContent,
+} from './content.drawer';
 
 export const selectEmotionHandler = async (ctx: BotContext) => {
+  if (isFinishButtonPressed(ctx)) {
+    await ByeContent(ctx);
+    return ctx.scene.leave();
+  }
   const emotion = await processButtons(ctx, {
     buttonGroup: 'emotion',
     sessionKey: 'emotion',
