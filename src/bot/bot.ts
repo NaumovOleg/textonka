@@ -1,12 +1,7 @@
 import Config from '@conf';
 import { BotContext } from '@util';
 import { Telegraf, session } from 'telegraf';
-import {
-  locales,
-  subscriptionMiddleware,
-  typeormSession,
-  userMiddleware,
-} from './middlewares';
+import { locales, typeormSession, userMiddleware } from './middlewares';
 import RootRouter from './roots';
 import { stage } from './wizards';
 
@@ -15,7 +10,6 @@ export class Textonka extends Telegraf<BotContext> {
     this.use(session({ store: typeormSession() }));
     this.use(locales.middleware());
     this.use(userMiddleware);
-    this.use(subscriptionMiddleware);
     this.use(stage.middleware());
     this.use(RootRouter);
 

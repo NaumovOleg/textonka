@@ -1,3 +1,4 @@
+import { findSubscriptionUC } from '@shared/useCases';
 import { BotContext, PostWizardGeneralButtons, PostWizardName } from '@util';
 import { callbackQuery } from 'telegraf/filters';
 import {
@@ -21,6 +22,17 @@ export const handleExtraSelection = async (ctx: BotContext) => {
   if (isBackButtonPressed(ctx)) {
     ctx.wizard.back();
     return DetailsContent(ctx);
+  }
+
+  const subscription = await findSubscriptionUC.execute({
+    user: ctx.state.user.id,
+  });
+
+  if (!subscription || subscription.availableGenerations?.postWizard < 1) {
+    await ctx.reply(
+      ctx.i18n.t(`wizards.${PostWizardName}.text.subscription_expired`),
+    );
+    return ctx.scene.leave();
   }
 
   if (data === PostWizardGeneralButtons.submit_extra) {

@@ -1,18 +1,21 @@
-import { IUserDataSource } from '../interfaces';
+import { IBaseDataSource } from '../interfaces';
 
-export class BaseRepository<T> {
-  constructor(
-    private entity: { new (...args: T[]): T },
-    private userDataSource: IUserDataSource<T>,
-  ) {}
+export class BaseRepository<T, D extends IBaseDataSource<T>> {
+  protected entity: { new (...args: T[]): T };
+  protected dataSource: D;
+
+  constructor(entity: { new (...args: T[]): T }, dataSource: D) {
+    this.entity = entity;
+    this.dataSource = dataSource;
+  }
 
   async create(user: Omit<T, 'id'>) {
-    const response = await this.userDataSource.create(user);
+    const response = await this.dataSource.create(user);
     return response && new this.entity(response);
   }
 
   async findOne(searchData: Partial<T>) {
-    const response = await this.userDataSource.findOne(searchData);
+    const response = await this.dataSource.findOne(searchData);
     return response && new this.entity(response);
   }
 }

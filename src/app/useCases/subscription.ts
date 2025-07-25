@@ -5,10 +5,13 @@ import { SubscriptionService } from '@services';
 export class CreateSubscriptionUseCase {
   constructor(private subscriptionService: SubscriptionService) {}
 
-  async execute(data: Omit<Subscription, 'id' | 'availableGenerations'>) {
+  async execute(
+    data: Omit<Subscription, 'id' | 'availableGenerations' | 'usedGenerations'>,
+  ) {
     return await this.subscriptionService.create({
       ...data,
       availableGenerations: { postWizard: Config.POST_WIZARD_FREE_GENERATIONS },
+      usedGenerations: { postWizard: 0 },
     });
   }
 }

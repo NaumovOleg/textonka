@@ -1,7 +1,10 @@
 import { DataSource, type MongoRepository, type ObjectLiteral } from 'typeorm';
+import { IBaseDataSource } from '../../../interfaces';
 
-export class BaseDataSource<T extends ObjectLiteral> {
-  private readonly repo: MongoRepository<T>;
+export class BaseDataSource<T extends ObjectLiteral>
+  implements IBaseDataSource<T>
+{
+  readonly repo: MongoRepository<T>;
 
   constructor(datasource: DataSource, entity: { new (): T }) {
     this.repo = datasource.getMongoRepository(entity);

@@ -9,6 +9,11 @@ class AvailableGenerations {
   @Column('number', { default: Config.POST_WIZARD_FREE_GENERATIONS })
   postWizard: number;
 }
+class UsedGenerations {
+  @IsNumber()
+  @Column('number', { default: 0 })
+  postWizard: number;
+}
 
 @Entity('subscription')
 export class SubscriptionEntity extends BaseEntity {
@@ -20,4 +25,8 @@ export class SubscriptionEntity extends BaseEntity {
   @ValidateNested({ each: true })
   @Type(() => AvailableGenerations)
   availableGenerations: AvailableGenerations;
+  @Column(() => UsedGenerations, { array: false })
+  @ValidateNested({ each: true })
+  @Type(() => UsedGenerations)
+  usedGenerations: UsedGenerations;
 }
