@@ -14,7 +14,7 @@ export class BaseRepository<T, D extends IBaseDataSource<T>> {
     return response && new this.entity(response);
   }
 
-  async findOne(searchData: Partial<T>) {
+  async findOne(searchData: Partial<T & { _id?: string }>) {
     const response = await this.dataSource.findOne(searchData);
     return response && new this.entity(response);
   }

@@ -1,3 +1,4 @@
+import { subscriptionService } from '@shared/services';
 import { findSubscriptionUC } from '@shared/useCases';
 import { BotContext, PostWizardGeneralButtons, PostWizardName } from '@util';
 import { callbackQuery } from 'telegraf/filters';
@@ -45,6 +46,7 @@ export const handleExtraSelection = async (ctx: BotContext) => {
       'Tap the copy button to copy the below address.\n\n<pre><code>The Address To Be Copied</code></pre>';
 
     await AIContent(ctx, text);
+    await subscriptionService.decreaseGenerationCount(ctx.state.user.id);
     return ctx.scene.leave();
   }
 

@@ -10,7 +10,7 @@ export const welcomeHandler = async (ctx: BotContext) => {
     user: ctx.state.user.id,
   });
 
-  if (!subscription || subscription.availableGenerations?.postWizard > 1) {
+  if (!subscription || subscription.availableGenerations?.postWizard < 1) {
     await ctx.reply(
       ctx.i18n.t(`wizards.${PostWizardName}.text.subscription_expired`),
     );

@@ -1,6 +1,7 @@
 import Config from '@conf';
 import { Type } from 'class-transformer';
 import { IsNumber, IsString, ValidateNested } from 'class-validator';
+import { ObjectId } from 'mongodb';
 import { Column, Entity, Index } from 'typeorm';
 import { BaseEntity } from './base';
 
@@ -20,7 +21,7 @@ export class SubscriptionEntity extends BaseEntity {
   @Column('text')
   @IsString()
   @Index('user')
-  user: string;
+  user: ObjectId;
   @Column(() => AvailableGenerations, { array: false })
   @ValidateNested({ each: true })
   @Type(() => AvailableGenerations)
@@ -29,4 +30,11 @@ export class SubscriptionEntity extends BaseEntity {
   @ValidateNested({ each: true })
   @Type(() => UsedGenerations)
   usedGenerations: UsedGenerations;
+
+  constructor(data?: Partial<SubscriptionEntity>) {
+    super(data);
+    if (data?.user) {
+      this.user = new ObjectId(data.user);
+    }
+  }
 }
