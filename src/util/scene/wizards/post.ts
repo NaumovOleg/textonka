@@ -50,7 +50,7 @@ export type PostWizardEmoji = {
 };
 
 export type PostWizardSession = Partial<{
-  language: string;
+  language: 'uk' | 'ru' | 'pl' | 'en';
   attachmentUrl: string;
   type: PostWizardType;
   mainIdea: string;

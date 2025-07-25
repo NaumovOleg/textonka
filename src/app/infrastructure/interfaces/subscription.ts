@@ -4,9 +4,15 @@ import { IBaseDataSource } from './base.dataSource';
 import { IBaseRepository } from './base.repository';
 
 export interface ISubscriptionDataSource<T> extends IBaseDataSource<T> {
-  decreaseGenerationCount(user: string): Promise<UpdateResult | Document>;
+  decreaseLeftPostWizardGenerations(
+    user: string,
+  ): Promise<UpdateResult | Document>;
+  increasePostWizardGenerations(user: string): Promise<UpdateResult | Document>;
 }
 
 export interface ISubscriptionRepository extends IBaseRepository<Subscription> {
-  decreaseGenerationCount(user: string): Promise<Document | UpdateResult>;
+  decreaseLeftPostWizardGenerations(
+    user: string,
+  ): Promise<Document | UpdateResult>;
+  increasePostWizardGenerations(user: string): Promise<Document | UpdateResult>;
 }

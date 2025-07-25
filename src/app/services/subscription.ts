@@ -6,7 +6,11 @@ export class SubscriptionService extends BaseService<
   Subscription,
   ISubscriptionRepository
 > {
-  decreaseGenerationCount(user: string) {
-    return this.repository.decreaseGenerationCount(user);
+  decreaseLeftPostWizardGenerations(user: string) {
+    return this.repository.decreaseLeftPostWizardGenerations(user);
+  }
+
+  increasePostWizardGenerations(user: string) {
+    return this.repository.increasePostWizardGenerations(user);
   }
 }

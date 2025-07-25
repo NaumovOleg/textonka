@@ -8,10 +8,6 @@
     "buttons": {
       "samples": "Samples before/after"
     },
-    "titles": {
-      "before": "befeore",
-      "after": "after"
-    },
     "samples": {
       "sample_1": "<b>Before</b>:\n Hi, I have a new line of T-shirts. You can order via Direct.\n\n<b>After</b>:\n 👕 Meet our new T-shirt collection — style that speaks for you.\n🔥 Ultra-soft cotton, trendy fits, and a perfect shape.\n💬 DM us to pick your size — fast delivery!",
       "sample_2": "<b>Before</b>:\n Today I thought I should rest more often. It's important.\n\n<b>After</b>:\n 🧘‍♀️ Caught myself thinking — we forget ourselves in the rush of tasks.\nRest isn’t weakness, it’s a necessity.\n📌 Take a break. Recharge. Be with yourself for a moment.",
@@ -25,6 +21,7 @@
         "bye": "👋 Bye-bye!"
       },
       "text": {
+        "generating": "Generating ...",
         "subscription_expired": "❗️Your subscription has ended\n\nTo keep using the post generator, please renew your subscription. \n\n 🔓 Unlock the full power of the neural network:\n— Generate as many posts as you need\n— Use enhanced style and tone options\n— Get support and updates first\n\n📈 Make your content brighter, faster, and more effective — with a subscription!",
         "language": "🌐 What language should the post be generated in?",
         "welcome": "Hey there! 👋\nReady to create an awesome post? I’ll help you do it quickly and easily.\nLet’s go! 🚀",

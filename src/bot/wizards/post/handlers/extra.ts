@@ -1,6 +1,11 @@
-import { subscriptionService } from '@shared/services';
+import { aiService, subscriptionService } from '@shared/services';
 import { findSubscriptionUC } from '@shared/useCases';
-import { BotContext, PostWizardGeneralButtons, PostWizardName } from '@util';
+import {
+  BotContext,
+  PostWizardGeneralButtons,
+  PostWizardName,
+  WizardType,
+} from '@util';
 import { callbackQuery } from 'telegraf/filters';
 import {
   clearMessageText,
@@ -53,11 +58,24 @@ export const handleExtraSelection = async (ctx: BotContext) => {
       ctx.i18n.t(`wizards.${PostWizardName}.text.finalStep`),
     );
 
-    const text =
-      'Tap the copy button to copy the below address.\n\n<pre><code>The Address To Be Copied</code></pre>';
+    const prompt = await aiService.generatePostWizardText(
+      ctx.scene.session[WizardType.post_wizard],
+    );
 
-    await AIContent(ctx, text);
-    await subscriptionService.decreaseGenerationCount(ctx.state.user.id);
+    await editOrReplyMessage(
+      ctx,
+      ctx.i18n.t(`wizards.${PostWizardName}.text.generating`),
+      {
+        parse_mode: 'HTML',
+      },
+    );
+
+    await AIContent(ctx, prompt);
+    await Promise.all([
+      subscriptionService.decreaseLeftPostWizardGenerations(ctx.state.user.id),
+      subscriptionService.increasePostWizardGenerations(ctx.state.user.id),
+    ]);
+
     return ctx.scene.leave();
   }
 
