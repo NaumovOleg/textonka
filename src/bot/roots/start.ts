@@ -4,10 +4,7 @@ import { Composer } from 'telegraf';
 export const startRoute = new Composer<BotContext>();
 
 startRoute.command('start', async (ctx) => {
-  const sample1 = ctx.i18n.t('before_after.samples.sample_1');
-  const sample2 = ctx.i18n.t('before_after.samples.sample_2');
-  const sample3 = ctx.i18n.t('before_after.samples.sample_2');
-  return ctx.reply([sample1, sample2, sample3].join('\n\n\n\n'), {
+  return ctx.reply(ctx.i18n.t('welcome_message'), {
     parse_mode: 'HTML',
   });
 });

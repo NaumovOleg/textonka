@@ -60,7 +60,7 @@ export default defineConfig([
       ],
       'no-unused-vars': 'off',
     },
-    ignores: ['node_modules', 'dist'],
+    ignores: ['node_modules', 'dist', 'lambdas'],
     languageOptions: { globals: globals.node },
   },
 ]);

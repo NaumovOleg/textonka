@@ -5,3 +5,4 @@ coverage
 *.min.js
 public/
 .git
+lambdas
