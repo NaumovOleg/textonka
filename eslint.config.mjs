@@ -60,7 +60,7 @@ export default defineConfig([
       ],
       'no-unused-vars': 'off',
     },
-    ignores: ['node_modules', 'dist', 'lambdas'],
+    ignores: ['node_modules', 'dist', 'lambdas', '.cdk.staging', 'cdk.out'],
     languageOptions: { globals: globals.node },
   },
 ]);

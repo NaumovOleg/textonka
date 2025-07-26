@@ -6,3 +6,5 @@ coverage
 public/
 .git
 lambdas
+.cdk.staging
+cdk.out
