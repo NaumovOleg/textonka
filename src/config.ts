@@ -12,6 +12,7 @@ class Config {
     process.env.POST_WIZARD_FREE_GENERATIONS ?? '5',
   );
   AI_API_KEY = process.env.AI_API_KEY ?? '';
+  AI_MODEL = process.env.AI_MODEL ?? '';
 }
 
 export default new Config();

@@ -8,7 +8,7 @@ import {
 import {
   ByeContent,
   EmotionContent,
-  IdeaContent,
+  GoalContent,
   StyleContent,
 } from './content.drawer';
 
@@ -31,7 +31,7 @@ export const selectStyleHandler = async (ctx: BotContext) => {
 
   if (isBackButtonPressed(ctx)) {
     ctx.wizard.back();
-    return IdeaContent(ctx);
+    return GoalContent(ctx);
   }
 
   await StyleContent(ctx);

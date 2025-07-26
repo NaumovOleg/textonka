@@ -7,8 +7,8 @@ import {
 } from '../helper';
 import {
   ByeContent,
-  DetailsContent,
   EmotionContent,
+  ExtraContent,
   StyleContent,
 } from './content.drawer';
 
@@ -23,7 +23,7 @@ export const selectEmotionHandler = async (ctx: BotContext) => {
   });
   if (emotion) {
     ctx.wizard.next();
-    return DetailsContent(ctx);
+    return ExtraContent(ctx);
   }
 
   await clearMessageText(ctx);

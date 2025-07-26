@@ -7,9 +7,9 @@ import {
 } from '../helper';
 import {
   ByeContent,
+  DetailsContent,
   GoalContent,
-  IdeaContent,
-  TypeContent,
+  StyleContent,
 } from './content.drawer';
 
 export const selectGoalHandler = async (ctx: BotContext) => {
@@ -24,14 +24,14 @@ export const selectGoalHandler = async (ctx: BotContext) => {
 
   if (goal) {
     ctx.wizard.next();
-    return IdeaContent(ctx);
+    return StyleContent(ctx);
   }
 
   await clearMessageText(ctx);
 
   if (isBackButtonPressed(ctx)) {
     ctx.wizard.back();
-    return TypeContent(ctx);
+    return DetailsContent(ctx);
   }
 
   return GoalContent(ctx);

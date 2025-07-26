@@ -7,7 +7,7 @@ import {
 } from '../helper';
 import {
   ByeContent,
-  GoalContent,
+  IdeaContent,
   LanguageContent,
   TypeContent,
 } from './content.drawer';
@@ -24,7 +24,7 @@ export const selectTypeHandler = async (ctx: BotContext) => {
 
   if (type) {
     ctx.wizard.next();
-    return GoalContent(ctx);
+    return IdeaContent(ctx);
   }
 
   await clearMessageText(ctx);

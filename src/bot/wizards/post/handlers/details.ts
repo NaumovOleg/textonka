@@ -8,8 +8,8 @@ import {
 import {
   ByeContent,
   DetailsContent,
-  EmotionContent,
-  ExtraContent,
+  GoalContent,
+  IdeaContent,
 } from './content.drawer';
 
 export const writeDetailsHandler = async (ctx: BotContext) => {
@@ -22,12 +22,12 @@ export const writeDetailsHandler = async (ctx: BotContext) => {
   if (details) {
     await clearMessageText(ctx);
     ctx.wizard.next();
-    return ExtraContent(ctx);
+    return GoalContent(ctx);
   }
 
   if (isBackButtonPressed(ctx)) {
     ctx.wizard.back();
-    return EmotionContent(ctx);
+    return IdeaContent(ctx);
   }
 
   return DetailsContent(ctx);

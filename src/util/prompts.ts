@@ -1,5 +1,6 @@
 /* eslint-disable max-len */
 import { PostWizardEmoji, PostWizardSession } from './scene';
+import { Prompt } from './type';
 
 export type PostWizardPrompt = {
   extra: PostWizardEmoji;
@@ -59,86 +60,52 @@ const mapData = (input: PostWizardSession) => ({
   extra: input.extra,
 });
 
-export const generatePostWizardPrompt = (input: PostWizardSession): string => {
-  const { extra, language, type, mainIdea, goal, style, emotion, keyDetails } =
-    mapData(input);
-  const promptHeader =
-    'You are an experienced copywriter who creates viral and engaging **social media captions** for user posts.Generate a **caption** (post text) for a social media post based on the following user-provided data:';
+const postWizardSystemPrompt = `You are a social media assistant that generates clear, expressive, and publish-ready social media post text.
+The user will send you input in **structured JSON format**, like this:
+  {
+    language: string,
+    type: string,                // Post type: e.g. "announcement", "productPromo", etc.
+    mainIdea: string,            // The main message to communicate in the post
+    goal: string,                // Purpose of the post: "engagement", "sales", "education", etc.
+    style: string,               // Writing tone: "friendly", "inspirational", "professional", etc.
+    emotion: string,            // Intended emotional impact: "surprise", "joy", "trust", etc.
+    keyDetails?: string,        // Important facts or context to include
+    extra: {
+      emoji?: boolean,          // Whether to include emojis
+      hashtags?: boolean,       // Whether to include hashtags
+      cta?: boolean,            // Whether to include a call-to-action
+    }
+  }
 
-  const formattingReferences = [
-    `- Use emojis: ${extra?.emoji ? 'yes' : 'no'}`,
-    `- Add hashtags: ${extra?.hashtags ? 'yes' : 'no'}`,
-    `- Include a call to action (CTA): ${extra?.cta ? 'yes' : 'no'}`,
+###Your job is to:
+  - Generate **only one** version of the post, **in the language specified in the "language" field**. Do not generate translations or duplicates.
+
+### Important rules:
+  - If the user input is in another language (e.g. Russian), always generate the post in the **"language"** specified.
+  - Escape all available HTML tags using HTML entities:
+    - < → &lt;
+    - > → &gt;
+    - & → &amp;
+  - Output must be a **ready-to-publish social media post**, styled according to the type, tone, and emotion.
+  - Use emojis, hashtags, and CTA only if requested in the 'extra' field.
+  - Do not include any notes, explanations, or alternative versions — only the final post.
+  - The user input might be written in Russian or another language, but if a language is specified — generate the final post **strictly in that language**.
+  - Do not generate multiple translations — only one final post in the specified language.
+  - Fix grammar and spelling if necessary.
+  - Follow the selected style, emotion, goal,emotion,key details, main idea  closely.
+  - Format the text clearly and stylishly so the user can copy-paste it into social media without changes.
+  - Use emoji only if requested.
+  - Add a call to action (CTA) or hashtags if requested in extra.
+  - If the input includes HTML tags (e.g. '<script>', '<b>', '<div>') — escape them properly using HTML entities (e.g. '<' → '&lt;', '>' → '&gt;', '&' → '&amp, especially links
+
+### Output format:
+  - Final post only.
+  - No explanation or instructions.
+  - Markdown formatting is allowed (e.g. **bold** or emojis).`;
+
+export const generatePostWizardPrompt = (input: PostWizardSession): Prompt => {
+  return [
+    { role: 'system', content: postWizardSystemPrompt },
+    { role: 'user', content: JSON.stringify(mapData(input)) },
   ];
-
-  const promptData = [
-    `- Language: ${language} (generate the caption in this language)`,
-    `- Platform: (use your best guess based on style, tone, or attachment if not specified)`,
-    `- Post type: ${type}`,
-    `- Main idea: ${mainIdea}`,
-    `- Goal: ${goal}`,
-    `- Style: ${style}`,
-    `- Emotion: ${emotion}`,
-    `- Key details: ${keyDetails || '—'}`,
-    `- Formatting preferences: ${formattingReferences.join(', ')}`,
-  ];
-
-  const instructions =
-    'Instructions' +
-    [
-      `- It should read fluently and naturally as if written by a human, with **no spelling or grammar errors**`,
-      `- The result must be a **well-formatted, grammatically correct`,
-      `- Include relevant details in a **clear, concise, and scroll-stopping** format.`,
-      `- Break long text into **short paragraphs or lines** to improve readability.`,
-      `- Start with a strong hook to capture`,
-      '- Expand on the main idea with the selected style',
-      '- Include a CTA if requested and relevant to the goal.',
-      '- Use emojis only if requested, and integrate them naturally.',
-      '- Add **up to 5 related hashtags** at the end if hashtags are requested, each on a new line or space-separated.',
-      '- Keep it engaging, and ready to post — no explanations, no extra commentary.',
-      '- **Output only the final, polished caption text** — no explanation, no commentary, no formatting like code blocks.',
-      '- The output should be ready for **copy-paste directly into a social media app** (Instagram, Facebook, Twitter/X, etc.).',
-    ].join(' ');
-
-  const readyPrompt =
-    promptHeader +
-    promptData +
-    instructions +
-    'Be concise, human, and bold — write like a real person trying to connect with an audience.';
-
-  const data = mapData(input);
-
-  return `You are a social media assistant.
-
-You are given user input with the following structure:
-
-{
-  language: ${data.language}
-  type: ${data.type}
-  mainIdea: ${data.mainIdea}
-  goal: ${data.goal}
-  style: ${data.style}
-  emotion: ${data.emotion}
-  keyDetails: ${data.keyDetails}
-  extra: ${data.extra}
-}
-
-**Your task is to generate a clean, engaging, and well-written post** for social media, based only on the specified language. 
-
-    ### Important rules:
-    - The user input might be written in Russian or another language, but if a ${language} is specified — generate the final post **strictly in that language**.
-    - Do not generate multiple translations — only one final post in the specified language.
-    - Fix grammar and spelling if necessary.
-    - Follow the selected ${style}, ${emotion}, and ${goal} closely.
-    - Format the text clearly and stylishly so the user can copy-paste it into social media without changes.
-    - Use emoji only if requested.
-    - Add a call to action (CTA) or hashtags if requested in extra.
-    - If the input includes HTML tags (e.g. '<script>', '<b>', '<div>') — escape them properly using HTML entities (e.g. '<' → '&lt;', '>' → '&gt;', '&' → '&amp, especially links
-
-    ### Output format:
-    - Final post only.
-    - No explanation or instructions.
-    - Markdown formatting is allowed (e.g. **bold** or emojis).
-
-    Now generate the post.`;
 };

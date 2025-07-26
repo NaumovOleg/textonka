@@ -18,10 +18,10 @@ export const PostWizard = new Scenes.WizardScene<BotContext>(
   welcomeHandler,
   languageHandler,
   selectTypeHandler,
-  selectGoalHandler,
   writeIdeaHandler,
+  writeDetailsHandler,
+  selectGoalHandler,
   selectStyleHandler,
   selectEmotionHandler,
-  writeDetailsHandler,
   handleExtraSelection,
 );

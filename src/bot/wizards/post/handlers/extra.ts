@@ -62,14 +62,6 @@ export const handleExtraSelection = async (ctx: BotContext) => {
       ctx.scene.session[WizardType.post_wizard],
     );
 
-    await editOrReplyMessage(
-      ctx,
-      ctx.i18n.t(`wizards.${PostWizardName}.text.generating`),
-      {
-        parse_mode: 'HTML',
-      },
-    );
-
     await AIContent(ctx, prompt);
     await Promise.all([
       subscriptionService.decreaseLeftPostWizardGenerations(ctx.state.user.id),
