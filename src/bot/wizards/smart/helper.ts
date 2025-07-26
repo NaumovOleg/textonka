@@ -1,10 +1,10 @@
 import {
   BotContext,
-  PostWizardButtons,
-  PostWizardEmoji,
-  PostWizardGeneralButtons,
-  PostWizardName,
-  PostWizardSession,
+  SmartWizardButtons,
+  SmartWizardEmoji,
+  SmartWizardGeneralButtons,
+  SmartWizardName,
+  SmartWizardSession,
   splitByChunks,
   WizardType,
 } from '@util';
@@ -12,28 +12,28 @@ import { Markup } from 'telegraf';
 import { callbackQuery } from 'telegraf/filters';
 import { Convenience as tt } from 'telegraf/types';
 
-export const extraPostChecklistItems: (keyof PostWizardEmoji)[] = [
+export const extraPostChecklistItems: (keyof SmartWizardEmoji)[] = [
   'emoji',
   'hashtags',
   'cta',
 ];
 
-export const getCheckboxPrefix = (key: keyof PostWizardEmoji) =>
-  `wizards.${PostWizardName}.buttons.extra.${key}`;
+export const getCheckboxPrefix = (key: keyof SmartWizardEmoji) =>
+  `wizards.${SmartWizardName}.buttons.extra.${key}`;
 
 export const buildChecklistText = (
-  extra: Partial<PostWizardEmoji>,
+  extra: Partial<SmartWizardEmoji>,
   t: (key: string) => string,
 ) => {
   const lines = extraPostChecklistItems.map(
     (key) => `${extra[key] ? '☑️' : '⬜️'} ${t(getCheckboxPrefix(key))}`,
   );
 
-  return `${t(`wizards.${PostWizardName}.text.extra`)}\n\n${lines.join('\n')}`;
+  return `${t(`wizards.${SmartWizardName}.text.extra`)}\n\n${lines.join('\n')}`;
 };
 
 export const buildChecklistButtons = (
-  extra: Partial<PostWizardEmoji>,
+  extra: Partial<SmartWizardEmoji>,
   t: (key: string) => string,
 ) => {
   const buttonsList = extraPostChecklistItems.map((key) =>
@@ -47,44 +47,45 @@ export const buildChecklistButtons = (
 
   buttons.push([
     Markup.button.callback(
-      t(`wizards.${PostWizardName}.buttons.general.submit`),
-      PostWizardGeneralButtons.submit_extra,
+      t(`wizards.${SmartWizardName}.buttons.general.submit`),
+      SmartWizardGeneralButtons.submit_extra,
     ),
   ]);
   return buttons;
 };
 
 export const getButtonsTranslatePrefix = (
-  buttonGroup: keyof PostWizardSession,
+  buttonGroup: keyof SmartWizardSession,
   value: string,
-) => `wizards.${PostWizardName}.buttons.${buttonGroup}.${value}`;
+) => `wizards.${SmartWizardName}.buttons.${buttonGroup}.${value}`;
 
 export async function processButtons<
-  K extends keyof typeof PostWizardButtons,
-  V extends keyof BotContext['scene']['session'][typeof WizardType.post_wizard],
-  T extends BotContext['scene']['session'][typeof WizardType.post_wizard][V],
+  K extends keyof typeof SmartWizardButtons,
+  V extends
+    keyof BotContext['scene']['session'][typeof WizardType.smart_wizard],
+  T extends BotContext['scene']['session'][typeof WizardType.smart_wizard][V],
 >(ctx: BotContext, data: { buttonGroup: K; sessionKey: V }) {
   if (!ctx.has(callbackQuery('data'))) {
     return null;
   }
 
   const selectedKey = ctx.callbackQuery
-    ?.data as keyof (typeof PostWizardButtons)[K];
+    ?.data as keyof (typeof SmartWizardButtons)[K];
 
-  if (!selectedKey || !(selectedKey in PostWizardButtons[data.buttonGroup])) {
+  if (!selectedKey || !(selectedKey in SmartWizardButtons[data.buttonGroup])) {
     return null;
   }
 
   await ctx.editMessageReplyMarkup(undefined).catch(() => {});
-  const value = PostWizardButtons[data.buttonGroup][selectedKey] as T;
+  const value = SmartWizardButtons[data.buttonGroup][selectedKey] as T;
 
-  ctx.scene.session[WizardType.post_wizard][data.sessionKey] = value;
+  ctx.scene.session[WizardType.smart_wizard][data.sessionKey] = value;
 
   return value;
 }
 
 export async function processText<
-  T extends keyof Pick<PostWizardSession, 'mainIdea' | 'keyDetails'>,
+  T extends keyof Pick<SmartWizardSession, 'mainIdea' | 'keyDetails'>,
 >(ctx: BotContext, property: T) {
   if (!ctx.message || !('text' in ctx.message)) {
     return null;
@@ -92,13 +93,13 @@ export async function processText<
 
   const inputText = ctx.message.text;
 
-  ctx.scene.session[WizardType.post_wizard][property] = inputText;
+  ctx.scene.session[WizardType.smart_wizard][property] = inputText;
 
   return inputText;
 }
 
 export const drawCurrentStep = async (ctx: BotContext, max: number) => {
-  const text = ctx.i18n.t(`wizards.${PostWizardName}.common.step`, {
+  const text = ctx.i18n.t(`wizards.${SmartWizardName}.common.step`, {
     step: ctx.wizard.cursor,
     max,
   });
@@ -122,14 +123,14 @@ export const drawCurrentStep = async (ctx: BotContext, max: number) => {
 
 export function isBackButtonPressed(ctx: BotContext) {
   if (ctx.has(callbackQuery('data'))) {
-    return PostWizardGeneralButtons.previous_step === ctx.callbackQuery?.data;
+    return SmartWizardGeneralButtons.previous_step === ctx.callbackQuery?.data;
   }
   return false;
 }
 
 export function isFinishButtonPressed(ctx: BotContext) {
   if (ctx.has(callbackQuery('data'))) {
-    return PostWizardGeneralButtons.finish_wizard === ctx.callbackQuery?.data;
+    return SmartWizardGeneralButtons.finish_wizard === ctx.callbackQuery?.data;
   }
   return false;
 }
@@ -137,7 +138,7 @@ export function isFinishButtonPressed(ctx: BotContext) {
 export async function renderChecklist(ctx: BotContext) {
   await processText(ctx, 'keyDetails');
 
-  const session = ctx.scene.session[WizardType.post_wizard];
+  const session = ctx.scene.session[WizardType.smart_wizard];
   const extra = session.extra ?? {};
   const t = ctx.i18n.t.bind(ctx.i18n);
 
@@ -177,12 +178,12 @@ export const editOrReplyMessage = async (
 export const getNavigationButtons = (ctx: BotContext) => {
   return [
     Markup.button.callback(
-      ctx.i18n.t(`wizards.${PostWizardName}.buttons.general.previous_step`),
-      PostWizardGeneralButtons.previous_step,
+      ctx.i18n.t(`wizards.${SmartWizardName}.buttons.general.previous_step`),
+      SmartWizardGeneralButtons.previous_step,
     ),
     Markup.button.callback(
-      ctx.i18n.t(`wizards.${PostWizardName}.buttons.general.finish`),
-      PostWizardGeneralButtons.finish_wizard,
+      ctx.i18n.t(`wizards.${SmartWizardName}.buttons.general.finish`),
+      SmartWizardGeneralButtons.finish_wizard,
     ),
   ];
 };

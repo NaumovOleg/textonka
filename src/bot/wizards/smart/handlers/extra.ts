@@ -2,8 +2,8 @@ import { aiService, subscriptionService } from '@shared/services';
 import { findSubscriptionUC } from '@shared/useCases';
 import {
   BotContext,
-  PostWizardGeneralButtons,
-  PostWizardName,
+  SmartWizardGeneralButtons,
+  SmartWizardName,
   WizardType,
 } from '@util';
 import { callbackQuery } from 'telegraf/filters';
@@ -45,27 +45,27 @@ export const handleExtraSelection = async (ctx: BotContext) => {
     user: ctx.state.user.id,
   });
 
-  if (!subscription || subscription.availableGenerations?.postWizard < 1) {
+  if (!subscription || subscription.availableGenerations?.smartWizard < 1) {
     await ctx.reply(
-      ctx.i18n.t(`wizards.${PostWizardName}.text.subscription_expired`),
+      ctx.i18n.t(`wizards.${SmartWizardName}.text.subscription_expired`),
     );
     return ctx.scene.leave();
   }
 
-  if (data === PostWizardGeneralButtons.submit_extra) {
+  if (data === SmartWizardGeneralButtons.submit_extra) {
     await editOrReplyMessage(
       ctx,
-      ctx.i18n.t(`wizards.${PostWizardName}.text.finalStep`),
+      ctx.i18n.t(`wizards.${SmartWizardName}.text.finalStep`),
     );
 
     const prompt = await aiService.generatePostWizardText(
-      ctx.scene.session[WizardType.post_wizard],
+      ctx.scene.session[WizardType.smart_wizard],
     );
 
     await AIContent(ctx, prompt);
     await Promise.all([
-      subscriptionService.decreaseLeftPostWizardGenerations(ctx.state.user.id),
-      subscriptionService.increasePostWizardGenerations(ctx.state.user.id),
+      subscriptionService.decreaseLeftSmartWizardGenerations(ctx.state.user.id),
+      subscriptionService.increaseSmartWizardGenerations(ctx.state.user.id),
     ]);
 
     return ctx.scene.leave();

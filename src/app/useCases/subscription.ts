@@ -10,8 +10,10 @@ export class CreateSubscriptionUseCase {
   ) {
     return await this.subscriptionService.create({
       ...data,
-      availableGenerations: { postWizard: Config.POST_WIZARD_FREE_GENERATIONS },
-      usedGenerations: { postWizard: 0 },
+      availableGenerations: {
+        smartWizard: Config.SMART_WIZARD_FREE_GENERATIONS,
+      },
+      usedGenerations: { smartWizard: 0 },
     });
   }
 }

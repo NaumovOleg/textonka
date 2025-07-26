@@ -16,7 +16,7 @@
   },
 
   "wizards": {
-    "post-wizard": {
+    "smart-wizard": {
       "common": {
         "step": "✅ Шаг ${step}/${max}",
         "bye": "👋 Пока-пока!"
@@ -47,42 +47,42 @@
           "clean": "Без дополнений 🧽"
         },
         "type": {
-          "post-wizard_type_personal": "🙋 О себе",
-          "post-wizard_type_productPromotion": "🛍️ Реклама товара",
-          "post-wizard_type_announcement": "📢 Анонс / запуск",
-          "post-wizard_type_opinion": "💬 Мнение / размышление",
-          "post-wizard_type_educational": "🎓 Образовательный / советы",
-          "post-wizard_type_caption": "📸 Подпись к фото / видео"
+          "smart-wizard_type_personal": "🙋 О себе",
+          "smart-wizard_type_productPromotion": "🛍️ Реклама товара",
+          "smart-wizard_type_announcement": "📢 Анонс / запуск",
+          "smart-wizard_type_opinion": "💬 Мнение / размышление",
+          "smart-wizard_type_educational": "🎓 Образовательный / советы",
+          "smart-wizard_type_caption": "📸 Подпись к фото / видео"
         },
         "goal": {
-          "post-wizard_goal_likeOrSave": "❤️ Поставить лайк / сохранить",
-          "post-wizard_goal_leaveComment": "✍️ Оставить комментарий",
-          "post-wizard_goal_followLink": "🔗 Перейти по ссылке",
-          "post-wizard_goal_sendMessage": "📩 Написать в личку",
-          "post-wizard_goal_subscribe": "🚀 Подписаться",
-          "post-wizard_goal_justRead": "👀 Просто прочитать"
+          "smart-wizard_goal_likeOrSave": "❤️ Поставить лайк / сохранить",
+          "smart-wizard_goal_leaveComment": "✍️ Оставить комментарий",
+          "smart-wizard_goal_followLink": "🔗 Перейти по ссылке",
+          "smart-wizard_goal_sendMessage": "📩 Написать в личку",
+          "smart-wizard_goal_subscribe": "🚀 Подписаться",
+          "smart-wizard_goal_justRead": "👀 Просто прочитать"
         },
         "style": {
-          "post-wizard_style_friendly": "🤝 Дружелюбно",
-          "post-wizard_style_confident": "🎯 Уверенно / по делу",
-          "post-wizard_style_heartfelt": "🫶 От души / по-человечески",
-          "post-wizard_style_analytical": "🧠 Умно / с анализом",
-          "post-wizard_style_bold": "😏 Смело / дерзко",
-          "post-wizard_style_humorous": "🤪 С юмором"
+          "smart-wizard_style_friendly": "🤝 Дружелюбно",
+          "smart-wizard_style_confident": "🎯 Уверенно / по делу",
+          "smart-wizard_style_heartfelt": "🫶 От души / по-человечески",
+          "smart-wizard_style_analytical": "🧠 Умно / с анализом",
+          "smart-wizard_style_bold": "😏 Смело / дерзко",
+          "smart-wizard_style_humorous": "🤪 С юмором"
         },
         "emotion": {
-          "post-wizard_emotion_emotional": "🥹 Эмоционально",
-          "post-wizard_emotion_inspirational": "😍 Вдохновляюще",
-          "post-wizard_emotion_wowEffect": "🤯 Вау-эффект",
-          "post-wizard_emotion_thoughtful": "🤔 Задумчиво",
-          "post-wizard_emotion_provocative": "😠 Провокационно",
-          "post-wizard_emotion_smile": "😅 С улыбкой"
+          "smart-wizard_emotion_emotional": "🥹 Эмоционально",
+          "smart-wizard_emotion_inspirational": "😍 Вдохновляюще",
+          "smart-wizard_emotion_wowEffect": "🤯 Вау-эффект",
+          "smart-wizard_emotion_thoughtful": "🤔 Задумчиво",
+          "smart-wizard_emotion_provocative": "😠 Провокационно",
+          "smart-wizard_emotion_smile": "😅 С улыбкой"
         },
         "language": {
-          "post-wizard_language_uk": "🇺🇦 Украинский",
-          "post-wizard_language_ru": "🇷🇺 Русский",
-          "post-wizard_language_en": "🇬🇧 Английский",
-          "post-wizard_language_pl": "🇵🇱 Польский"
+          "smart-wizard_language_uk": "🇺🇦 Украинский",
+          "smart-wizard_language_ru": "🇷🇺 Русский",
+          "smart-wizard_language_en": "🇬🇧 Английский",
+          "smart-wizard_language_pl": "🇵🇱 Польский"
         }
       }
     }

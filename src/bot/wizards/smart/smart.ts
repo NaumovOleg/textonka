@@ -13,7 +13,7 @@ import {
 } from './handlers';
 
 export const PostWizard = new Scenes.WizardScene<BotContext>(
-  WizardType.post_wizard,
+  WizardType.smart_wizard,
 
   welcomeHandler,
   languageHandler,

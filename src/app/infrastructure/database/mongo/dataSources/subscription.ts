@@ -8,21 +8,21 @@ export class SubscriptionDatasource
   extends BaseDataSource<Subscription, SubscriptionEntity>
   implements ISubscriptionDataSource<Subscription>
 {
-  async decreaseLeftPostWizardGenerations(
+  async decreaseLeftSmartWizardGenerations(
     user: string,
   ): Promise<UpdateResult | Document> {
     return this.repo.updateOne(
       { user: deepParseObjectId(user) },
-      { $inc: { 'availableGenerations.postWizard': -1 } },
+      { $inc: { 'availableGenerations.smartWizard': -1 } },
     );
   }
 
-  async increasePostWizardGenerations(
+  async increaseSmartWizardGenerations(
     user: string,
   ): Promise<UpdateResult | Document> {
     return this.repo.updateOne(
       { user: deepParseObjectId(user) },
-      { $inc: { 'usedGenerations.postWizard': +1 } },
+      { $inc: { 'usedGenerations.smartWizard': +1 } },
     );
   }
 }

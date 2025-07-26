@@ -1,5 +1,5 @@
 export type Generations = {
-  postWizard: number;
+  smartWizard: number;
 };
 
 export type Subscription = {

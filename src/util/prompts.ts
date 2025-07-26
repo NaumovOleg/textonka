@@ -1,9 +1,9 @@
 /* eslint-disable max-len */
-import { PostWizardEmoji, PostWizardSession } from './scene';
+import { SmartWizardEmoji, SmartWizardSession } from './scene';
 import { Prompt } from './type';
 
-export type PostWizardPrompt = {
-  extra: PostWizardEmoji;
+export type SmartWizardPrompt = {
+  extra: SmartWizardEmoji;
 };
 
 const typeMap = {
@@ -49,7 +49,7 @@ const emotionMap = {
   smile: 'Smile',
 };
 
-const mapData = (input: PostWizardSession) => ({
+const mapData = (input: SmartWizardSession) => ({
   language: languageMap[input?.language ?? 'uk'] ?? 'Ukrainian',
   type: typeMap[input.type ?? 'personal'] ?? 'Personal',
   mainIdea: input.mainIdea,
@@ -60,7 +60,7 @@ const mapData = (input: PostWizardSession) => ({
   extra: input.extra,
 });
 
-const postWizardSystemPrompt = `You are a social media assistant that generates clear, expressive, and publish-ready social media post text.
+const smartWizardSystemPrompt = `You are a social media assistant that generates clear, expressive, and publish-ready social media post text.
 The user will send you input in **structured JSON format**, like this:
   {
     language: string,
@@ -103,9 +103,11 @@ The user will send you input in **structured JSON format**, like this:
   - No explanation or instructions.
   - Markdown formatting is allowed (e.g. **bold** or emojis).`;
 
-export const generatePostWizardPrompt = (input: PostWizardSession): Prompt => {
+export const generateSmartWizardPrompt = (
+  input: SmartWizardSession,
+): Prompt => {
   return [
-    { role: 'system', content: postWizardSystemPrompt },
+    { role: 'system', content: smartWizardSystemPrompt },
     { role: 'user', content: JSON.stringify(mapData(input)) },
   ];
 };

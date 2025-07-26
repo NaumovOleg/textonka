@@ -20,7 +20,7 @@ export class Textonka extends Telegraf<BotContext> {
     this.use(RootRouter);
 
     this.telegram.setMyCommands([
-      { command: 'start', description: 'Start generating' },
+      { command: 'smartpost', description: 'Start smart post' },
       { command: 'samples', description: 'Samples' },
       { command: 'help', description: 'Help' },
     ]);

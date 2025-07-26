@@ -7,13 +7,13 @@ import { BaseEntity } from './base';
 
 class AvailableGenerations {
   @IsNumber()
-  @Column('number', { default: Config.POST_WIZARD_FREE_GENERATIONS })
-  postWizard: number;
+  @Column('number', { default: Config.SMART_WIZARD_FREE_GENERATIONS })
+  smartWizard: number;
 }
 class UsedGenerations {
   @IsNumber()
   @Column('number', { default: 0 })
-  postWizard: number;
+  smartWizard: number;
 }
 
 @Entity('subscription')

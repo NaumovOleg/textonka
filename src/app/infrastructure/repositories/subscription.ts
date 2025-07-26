@@ -16,11 +16,11 @@ export class SubscriptionRepository
     super(entity, dataSource);
   }
 
-  decreaseLeftPostWizardGenerations(user: string) {
-    return this.dataSource.decreaseLeftPostWizardGenerations(user);
+  decreaseLeftSmartWizardGenerations(user: string) {
+    return this.dataSource.decreaseLeftSmartWizardGenerations(user);
   }
 
-  increasePostWizardGenerations(user: string) {
-    return this.dataSource.increasePostWizardGenerations(user);
+  increaseSmartWizardGenerations(user: string) {
+    return this.dataSource.increaseSmartWizardGenerations(user);
   }
 }

@@ -15,7 +15,7 @@
     }
   },
   "wizards": {
-    "post-wizard": {
+    "smart-wizard": {
       "common": {
         "step": "✅ Step ${step}/${max}",
         "bye": "👋 Bye-bye!"
@@ -46,42 +46,42 @@
           "clean": "No extras 🧽"
         },
         "type": {
-          "post-wizard_type_personal": "🙋 About me",
-          "post-wizard_type_productPromotion": "🛍️ Product promotion",
-          "post-wizard_type_announcement": "📢 Announcement / launch",
-          "post-wizard_type_opinion": "💬 Opinion / thoughts",
-          "post-wizard_type_educational": "🎓 Educational / tips",
-          "post-wizard_type_caption": "📸 Photo / video caption"
+          "smart-wizard_type_personal": "🙋 About me",
+          "smart-wizard_type_productPromotion": "🛍️ Product promotion",
+          "smart-wizard_type_announcement": "📢 Announcement / launch",
+          "smart-wizard_type_opinion": "💬 Opinion / thoughts",
+          "smart-wizard_type_educational": "🎓 Educational / tips",
+          "smart-wizard_type_caption": "📸 Photo / video caption"
         },
         "goal": {
-          "post-wizard_goal_likeOrSave": "❤️ Like / Save",
-          "post-wizard_goal_leaveComment": "✍️ Leave a comment",
-          "post-wizard_goal_followLink": "🔗 Follow the link",
-          "post-wizard_goal_sendMessage": "📩 Send a message",
-          "post-wizard_goal_subscribe": "🚀 Subscribe",
-          "post-wizard_goal_justRead": "👀 Just read"
+          "smart-wizard_goal_likeOrSave": "❤️ Like / Save",
+          "smart-wizard_goal_leaveComment": "✍️ Leave a comment",
+          "smart-wizard_goal_followLink": "🔗 Follow the link",
+          "smart-wizard_goal_sendMessage": "📩 Send a message",
+          "smart-wizard_goal_subscribe": "🚀 Subscribe",
+          "smart-wizard_goal_justRead": "👀 Just read"
         },
         "style": {
-          "post-wizard_style_friendly": "🤝 Friendly",
-          "post-wizard_style_confident": "🎯 Confident / direct",
-          "post-wizard_style_heartfelt": "🫶 Heartfelt / sincere",
-          "post-wizard_style_analytical": "🧠 Smart / analytical",
-          "post-wizard_style_bold": "😏 Bold / edgy",
-          "post-wizard_style_humorous": "🤪 With humor"
+          "smart-wizard_style_friendly": "🤝 Friendly",
+          "smart-wizard_style_confident": "🎯 Confident / direct",
+          "smart-wizard_style_heartfelt": "🫶 Heartfelt / sincere",
+          "smart-wizard_style_analytical": "🧠 Smart / analytical",
+          "smart-wizard_style_bold": "😏 Bold / edgy",
+          "smart-wizard_style_humorous": "🤪 With humor"
         },
         "emotion": {
-          "post-wizard_emotion_emotional": "🥹 Emotional",
-          "post-wizard_emotion_inspirational": "😍 Inspirational",
-          "post-wizard_emotion_wowEffect": "🤯 Wow effect",
-          "post-wizard_emotion_thoughtful": "🤔 Thoughtful",
-          "post-wizard_emotion_provocative": "😠 Provocative",
-          "post-wizard_emotion_smile": "😅 With a smile"
+          "smart-wizard_emotion_emotional": "🥹 Emotional",
+          "smart-wizard_emotion_inspirational": "😍 Inspirational",
+          "smart-wizard_emotion_wowEffect": "🤯 Wow effect",
+          "smart-wizard_emotion_thoughtful": "🤔 Thoughtful",
+          "smart-wizard_emotion_provocative": "😠 Provocative",
+          "smart-wizard_emotion_smile": "😅 With a smile"
         },
         "language": {
-          "post-wizard_language_uk": "🇺🇦 Ukrainian",
-          "post-wizard_language_ru": "🇷🇺 Russian",
-          "post-wizard_language_en": "🇬🇧 English",
-          "post-wizard_language_pl": "🇵🇱 Poland"
+          "smart-wizard_language_uk": "🇺🇦 Ukrainian",
+          "smart-wizard_language_ru": "🇷🇺 Russian",
+          "smart-wizard_language_en": "🇬🇧 English",
+          "smart-wizard_language_pl": "🇵🇱 Poland"
         }
       }
     }

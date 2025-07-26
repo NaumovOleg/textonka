@@ -1,12 +1,16 @@
 import type { Scenes } from 'telegraf';
-import { PostSceneState, PostWizardName, PostWizardSession } from './wizards';
+import {
+  SmartWizardName,
+  SmartWizardSceneState,
+  SmartWizardSession,
+} from './wizards';
 
-export type SceneState = PostSceneState;
+export type SceneState = SmartWizardSceneState;
 
 export enum WizardType {
-  post_wizard = PostWizardName,
+  smart_wizard = SmartWizardName,
 }
 
 export interface WizardSession extends Scenes.WizardSessionData {
-  [WizardType.post_wizard]: PostWizardSession;
+  [WizardType.smart_wizard]: SmartWizardSession;
 }
