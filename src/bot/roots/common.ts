@@ -1,24 +1,22 @@
-import { type BotContext, WizardType } from '@util';
+import { type BotContext } from '@util';
 import { Composer } from 'telegraf';
 
-export const startRoute = new Composer<BotContext>();
-
-startRoute.command('start', async (ctx) => {
+const composer = new Composer<BotContext>();
+composer.command('start', async (ctx) => {
+  ctx.session = {};
   return ctx.reply(ctx.i18n.t('welcome_message'), {
     parse_mode: 'HTML',
   });
 });
 
-startRoute.command('smartpost', async (ctx) => {
-  await ctx.scene.enter(WizardType.smart_wizard);
-});
-
-startRoute.command('quit', async (ctx) => {
+composer.command('quit', async (ctx) => {
+  ctx.session = {};
   await ctx.telegram.leaveChat(ctx.message.chat.id);
   await ctx.leaveChat();
 });
 
-startRoute.command('samples', async (ctx) => {
+composer.command('samples', async (ctx) => {
+  ctx.session = {};
   const sample1 = ctx.i18n.t('before_after.samples.sample_1');
   const sample2 = ctx.i18n.t('before_after.samples.sample_2');
   const sample3 = ctx.i18n.t('before_after.samples.sample_2');
@@ -26,3 +24,4 @@ startRoute.command('samples', async (ctx) => {
     parse_mode: 'HTML',
   });
 });
+export const commonRouter = composer;
