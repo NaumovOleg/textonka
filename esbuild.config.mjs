@@ -2,7 +2,7 @@ import { build } from 'esbuild';
 import esbuildPluginTsc from 'esbuild-plugin-tsc';
 
 build({
-  entryPoints: ['./src/index.ts'],
+  entryPoints: ['./src/handler.ts'],
   bundle: true,
   minify: true,
   minifyIdentifiers: false,

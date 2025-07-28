@@ -13,6 +13,7 @@ class Config {
   );
   AI_API_KEY = process.env.AI_API_KEY ?? '';
   AI_MODEL = process.env.AI_MODEL ?? '';
+  NODE_ENV = process.env.NODE_ENV ?? 'dev';
 }
 
 export default new Config();
