@@ -5,17 +5,17 @@ import { join } from 'path';
 import Conf from '../../../src/config';
 import { LambdaFactoryConstruct } from './factory';
 
-export class WebhookConstruct extends Construct {
+export class WebhookAuthorizerConstruct extends Construct {
     handler: NodejsFunction;
 
     constructor(scope: Construct, id: string,) {
         super(scope, id);
 
-        this.handler = LambdaFactoryConstruct(this, `Textonka-webhook-${Conf.NODE_ENV}`, {
-            functionName: `textonka-webhook-${Conf.NODE_ENV}`,
-            timeout: Duration.seconds(20),
-            memorySize: 200,
-            entry: join(__dirname, `../../../lambdas/handler.js`),
+        this.handler = LambdaFactoryConstruct(this, `Textonka-authorizer-${Conf.NODE_ENV}`, {
+            functionName: `textonka-webhook-authorizer-${Conf.NODE_ENV}`,
+            timeout: Duration.seconds(10),
+            memorySize: 128,
+            entry: join(__dirname, `../../../lambdas/authorizer.js`),
             handler: 'handler',
         });
     }

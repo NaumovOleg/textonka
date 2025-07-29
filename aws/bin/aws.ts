@@ -5,6 +5,6 @@ import { AwsStack } from '../lib/aws-stack';
 import Conf from '../../src/config';
 
 const app = new cdk.App();
-new AwsStack(app, 'AwsStack', {
+new AwsStack(app, 'Textonka', {
   env: { region: Conf.REGION, account: Conf.AWS_ACCOUNT },
 });

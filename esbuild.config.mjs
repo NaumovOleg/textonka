@@ -2,13 +2,13 @@ import { build } from 'esbuild';
 import esbuildPluginTsc from 'esbuild-plugin-tsc';
 
 build({
-  entryPoints: ['./src/handler.ts'],
+  entryPoints: ['./src/lambda/handler.ts', './src/lambda/authorizer.ts'],
   bundle: true,
   minify: true,
   minifyIdentifiers: false,
   keepNames: true,
   platform: 'node',
-  sourcemap: true,
+  sourcemap: false,
   // target: 'node20',
   outdir: './lambdas',
   entryNames: '[name]',
