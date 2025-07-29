@@ -2,7 +2,6 @@ import { Duration } from 'aws-cdk-lib';
 import { NodejsFunction } from 'aws-cdk-lib/aws-lambda-nodejs';
 import { Construct } from 'constructs';
 import { join } from 'path';
-
 import Conf from '../../../src/config';
 import { LambdaFactoryConstruct } from './factory';
 

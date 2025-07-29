@@ -14,6 +14,9 @@ class Config {
   AI_API_KEY = process.env.AI_API_KEY ?? '';
   AI_MODEL = process.env.AI_MODEL ?? '';
   NODE_ENV = process.env.NODE_ENV ?? 'dev';
+  AWS_ACCOUNT = process.env.AWS_ACCOUNT ?? '';
+  REGION = process.env.REGION ?? 'eu-west-1';
+  WEBHOOK_SECRET = process.env.WEBHOOK_SECRET ?? '';
 }
 
 export default new Config();

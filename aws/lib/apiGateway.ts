@@ -1,10 +1,7 @@
 import { LambdaIntegration, RestApi } from 'aws-cdk-lib/aws-apigateway';
 import { NodejsFunction } from 'aws-cdk-lib/aws-lambda-nodejs';
 import { Construct } from 'constructs';
-
 import Conf from '../../src/config';
-
-const { NODE_ENV } = Conf;
 
 export class ApiGateway extends Construct {
   restApi: RestApi;
@@ -19,7 +16,7 @@ export class ApiGateway extends Construct {
 
     this.restApi = new RestApi(this, 'textonka', {
       restApiName,
-      deployOptions: { stageName: NODE_ENV },
+      deployOptions: { stageName: Conf.NODE_ENV },
       binaryMediaTypes: ['*/*'],
     });
 
@@ -28,7 +25,7 @@ export class ApiGateway extends Construct {
       allowTestInvoke: false,
     });
 
-    const resource = this.restApi.root.addResource('app');
+    const resource = this.restApi.root.addResource('telegraf');
     resource.addMethod('ANY', integration);
     resource.addProxy({ defaultIntegration: integration, anyMethod: true });
   }

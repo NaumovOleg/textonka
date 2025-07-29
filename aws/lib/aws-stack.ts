@@ -1,16 +1,18 @@
-import * as cdk from 'aws-cdk-lib';
+import { Stack, StackProps } from 'aws-cdk-lib';
 import { Construct } from 'constructs';
-// import * as sqs from 'aws-cdk-lib/aws-sqs';
+import { ApiGateway } from './apiGateway';
+import { WebhookConstruct } from './lambdas';
 
-export class AwsStack extends cdk.Stack {
-  constructor(scope: Construct, id: string, props?: cdk.StackProps) {
+export class AwsStack extends Stack {
+  constructor(scope: Construct, id: string, props?: StackProps) {
     super(scope, id, props);
+    const webhookLambda = new WebhookConstruct(this, 'textonka-webhook');
 
-    // The code that defines your stack goes here
-
-    // example resource
-    // const queue = new sqs.Queue(this, 'AwsQueue', {
-    //   visibilityTimeout: cdk.Duration.seconds(300)
-    // });
+    new ApiGateway(
+      this,
+      'textonka-api',
+      'textonaka-api',
+      webhookLambda.handler,
+    );
   }
 }
