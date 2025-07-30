@@ -20,7 +20,7 @@ class UsedGenerations {
 export class SubscriptionEntity extends BaseEntity {
   @Column('text')
   @IsString()
-  @Index('user')
+  @Index('user', { unique: true })
   user: ObjectId;
   @Column(() => AvailableGenerations, { array: false })
   @ValidateNested({ each: true })

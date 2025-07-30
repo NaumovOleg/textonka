@@ -11,6 +11,8 @@ import { commonRouter, wizardRouter } from './roots';
 import { stage } from './wizards';
 
 export class Textonka extends Telegraf<BotContext> {
+  initialized = false;
+
   init() {
     this.initMiddlewares([
       locales.middleware(),
@@ -29,6 +31,7 @@ export class Textonka extends Telegraf<BotContext> {
     }
     process.once('SIGINT', () => this.stop('SIGINT'));
     process.once('SIGTERM', () => this.stop('SIGTERM'));
+    this.initialized = true;
   }
 
   initMiddlewares(middlewares: Middleware<BotContext>[]) {

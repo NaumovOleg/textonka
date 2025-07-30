@@ -1,32 +1,23 @@
-exports.handler = async (event) => {
-  const secret = process.env.TELEGRAM_SECRET_TOKEN;
-  const headers = event.headers || {};
-  const incomingToken = headers['x-telegram-bot-api-secret-token'];
+type Event = {
+  methodArn: string;
+  headers: { [name: string]: string };
+};
 
-  if (incomingToken === secret) {
-    return {
-      principalId: 'telegram-bot',
-      policyDocument: {
-        Version: '2012-10-17',
-        Statement: [
-          {
-            Action: 'execute-api:Invoke',
-            Effect: 'Allow',
-            Resource: event.methodArn,
-          },
-        ],
-      },
-    };
-  }
+export const handler = async (event: Event) => {
+  const headers = event.headers || {};
+  const incomingToken =
+    headers['X-Telegram-Bot-Api-Secret-Token'] ??
+    headers['x-telegram-bot-api-secret-token'];
+  const isPermitted = incomingToken === process.env.WEBHOOK_SECRET;
 
   return {
-    principalId: 'unauthorized',
+    principalId: isPermitted ? 'telegram-bot' : 'unauthorized',
     policyDocument: {
       Version: '2012-10-17',
       Statement: [
         {
           Action: 'execute-api:Invoke',
-          Effect: 'Deny',
+          Effect: isPermitted ? 'Allow' : 'Deny',
           Resource: event.methodArn,
         },
       ],

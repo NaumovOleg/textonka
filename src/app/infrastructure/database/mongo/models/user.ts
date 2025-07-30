@@ -6,7 +6,7 @@ import { BaseEntity } from './base';
 export class UserEntity extends BaseEntity {
   @Column('number')
   @IsNumber()
-  @Index('telegram_id')
+  @Index('telegram_id', { unique: true })
   telegram_id: number;
   @IsBoolean()
   @Column('boolean')

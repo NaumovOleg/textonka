@@ -17,6 +17,9 @@ export class WebhookAuthorizerConstruct extends Construct {
             memorySize: 128,
             entry: join(__dirname, `../../../lambdas/authorizer.js`),
             handler: 'handler',
+            environment: {
+                WEBHOOK_SECRET: Conf.WEBHOOK_SECRET,
+            },
         });
     }
 
