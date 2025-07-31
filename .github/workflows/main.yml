@@ -1,0 +1,56 @@
+name: CDK Deploy
+
+on:
+  push:
+    branches:
+      - production
+      - staging
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment: ${{ github.ref_name }}
+    env:
+      DATABASE_USER: ${{vars.DATABASE_USER}}
+      SMART_WIZARD_FREE_GENERATIONS: ${{vars.SMART_WIZARD_FREE_GENERATIONS}}
+      DATABASE_URL: ${{vars.DATABASE_URL}}
+      AWS_ACCOUNT: ${{vars.AWS_ACCOUNT}}
+      REGION: ${{vars.REGION}}
+      AI_MODEL: ${{vars.AI_MODEL}}
+      AI_API_KEY: ${{secrets.AI_API_KEY}}
+      DATABASE_PASSWORD: ${{secrets.DATABASE_PASSWORD}}
+      WEBHOOK_SECRET: ${{secrets.WEBHOOK_SECRET}}
+      BOT_TOKEN: ${{secrets.BOT_TOKEN}}
+      NODE_ENV: ${{ github.ref_name }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'yarn'
+
+      - name: Install dependencies
+        run: yarn install
+
+      - name: Install build app
+        run: yarn bundle
+
+      - name: Install AWS CDK
+        run: yarn global add aws-cdk
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{vars.REGION}}
+
+      - name: Deploy CDK Stack
+        run: cdk deploy --require-approval never
+        env:
+          AWS_ACCOUNT_ID: ${{ vars.AWS_ACCOUNT }}
+          AWS_REGION: ${{ vars.REGION }}
