@@ -14,6 +14,10 @@ class UsedGenerations {
   @IsNumber()
   @Column('number', { default: 0 })
   smartWizard: number;
+
+  @IsNumber()
+  @Column('number', { default: 0 })
+  quickWizard: number;
 }
 
 @Entity('subscription')

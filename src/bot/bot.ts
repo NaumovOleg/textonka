@@ -12,7 +12,7 @@ import {
   paymentsRouter,
   subscriptionRouter,
   wizardRouter,
-} from './roots';
+} from './routes';
 import { stage } from './wizards';
 
 export class Textonka extends Telegraf<BotContext> {

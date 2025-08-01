@@ -1,9 +1,15 @@
-import { subscriptionService, userService } from '@shared/services';
 import {
+  invoiceService,
+  subscriptionService,
+  userService,
+} from '@shared/services';
+import {
+  CreateInvoiceUseCase,
   CreateSubscriptionUseCase,
   CreateUserUseCase,
   FindSubscriptionUseCase,
   FindUserUseCase,
+  UpdateInvoiceUseCase,
 } from '@useCases';
 
 export const createUserUC = new CreateUserUseCase(userService);
@@ -14,3 +20,5 @@ export const createSubscriptionUC = new CreateSubscriptionUseCase(
 export const findSubscriptionUC = new FindSubscriptionUseCase(
   subscriptionService,
 );
+export const createInvoiceUC = new CreateInvoiceUseCase(invoiceService);
+export const updateInvoiceUC = new UpdateInvoiceUseCase(invoiceService);

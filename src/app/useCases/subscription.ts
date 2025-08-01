@@ -12,8 +12,9 @@ export class CreateSubscriptionUseCase {
       ...data,
       availableGenerations: {
         smartWizard: Config.SMART_WIZARD_FREE_GENERATIONS,
+        quickWizard: Config.QUICK_WIZARD_FREE_GENERATIONS,
       },
-      usedGenerations: { smartWizard: 0 },
+      usedGenerations: { smartWizard: 0, quickWizard: 0 },
     });
   }
 }

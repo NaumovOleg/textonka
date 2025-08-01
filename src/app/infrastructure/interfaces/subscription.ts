@@ -1,4 +1,5 @@
 import { Subscription } from '@entities';
+import { GENERATIONS_TYPES } from '@util';
 import { Document, UpdateResult } from 'typeorm';
 import { IBaseDataSource } from './base.dataSource';
 import { IBaseRepository } from './base.repository';
@@ -10,6 +11,12 @@ export interface ISubscriptionDataSource<T> extends IBaseDataSource<T> {
   increaseSmartWizardGenerations(
     user: string,
   ): Promise<UpdateResult | Document>;
+
+  addGenerations(
+    user: string,
+    type: GENERATIONS_TYPES,
+    count: number,
+  ): Promise<UpdateResult | Document>;
 }
 
 export interface ISubscriptionRepository extends IBaseRepository<Subscription> {
@@ -19,4 +26,9 @@ export interface ISubscriptionRepository extends IBaseRepository<Subscription> {
   increaseSmartWizardGenerations(
     user: string,
   ): Promise<Document | UpdateResult>;
+  addGenerations(
+    user: string,
+    type: GENERATIONS_TYPES,
+    count: number,
+  ): Promise<UpdateResult | Document>;
 }

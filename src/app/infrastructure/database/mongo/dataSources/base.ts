@@ -29,7 +29,12 @@ export class BaseDataSource<T extends ObjectLiteral, E extends ObjectLiteral>
     return resp.toJson();
   }
 
-  async update(search: Partial<T>, data: Partial<Omit<T, 'id' | '_id'>>) {
-    return this.repo.updateOne(search, data);
+  update(search: Partial<T>, data: Partial<Omit<T, 'id' | '_id'>>) {
+    const { id, ...criteria } = search;
+    id && Object.assign(criteria ?? {}, { _id: id });
+
+    return this.repo.updateOne(deepParseObjectId(criteria), {
+      $set: deepParseObjectId(data),
+    });
   }
 }

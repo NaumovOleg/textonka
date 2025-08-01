@@ -8,7 +8,7 @@ import { BaseEntity } from './base';
 export class InvoiceEntity extends BaseEntity {
   @Column('text')
   @IsString()
-  @Index('user', { unique: true })
+  @Index('user')
   user: ObjectId;
 
   @Column('number')

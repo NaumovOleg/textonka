@@ -1,4 +1,5 @@
 import { Subscription } from '@entities';
+import { GENERATIONS_TYPES } from '@util';
 import {
   ISubscriptionDataSource,
   ISubscriptionRepository,
@@ -22,5 +23,9 @@ export class SubscriptionRepository
 
   increaseSmartWizardGenerations(user: string) {
     return this.dataSource.increaseSmartWizardGenerations(user);
+  }
+
+  addGenerations(user: string, type: GENERATIONS_TYPES, count: number) {
+    return this.dataSource.addGenerations(user, type, count);
   }
 }
