@@ -24,4 +24,5 @@ composer.command('samples', async (ctx) => {
     parse_mode: 'HTML',
   });
 });
+
 export const commonRouter = composer;

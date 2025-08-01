@@ -7,7 +7,12 @@ import {
   typeormSession,
   userMiddleware,
 } from './middlewares';
-import { commonRouter, wizardRouter } from './roots';
+import {
+  commonRouter,
+  paymentsRouter,
+  subscriptionRouter,
+  wizardRouter,
+} from './roots';
 import { stage } from './wizards';
 
 export class Textonka extends Telegraf<BotContext> {
@@ -20,7 +25,7 @@ export class Textonka extends Telegraf<BotContext> {
       userMiddleware,
       subscriptionMiddleware,
     ]);
-    this.initRoutes([commonRouter]);
+    this.initRoutes([commonRouter, subscriptionRouter, paymentsRouter]);
     this.initWizards([stage.middleware(), wizardRouter]);
 
     this.initCommands();
@@ -49,6 +54,7 @@ export class Textonka extends Telegraf<BotContext> {
   initCommands() {
     this.telegram.setMyCommands([
       { command: 'smartpost', description: 'Start smart post' },
+      { command: 'subscription', description: 'Subscription' },
       { command: 'samples', description: 'Samples' },
       { command: 'help', description: 'Help' },
     ]);

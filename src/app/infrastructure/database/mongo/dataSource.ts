@@ -1,6 +1,11 @@
 import { getMongoUrl } from '@util';
 import { DataSource } from 'typeorm';
-import { SessionEntity, SubscriptionEntity, UserEntity } from './models';
+import {
+  InvoiceEntity,
+  SessionEntity,
+  SubscriptionEntity,
+  UserEntity,
+} from './models';
 
 export const AppDataSource = new DataSource({
   type: 'mongodb',
@@ -8,5 +13,5 @@ export const AppDataSource = new DataSource({
   database: 'cleanarchdb',
   synchronize: true,
   logging: true,
-  entities: [UserEntity, SessionEntity, SubscriptionEntity],
+  entities: [UserEntity, SessionEntity, SubscriptionEntity, InvoiceEntity],
 });

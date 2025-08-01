@@ -28,4 +28,8 @@ export class BaseDataSource<T extends ObjectLiteral, E extends ObjectLiteral>
 
     return resp.toJson();
   }
+
+  async update(search: Partial<T>, data: Partial<Omit<T, 'id' | '_id'>>) {
+    return this.repo.updateOne(search, data);
+  }
 }

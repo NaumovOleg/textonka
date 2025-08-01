@@ -18,4 +18,11 @@ export class BaseRepository<T, D extends IBaseDataSource<T>> {
     const response = await this.dataSource.findOne(searchData);
     return response && new this.entity(response);
   }
+
+  async update(
+    search: Partial<T & { _id?: string }>,
+    data: Partial<T & { _id?: string }>,
+  ) {
+    return this.dataSource.update(search, data);
+  }
 }

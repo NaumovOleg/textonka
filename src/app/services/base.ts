@@ -10,4 +10,11 @@ export abstract class BaseService<T, R extends IBaseRepository<T>> {
   findOne(data: Partial<T & { _id?: string }>) {
     return this.repository.findOne(data);
   }
+
+  update(
+    search: Partial<T & { _id?: string }>,
+    data: Partial<Omit<T, 'id' | '_id'>>,
+  ) {
+    return this.repository.update(search, data);
+  }
 }

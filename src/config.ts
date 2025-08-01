@@ -17,6 +17,7 @@ class Config {
   AWS_ACCOUNT = process.env.AWS_ACCOUNT ?? '';
   REGION = process.env.REGION ?? 'eu-west-1';
   WEBHOOK_SECRET = process.env.WEBHOOK_SECRET ?? '';
+  PAYMENT_TOKEN = process.env.PAYMENT_TOKEN ?? '';
 }
 
 export default new Config();

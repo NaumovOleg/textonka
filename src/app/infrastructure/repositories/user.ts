@@ -1,4 +1,4 @@
-import { User } from '@src/app/domains/entities';
+import { User } from '@entities';
 import { IUserDataSource, IUserRepository } from '../interfaces';
 import { BaseRepository } from './base';
 

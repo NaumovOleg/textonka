@@ -8,7 +8,7 @@ export class CreateSubscriptionUseCase {
   async execute(
     data: Omit<Subscription, 'id' | 'availableGenerations' | 'usedGenerations'>,
   ) {
-    return await this.subscriptionService.create({
+    return this.subscriptionService.create({
       ...data,
       availableGenerations: {
         smartWizard: Config.SMART_WIZARD_FREE_GENERATIONS,
@@ -22,6 +22,6 @@ export class FindSubscriptionUseCase {
   constructor(private subscriptionService: SubscriptionService) {}
 
   async execute(searchData: Partial<Subscription>) {
-    return await this.subscriptionService.findOne(searchData);
+    return this.subscriptionService.findOne(searchData);
   }
 }
