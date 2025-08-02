@@ -12,7 +12,7 @@ import {
   writeIdeaHandler,
 } from './handlers';
 
-export const PostWizard = new Scenes.WizardScene<BotContext>(
+export const SmartWizard = new Scenes.WizardScene<BotContext>(
   WizardType.smart_wizard,
 
   welcomeHandler,

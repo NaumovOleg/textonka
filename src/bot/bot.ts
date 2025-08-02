@@ -1,5 +1,5 @@
 import Config from '@conf';
-import { BotContext } from '@util';
+import { BotContext, WIZARD_COMMANDS } from '@util';
 import { Middleware, Telegraf, session } from 'telegraf';
 import {
   locales,
@@ -64,7 +64,14 @@ export class Textonka extends Telegraf<BotContext> {
 
   initCommands() {
     this.telegram.setMyCommands([
-      { command: 'smartpost', description: 'Start smart post' },
+      {
+        command: WIZARD_COMMANDS.smartwizard,
+        description: 'Start smart wizard',
+      },
+      {
+        command: WIZARD_COMMANDS.quickwizard,
+        description: 'Start quick wizard',
+      },
       { command: 'subscription', description: 'Subscription' },
       { command: 'samples', description: 'Samples' },
       { command: 'help', description: 'Help' },

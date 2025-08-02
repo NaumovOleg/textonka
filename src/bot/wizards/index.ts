@@ -1,5 +1,6 @@
 import { BotContext } from '@util';
 import { Scenes } from 'telegraf';
-import { PostWizard } from './smart';
+import { QuickWizard } from './quick';
+import { SmartWizard } from './smart';
 
-export const stage = new Scenes.Stage<BotContext>([PostWizard]);
+export const stage = new Scenes.Stage<BotContext>([SmartWizard, QuickWizard]);

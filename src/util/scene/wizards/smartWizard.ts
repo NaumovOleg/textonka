@@ -51,7 +51,6 @@ export type SmartWizardEmoji = {
 
 export type SmartWizardSession = Partial<{
   language: 'uk' | 'ru' | 'pl' | 'en';
-  attachmentUrl: string;
   type: SmartWizardType;
   mainIdea: string;
   goal: SmartWizardGoal;

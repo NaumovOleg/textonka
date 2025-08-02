@@ -1,16 +1,12 @@
 import { BotContext } from '@util';
+import { ByeContent } from '../../general.content.drawer';
 import {
   clearMessageText,
   isBackButtonPressed,
   isFinishButtonPressed,
   processButtons,
 } from '../helper';
-import {
-  ByeContent,
-  EmotionContent,
-  ExtraContent,
-  StyleContent,
-} from './content.drawer';
+import { EmotionContent, ExtraContent, StyleContent } from './content.drawer';
 
 export const selectEmotionHandler = async (ctx: BotContext) => {
   if (isFinishButtonPressed(ctx)) {

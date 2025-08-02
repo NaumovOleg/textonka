@@ -1,16 +1,12 @@
 import { BotContext } from '@util';
+import { ByeContent } from '../../general.content.drawer';
 import {
   clearMessageText,
   isBackButtonPressed,
   isFinishButtonPressed,
   processText,
 } from '../helper';
-import {
-  ByeContent,
-  DetailsContent,
-  IdeaContent,
-  TypeContent,
-} from './content.drawer';
+import { DetailsContent, IdeaContent, TypeContent } from './content.drawer';
 
 export const writeIdeaHandler = async (ctx: BotContext) => {
   if (isFinishButtonPressed(ctx)) {

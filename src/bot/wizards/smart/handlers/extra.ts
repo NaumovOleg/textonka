@@ -9,16 +9,12 @@ import {
 import { callbackQuery } from 'telegraf/filters';
 import {
   clearMessageText,
-  editOrReplyMessage,
   isBackButtonPressed,
   isFinishButtonPressed,
 } from '../helper';
-import {
-  AIContent,
-  ByeContent,
-  DetailsContent,
-  ExtraContent,
-} from './content.drawer';
+import { AIContent, DetailsContent, ExtraContent } from './content.drawer';
+
+import { ByeContent, editOrReplyMessage } from '../../general.content.drawer';
 
 export const handleExtraSelection = async (ctx: BotContext) => {
   let data;

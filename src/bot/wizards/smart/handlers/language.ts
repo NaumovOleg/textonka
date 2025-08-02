@@ -1,10 +1,11 @@
 import { BotContext } from '@util';
+import { ByeContent } from '../../general.content.drawer';
 import {
   clearMessageText,
   isFinishButtonPressed,
   processButtons,
 } from '../helper';
-import { ByeContent, LanguageContent, TypeContent } from './content.drawer';
+import { LanguageContent, TypeContent } from './content.drawer';
 
 export const languageHandler = async (ctx: BotContext) => {
   if (isFinishButtonPressed(ctx)) {

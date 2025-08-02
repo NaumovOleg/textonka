@@ -15,10 +15,11 @@ import {
   buildChecklistButtons,
   buildChecklistText,
   drawCurrentStep,
-  editOrReplyMessage,
   getButtonsTranslatePrefix,
   getNavigationButtons,
 } from '../helper';
+
+import { editOrReplyMessage } from '../../general.content.drawer';
 
 export const WelcomeContent = async (ctx: BotContext) => {
   await ctx.reply(ctx.i18n.t(`wizards.smart-wizard.text.welcome`));
@@ -173,9 +174,4 @@ export const AIContent = async (ctx: BotContext, text: string) => {
   return editOrReplyMessage(ctx, text, {
     parse_mode: 'HTML',
   });
-};
-
-export const ByeContent = (ctx: BotContext) => {
-  const text = `<b>${ctx.i18n.t(`wizards.${SmartWizardName}.common.bye`)}</b>`;
-  return editOrReplyMessage(ctx, text, { parse_mode: 'HTML' });
 };

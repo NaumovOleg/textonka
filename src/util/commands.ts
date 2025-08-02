@@ -11,3 +11,8 @@ export const COMMON_COMMANDS = {
   quit: 'quit',
   samples: 'samples',
 };
+
+export const WIZARD_COMMANDS = {
+  smartwizard: 'smartwizard',
+  quickwizard: 'quickwizard',
+};
