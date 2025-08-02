@@ -21,9 +21,15 @@
         "description": "Шаблонный текст под пост в соцсети на базе ИИ"
       }
     },
+    "available_packages": "<b>📦 Доступные пакеты</b>",
     "successful_payment": "✅ Оплата прошла успешно на сумму ${price} — ${count} ${type}-генераций",
     "by_buttons": {
-      "smart": "${count} Smart генераций — ${price}"
+      "smart": "${count} Smart генераций — ${price}",
+      "quick": "${count} Quick — ${price}",
+      "price-list": {
+        "smart": "Купить Smart wizard",
+        "quick": "Купить Quick wizard"
+      }
     },
     "title": "<b>🔔 Ваша подписка:</b>\nУ вас осталось генераций:\n<b>🧠 Smart Wizard:</b> <code>${smartWizard}</code>\n<b>🪄 Simple Wizard:</b> <code>${simpleWizard}</code>\n\n<a>🛒 Купить генерации</a>"
   },

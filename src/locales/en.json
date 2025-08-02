@@ -21,9 +21,15 @@
         "description": "AI-generated text template for your social media post"
       }
     },
+    "available_packages": "<b>📦 Available packages</b>",
     "successful_payment": "✅ Payment was successful: ${price} — ${count} ${type}-generation",
     "by_buttons": {
-      "smart": "${count} Smart generations — ${price}"
+      "smart": "${count} Smart generations — ${price}",
+      "quick": "${count} Quick — ${price}",
+      "price-list": {
+        "smart": "Buy Smart wizard",
+        "quick": "Buy Quick wizard"
+      }
     },
     "title": "<b>🔔 Your subscription:</b>\nYou have the following generations left:\n<b>🧠 Smart Wizard:</b> <code>${smartWizard}</code>\n<b>🪄 Simple Wizard:</b> <code>${simpleWizard}</code>\n<a>🛒 Buy more generations</a>"
   },

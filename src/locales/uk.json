@@ -21,9 +21,15 @@
         "description": "Шаблонний текст для посту в соцмережі на основі ШІ"
       }
     },
+    "available_packages": "<b>📦 Доступні пакети</b>",
     "successful_payment": "✅ Оплата пройшла успішно на суму ${price} — ${count} ${type}-генерацій",
     "by_buttons": {
-      "smart": "${count} Smart — ${price}"
+      "smart": "${count} Smart — ${price}",
+      "quick": "${count} Quick — ${price}",
+      "price-list": {
+        "smart": "Придбати Smart wizard",
+        "quick": "Придбати Quick wizard"
+      }
     },
     "title": "<b>🔔 Ваша підписка:</b>\nУ вас залишилось генерацій:\n<b>🧠 Smart Wizard:</b> <code>${smartWizard}</code>\n<b>🪄 Simple Wizard:</b> <code>${simpleWizard}</code>\n\n<a>🛒 Купити генерації</a>"
   },

@@ -1,10 +1,10 @@
-import { INVOICE_STATUS, PRODUCT_TYPE, type Invoice as InvoiceT } from '@util';
+import { INVOICE_STATUS, PACKAGES, type Invoice as InvoiceT } from '@util';
 
 export class Invoice {
   id: string;
   user: string;
   amount: number;
-  product: PRODUCT_TYPE;
+  product: PACKAGES;
   currency: string;
   status: INVOICE_STATUS;
   count: number;

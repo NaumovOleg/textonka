@@ -1,21 +1,21 @@
 import Conf from '@conf';
 import { Subscription } from '@entities';
-import { createInvoiceUC } from '@shared/useCases';
 import {
-  INVOICE_STATUS,
-  PRODUCT_TYPE,
+  PACKAGES,
   QUICK_GENERATIONS,
   QUICK_SUBSCRIPTION_BUTTONS,
   SMART_GENERATIONS,
   SMART_SUBSCRIPTION_BUTTONS,
   splitByChunks,
+  SUBSCRIPTION_COMMANDS,
   type BotContext,
 } from '@util';
 import { Composer, Markup } from 'telegraf';
+import { callbackQuery } from 'telegraf/filters';
 
 const composer = new Composer<BotContext>();
 
-composer.command('subscription', async (ctx) => {
+composer.command(SUBSCRIPTION_COMMANDS.subscription, async (ctx) => {
   ctx.session = {};
   const subscription = ctx.state.subscription as Subscription;
   const text = ctx.i18n.t('subscription.title', {
@@ -23,15 +23,16 @@ composer.command('subscription', async (ctx) => {
     simpleWizard: 0,
   });
 
-  const buttons = Object.values(SMART_GENERATIONS).map((product) =>
+  const buttons = [
     Markup.button.callback(
-      ctx.i18n.t(`subscription.by_buttons.smart`, {
-        count: product.count,
-        price: `${product.price / 100}/${product.currency}`,
-      }),
-      product.command,
+      ctx.i18n.t(`subscription.by_buttons.price-list.smart`),
+      SUBSCRIPTION_COMMANDS.smart_prices,
     ),
-  );
+    Markup.button.callback(
+      ctx.i18n.t(`subscription.by_buttons.price-list.quick`),
+      SUBSCRIPTION_COMMANDS.quick_prices,
+    ),
+  ];
 
   return ctx.reply(text, {
     parse_mode: 'HTML',
@@ -39,7 +40,35 @@ composer.command('subscription', async (ctx) => {
   });
 });
 
-composer.action(/^(smart|quick)_\d+$/, async (ctx) => {
+composer.action(SUBSCRIPTION_COMMANDS.price_list, async (ctx) => {
+  ctx.session = {};
+  if (!ctx.has(callbackQuery('data'))) {
+    return null;
+  }
+
+  const key = ctx.callbackQuery.data.split('-')[0] as PACKAGES;
+  const generationsMap = {
+    [PACKAGES.smart]: SMART_GENERATIONS,
+    [PACKAGES.quick]: QUICK_GENERATIONS,
+  };
+
+  const buttons = Object.values(generationsMap[key]).map((product) =>
+    Markup.button.callback(
+      ctx.i18n.t(`subscription.by_buttons.${key}`, {
+        count: product.count,
+        price: `${product.price / 100}/${product.currency}`,
+      }),
+      product.command,
+    ),
+  );
+
+  return ctx.reply(ctx.i18n.t('subscription.available_packages'), {
+    parse_mode: 'HTML',
+    reply_markup: Markup.inlineKeyboard(splitByChunks(buttons, 1)).reply_markup,
+  });
+});
+
+composer.action(SUBSCRIPTION_COMMANDS.invoice, async (ctx) => {
   const command = ctx.match[0] as
     | QUICK_SUBSCRIPTION_BUTTONS
     | SMART_SUBSCRIPTION_BUTTONS;
@@ -48,22 +77,12 @@ composer.action(/^(smart|quick)_\d+$/, async (ctx) => {
     SMART_GENERATIONS[command as SMART_SUBSCRIPTION_BUTTONS] ??
     QUICK_GENERATIONS[command as QUICK_SUBSCRIPTION_BUTTONS];
 
-  const invoice = await createInvoiceUC.execute({
-    user: ctx.state.user.id,
-    product: PRODUCT_TYPE.smart,
-    amount: product.price,
-    currency: product.currency,
-    status: INVOICE_STATUS.PENDING,
-    count: product.count,
-  });
-
   return ctx.replyWithInvoice({
     title: ctx.i18n.t(product.titleT, { count: product.count }),
     description: ctx.i18n.t(product.descriptionT),
     payload: JSON.stringify({
       user: ctx.state.user.id,
       product: product.id,
-      invoice: invoice.id,
     }),
     provider_token: Conf.PAYMENT_TOKEN,
     currency: product.currency,

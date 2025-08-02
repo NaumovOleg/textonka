@@ -1,5 +1,5 @@
 import { subscriptionService } from '@shared/services';
-import { updateInvoiceUC } from '@shared/useCases';
+import { createInvoiceUC } from '@shared/useCases';
 import {
   type BotContext,
   INVOICE_STATUS,
@@ -33,17 +33,22 @@ composer.on(message('successful_payment'), async (ctx) => {
     SMART_GENERATIONS[payload.product as SMART_SUBSCRIPTION_BUTTONS] ??
     QUICK_GENERATIONS[payload.product as QUICK_SUBSCRIPTION_BUTTONS];
 
-  await Promise.all([
-    subscriptionService.addGenerations(
-      payload.user,
-      product.type,
-      product.count,
-    ),
-    updateInvoiceUC.execute(
-      { id: payload.invoice },
-      { status: INVOICE_STATUS.COMPLETED },
-    ),
-  ]);
+  const createInvoice = createInvoiceUC.execute({
+    user: ctx.state.user.id,
+    product: product.package,
+    amount: product.price,
+    currency: product.currency,
+    status: INVOICE_STATUS.COMPLETED,
+    count: product.count,
+  });
+
+  const updateSubscription = subscriptionService.addGenerations(
+    payload.user,
+    product.type,
+    product.count,
+  );
+
+  await Promise.all([updateSubscription, createInvoice]);
 
   return ctx.reply(
     ctx.i18n.t('subscription.successful_payment', {

@@ -1,4 +1,4 @@
-import { INVOICE_STATUS, PRODUCT_TYPE } from '@util';
+import { INVOICE_STATUS, PACKAGES } from '@util';
 import { IsNumber, IsString } from 'class-validator';
 import { ObjectId } from 'mongodb';
 import { Column, Entity, Index } from 'typeorm';
@@ -7,7 +7,6 @@ import { BaseEntity } from './base';
 @Entity('invoice')
 export class InvoiceEntity extends BaseEntity {
   @Column('text')
-  @IsString()
   @Index('user')
   user: ObjectId;
 
@@ -30,9 +29,13 @@ export class InvoiceEntity extends BaseEntity {
   })
   status: INVOICE_STATUS;
 
-  @Column({
-    array: false,
-    enum: PRODUCT_TYPE,
-  })
-  product: PRODUCT_TYPE;
+  @Column({ array: false, enum: PACKAGES })
+  product: PACKAGES;
+
+  constructor(data?: Partial<InvoiceEntity>) {
+    super(data);
+    if (data?.user) {
+      this.user = new ObjectId(data.user);
+    }
+  }
 }

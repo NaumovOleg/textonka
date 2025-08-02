@@ -39,7 +39,6 @@ export class SubscriptionEntity extends BaseEntity {
   usedGenerations: UsedGenerations;
 
   constructor(data?: Partial<SubscriptionEntity>) {
-    console.log('subscription dataa', data);
     super(data);
     if (data?.user) {
       this.user = new ObjectId(data.user);
