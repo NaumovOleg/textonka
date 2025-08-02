@@ -37,6 +37,17 @@ export class Textonka extends Telegraf<BotContext> {
     process.once('SIGINT', () => this.stop('SIGINT'));
     process.once('SIGTERM', () => this.stop('SIGTERM'));
     this.initialized = true;
+
+    this.catch((err, ctx) => {
+      console.error(err);
+      console.error(
+        '❌ Unhandled error occurred:',
+        JSON.stringify(err, null, 2),
+      );
+      console.error('📩 Context info:', ctx.update);
+
+      ctx.reply?.('Произошла ошибка. Попробуйте позже.');
+    });
   }
 
   initMiddlewares(middlewares: Middleware<BotContext>[]) {

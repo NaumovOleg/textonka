@@ -16,6 +16,10 @@ export class InvoiceEntity extends BaseEntity {
   amount: number;
 
   @Column('number')
+  @IsNumber()
+  count: number;
+
+  @Column('number')
   @IsString()
   currency: string;
 

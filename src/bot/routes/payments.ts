@@ -33,8 +33,6 @@ composer.on(message('successful_payment'), async (ctx) => {
     SMART_GENERATIONS[payload.product as SMART_SUBSCRIPTION_BUTTONS] ??
     QUICK_GENERATIONS[payload.product as QUICK_SUBSCRIPTION_BUTTONS];
 
-  console.log('Успешная оплата:', payment);
-
   await Promise.all([
     subscriptionService.addGenerations(
       payload.user,
@@ -47,7 +45,13 @@ composer.on(message('successful_payment'), async (ctx) => {
     ),
   ]);
 
-  return ctx.reply(ctx.i18n.t('subscription.successful_payment'));
+  return ctx.reply(
+    ctx.i18n.t('subscription.successful_payment', {
+      price: `${product.price / 100}${product.currency}`,
+      count: product.count,
+      type: product.name,
+    }),
+  );
 });
 
 export const paymentsRouter = composer;

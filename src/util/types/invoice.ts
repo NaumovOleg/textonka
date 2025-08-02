@@ -15,4 +15,5 @@ export type Invoice = {
   product: PRODUCT_TYPE;
   currency: string;
   status: INVOICE_STATUS;
+  count: number;
 };

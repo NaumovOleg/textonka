@@ -7,6 +7,7 @@ export class Invoice {
   product: PRODUCT_TYPE;
   currency: string;
   status: INVOICE_STATUS;
+  count: number;
 
   constructor(data: InvoiceT) {
     this.id = data.id;
@@ -15,5 +16,6 @@ export class Invoice {
     this.product = data.product;
     this.currency = data.currency;
     this.status = data.status;
+    this.count = data.count;
   }
 }

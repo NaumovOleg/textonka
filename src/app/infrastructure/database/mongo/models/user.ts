@@ -1,4 +1,4 @@
-import { IsBoolean, IsNumber, IsString } from 'class-validator';
+import { IsBoolean, IsNumber, IsOptional, IsString } from 'class-validator';
 import { Column, Entity, Index } from 'typeorm';
 import { BaseEntity } from './base';
 
@@ -15,18 +15,23 @@ export class UserEntity extends BaseEntity {
   @Column('text')
   first_name: string;
   @IsString()
+  @IsOptional()
   @Column('text', { nullable: true })
   language_code?: string;
   @IsString()
+  @IsOptional()
   @Column('text', { nullable: true })
   added_to_attachment_menu?: boolean;
   @IsString()
+  @IsOptional()
   @Column('text', { nullable: true })
   username?: string;
   @IsString()
+  @IsOptional()
   @Column('text', { nullable: true })
   is_premium?: boolean;
   @IsString()
+  @IsOptional()
   @Column('text', { nullable: true })
   last_name?: string;
 }

@@ -31,6 +31,7 @@ export const SMART_GENERATIONS = {
     descriptionT: 'subscription.products.smart.description',
     command: SMART_SUBSCRIPTION_BUTTONS.smart_15,
     currency: 'UAH',
+    name: 'Smart',
   },
   [SMART_SUBSCRIPTION_BUTTONS.smart_50]: {
     id: SMART_SUBSCRIPTION_BUTTONS.smart_50,
@@ -41,6 +42,7 @@ export const SMART_GENERATIONS = {
     descriptionT: 'subscription.products.smart.description',
     command: SMART_SUBSCRIPTION_BUTTONS.smart_50,
     currency: 'UAH',
+    name: 'Smart',
   },
   [SMART_SUBSCRIPTION_BUTTONS.smart_120]: {
     id: SMART_SUBSCRIPTION_BUTTONS.smart_120,
@@ -51,6 +53,7 @@ export const SMART_GENERATIONS = {
     descriptionT: 'subscription.products.smart.description',
     command: SMART_SUBSCRIPTION_BUTTONS.smart_120,
     currency: 'UAH',
+    name: 'Smart',
   },
 };
 
@@ -64,6 +67,7 @@ export const QUICK_GENERATIONS = {
     descriptionT: 'subscription.products.smart.description',
     command: QUICK_SUBSCRIPTION_BUTTONS.quick_30,
     currency: 'UAH',
+    name: 'Quick',
   },
   [QUICK_SUBSCRIPTION_BUTTONS.quick_50]: {
     id: QUICK_SUBSCRIPTION_BUTTONS.quick_50,
@@ -74,6 +78,7 @@ export const QUICK_GENERATIONS = {
     descriptionT: 'subscription.products.smart.description',
     command: QUICK_SUBSCRIPTION_BUTTONS.quick_50,
     currency: 'UAH',
+    name: 'Quick',
   },
   [QUICK_SUBSCRIPTION_BUTTONS.quick_100]: {
     id: QUICK_SUBSCRIPTION_BUTTONS.quick_100,
@@ -84,6 +89,7 @@ export const QUICK_GENERATIONS = {
     descriptionT: 'subscription.products.smart.description',
     command: QUICK_SUBSCRIPTION_BUTTONS.quick_100,
     currency: 'UAH',
+    name: 'Quick',
   },
 };
 
