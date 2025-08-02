@@ -1,3 +1,5 @@
+import { WIZARD_LANGUAGES } from '../common';
+
 export const QuickWizardName = 'quick-wizard';
 
 export type QuickWizardSession = Partial<{
@@ -8,3 +10,12 @@ export type QuickWizardSession = Partial<{
 export enum QuickWizardGeneralButtons {
   finish_wizard = `${QuickWizardName}_finish_wizard`,
 }
+
+export const QuickWizardButtons = {
+  language: {
+    [`${QuickWizardName}_language_${WIZARD_LANGUAGES.en}`]: WIZARD_LANGUAGES.en,
+    [`${QuickWizardName}_language_${WIZARD_LANGUAGES.ru}`]: WIZARD_LANGUAGES.ru,
+    [`${QuickWizardName}_language_${WIZARD_LANGUAGES.uk}`]: WIZARD_LANGUAGES.uk,
+    [`${QuickWizardName}_language_${WIZARD_LANGUAGES.pl}`]: WIZARD_LANGUAGES.pl,
+  },
+};

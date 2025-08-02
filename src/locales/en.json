@@ -109,7 +109,16 @@
       "buttons": {
         "general": {
           "finish": "Finish"
+        },
+        "language": {
+          "quick-wizard_language_uk": "🇺🇦 Ukrainian",
+          "quick-wizard_language_ru": "🇷🇺 Russian",
+          "quick-wizard_language_en": "🇬🇧 English",
+          "quick-wizard_language_pl": "🇵🇱 Poland"
         }
+      },
+      "text": {
+        "language": "🌐 What language should the post be generated in?"
       },
       "welcome": "<b>📸 Send a photo — and we'll create the perfect caption for your post</b>\n\n🧠 Our neural network will analyze the image and generate matching text."
     }

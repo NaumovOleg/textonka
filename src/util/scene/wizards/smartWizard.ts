@@ -1,11 +1,7 @@
+import { WIZARD_LANGUAGES } from '../common';
+
 export const SmartWizardName = 'smart-wizard';
 export const SMART_WIZARD_STEPS_COUNT = 8;
-export enum SMART_WIZARD_LANGUAGES {
-  ru = 'ru',
-  en = 'en',
-  uk = 'uk',
-  pl = 'pl',
-}
 
 export enum SmartWizardType {
   personal = 'personal',
@@ -129,13 +125,9 @@ export const SmartWizardButtons = {
       SmartWizardEmotion.smile,
   },
   language: {
-    [`${SmartWizardName}_language_${SMART_WIZARD_LANGUAGES.en}`]:
-      SMART_WIZARD_LANGUAGES.en,
-    [`${SmartWizardName}_language_${SMART_WIZARD_LANGUAGES.ru}`]:
-      SMART_WIZARD_LANGUAGES.ru,
-    [`${SmartWizardName}_language_${SMART_WIZARD_LANGUAGES.uk}`]:
-      SMART_WIZARD_LANGUAGES.uk,
-    [`${SmartWizardName}_language_${SMART_WIZARD_LANGUAGES.pl}`]:
-      SMART_WIZARD_LANGUAGES.pl,
+    [`${SmartWizardName}_language_${WIZARD_LANGUAGES.en}`]: WIZARD_LANGUAGES.en,
+    [`${SmartWizardName}_language_${WIZARD_LANGUAGES.ru}`]: WIZARD_LANGUAGES.ru,
+    [`${SmartWizardName}_language_${WIZARD_LANGUAGES.uk}`]: WIZARD_LANGUAGES.uk,
+    [`${SmartWizardName}_language_${WIZARD_LANGUAGES.pl}`]: WIZARD_LANGUAGES.pl,
   },
 };

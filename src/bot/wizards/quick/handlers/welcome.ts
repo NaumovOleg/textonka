@@ -2,7 +2,7 @@ import { findSubscriptionUC } from '@shared/useCases';
 import { BotContext, WizardType } from '@util';
 import { ByeContent } from '../../general.content.drawer';
 import { isFinishButtonPressed } from '../helper';
-import { WelcomeContent } from './content.drawer';
+import { LanguageContent, WelcomeContent } from './content.drawer';
 
 export const welcomeHandler = async (ctx: BotContext) => {
   if (isFinishButtonPressed(ctx)) {
@@ -24,4 +24,5 @@ export const welcomeHandler = async (ctx: BotContext) => {
   ctx.wizard.next();
 
   await WelcomeContent(ctx);
+  return LanguageContent(ctx);
 };
