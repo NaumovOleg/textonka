@@ -13,7 +13,7 @@ export const SMART_PRODUCTS = {
   [SMART_SUBSCRIPTION_BUTTONS.smart_15]: {
     id: SMART_SUBSCRIPTION_BUTTONS.smart_15,
     count: 15,
-    price: 5000,
+    price: 7900,
     type: GENERATIONS_TYPES.smartWizard,
     titleT: 'subscription.products.smart.title',
     descriptionT: 'subscription.products.smart.description',
@@ -26,7 +26,7 @@ export const SMART_PRODUCTS = {
   [SMART_SUBSCRIPTION_BUTTONS.smart_50]: {
     id: SMART_SUBSCRIPTION_BUTTONS.smart_50,
     count: 50,
-    price: 10000,
+    price: 19900,
     type: GENERATIONS_TYPES.smartWizard,
     titleT: 'subscription.products.smart.title',
     descriptionT: 'subscription.products.smart.description',
@@ -39,7 +39,7 @@ export const SMART_PRODUCTS = {
   [SMART_SUBSCRIPTION_BUTTONS.smart_120]: {
     id: SMART_SUBSCRIPTION_BUTTONS.smart_120,
     count: 120,
-    price: 18000,
+    price: 39900,
     type: GENERATIONS_TYPES.smartWizard,
     titleT: 'subscription.products.smart.title',
     descriptionT: 'subscription.products.smart.description',
@@ -55,7 +55,7 @@ export const QUICK_PRODUCTS = {
   [QUICK_SUBSCRIPTION_BUTTONS.quick_30]: {
     id: QUICK_SUBSCRIPTION_BUTTONS.quick_30,
     count: 30,
-    price: 3000,
+    price: 10900,
     type: GENERATIONS_TYPES.quickWizard,
     titleT: 'subscription.products.smart.title',
     descriptionT: 'subscription.products.smart.description',
@@ -68,7 +68,7 @@ export const QUICK_PRODUCTS = {
   [QUICK_SUBSCRIPTION_BUTTONS.quick_50]: {
     id: QUICK_SUBSCRIPTION_BUTTONS.quick_50,
     count: 50,
-    price: 4500,
+    price: 14900,
     type: GENERATIONS_TYPES.quickWizard,
     titleT: 'subscription.products.smart.title',
     descriptionT: 'subscription.products.smart.description',
@@ -81,7 +81,7 @@ export const QUICK_PRODUCTS = {
   [QUICK_SUBSCRIPTION_BUTTONS.quick_100]: {
     id: QUICK_SUBSCRIPTION_BUTTONS.quick_100,
     count: 100,
-    price: 8000,
+    price: 23900,
     type: GENERATIONS_TYPES.quickWizard,
     titleT: 'subscription.products.smart.title',
     descriptionT: 'subscription.products.smart.description',
