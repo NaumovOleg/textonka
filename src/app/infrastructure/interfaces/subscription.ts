@@ -5,10 +5,8 @@ import { IBaseDataSource } from './base.dataSource';
 import { IBaseRepository } from './base.repository';
 
 export interface ISubscriptionDataSource<T> extends IBaseDataSource<T> {
-  decreaseLeftSmartWizardGenerations(
-    user: string,
-  ): Promise<UpdateResult | Document>;
-  increaseSmartWizardGenerations(
+  performGeneration(
+    wizard: GENERATIONS_TYPES,
     user: string,
   ): Promise<UpdateResult | Document>;
 
@@ -20,10 +18,8 @@ export interface ISubscriptionDataSource<T> extends IBaseDataSource<T> {
 }
 
 export interface ISubscriptionRepository extends IBaseRepository<Subscription> {
-  decreaseLeftSmartWizardGenerations(
-    user: string,
-  ): Promise<Document | UpdateResult>;
-  increaseSmartWizardGenerations(
+  performGeneration(
+    wizard: GENERATIONS_TYPES,
     user: string,
   ): Promise<Document | UpdateResult>;
   addGenerations(

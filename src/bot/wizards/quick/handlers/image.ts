@@ -1,5 +1,5 @@
-import { aiService } from '@shared/services';
-import { BotContext, WizardType } from '@util';
+import { aiService, subscriptionService } from '@shared/services';
+import { BotContext, GENERATIONS_TYPES, WizardType } from '@util';
 import { ByeContent } from '../../general.content.drawer';
 import {
   clearMessageText,
@@ -28,5 +28,11 @@ export const imageHandler = async (ctx: BotContext) => {
     WizardType.quick_wizard,
     ctx.scene.session[WizardType.quick_wizard],
   );
-  return ctx.reply(captcha);
+
+  await subscriptionService.performGeneration(
+    GENERATIONS_TYPES.quickWizard,
+    ctx.state.user.id,
+  );
+  await ctx.reply(captcha);
+  return ctx.scene.leave();
 };

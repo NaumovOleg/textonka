@@ -17,12 +17,8 @@ export class SubscriptionRepository
     super(entity, dataSource);
   }
 
-  decreaseLeftSmartWizardGenerations(user: string) {
-    return this.dataSource.decreaseLeftSmartWizardGenerations(user);
-  }
-
-  increaseSmartWizardGenerations(user: string) {
-    return this.dataSource.increaseSmartWizardGenerations(user);
+  performGeneration(type: GENERATIONS_TYPES, user: string) {
+    return this.dataSource.performGeneration(type, user);
   }
 
   addGenerations(user: string, type: GENERATIONS_TYPES, count: number) {

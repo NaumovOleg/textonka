@@ -2,6 +2,7 @@ import { aiService, subscriptionService } from '@shared/services';
 import { findSubscriptionUC } from '@shared/useCases';
 import {
   BotContext,
+  GENERATIONS_TYPES,
   SmartWizardGeneralButtons,
   SmartWizardName,
   WizardType,
@@ -59,12 +60,11 @@ export const handleExtraSelection = async (ctx: BotContext) => {
       ctx.scene.session[WizardType.smart_wizard],
     );
 
+    await subscriptionService.performGeneration(
+      GENERATIONS_TYPES.smartWizard,
+      ctx.state.user.id,
+    );
     await AIContent(ctx, prompt);
-    await Promise.all([
-      subscriptionService.decreaseLeftSmartWizardGenerations(ctx.state.user.id),
-      subscriptionService.increaseSmartWizardGenerations(ctx.state.user.id),
-    ]);
-
     return ctx.scene.leave();
   }
 

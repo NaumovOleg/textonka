@@ -107,6 +107,17 @@ The user will send you input in **structured JSON format**, like this:
   - No explanation or instructions.
   - Markdown formatting is allowed (e.g. **bold** or emojis).`;
 
+const quickWizardSystemPrompt =
+  `You are a social media assistant that analyzes media (photo, video thumbnail, or animation frame)
+and generates engaging, emotional social media captions with emojis, in the given language.
+Your captions should be relevant to the content of the image and written in the language provided
+by the user. Be expressive, concise, and creative. Respond only with the caption text for the
+input media. Do not include any explanations, formatting, markdown, or emojis.
+quotes, or commentary.
+ `
+    .split('\n')
+    .join(' ');
+
 export const generateSmartWizardPrompt = (
   input: SmartWizardSession,
 ): Prompt => {
@@ -117,15 +128,25 @@ export const generateSmartWizardPrompt = (
 };
 
 export const generateQuickWizardPrompt = (data: QuickWizardSession): Prompt => {
+  const language = languageMap[data?.language ?? 'uk'] ?? 'Ukrainian';
+
   return [
     {
       role: 'system',
-      content:
-        'You are a social media assistant that analyzes photos and generates engaging, emotional social media captions with emojis. Your captions should be relevant to the content of the image and written in the language provided by the user. Be expressive, concise, and creative.',
+      content: quickWizardSystemPrompt,
     },
     {
       role: 'user',
-      content: `Analyze the photo at this URL:\n${data.attachmentUrl}\n\nPlease generate a short, emotional caption in ${data.language} with emojis. The goal is to make it suitable for posting on Instagram or Telegram.\n\nLanguage: ${data.language}`,
+      content: JSON.stringify([
+        {
+          type: 'text',
+          text: `Analyze this media and write a short engaging caption in ${language} suitable for social media.`,
+        },
+        {
+          type: 'image_url',
+          image_url: { url: data.attachmentUrl },
+        },
+      ]),
     },
   ];
 };

@@ -53,8 +53,6 @@ export const getAttachment = async (ctx: BotContext) => {
 
   let attachment: Attachment | undefined;
 
-  console.log(JSON.stringify(ctx.message, null, 1.5));
-
   if ('photo' in ctx.message && Array.isArray(ctx.message.photo)) {
     const photoArray = ctx.message.photo;
     const photo = photoArray[photoArray.length - 1];
