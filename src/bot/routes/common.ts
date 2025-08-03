@@ -1,13 +1,16 @@
+import Conf from '@conf';
 import { type BotContext, COMMON_COMMANDS } from '@util';
-import { Composer } from 'telegraf';
+import { Composer, Markup } from 'telegraf';
 
 const composer = new Composer<BotContext>();
 
-composer.command(COMMON_COMMANDS.start, async (ctx) => {
-  ctx.session = {};
-  return ctx.reply(ctx.i18n.t('welcome_message'), {
-    parse_mode: 'HTML',
-  });
+composer.start((ctx) => {
+  return ctx.reply(
+    ctx.i18n.t('welcome_message'),
+    Markup.keyboard([
+      [COMMON_COMMANDS.startQuickWizard, COMMON_COMMANDS.startSmartWizard],
+    ]).resize(),
+  );
 });
 
 composer.command(COMMON_COMMANDS.quit, async (ctx) => {
@@ -23,6 +26,27 @@ composer.command(COMMON_COMMANDS.samples, async (ctx) => {
   const sample3 = ctx.i18n.t('before_after.samples.sample_2');
   return ctx.reply([sample1, sample2, sample3].join('\n\n\n\n'), {
     parse_mode: 'HTML',
+  });
+});
+
+composer.command(COMMON_COMMANDS.info, async (ctx) => {
+  const text = ctx.i18n.t('legal_info.text');
+  return ctx.reply(text, {
+    parse_mode: 'HTML',
+    reply_markup: {
+      inline_keyboard: [
+        [
+          {
+            text: ctx.i18n.t('legal_info.buttons.offer'),
+            url: Conf.OFFER_LINK,
+          },
+          {
+            text: ctx.i18n.t('legal_info.buttons.privacy'),
+            url: Conf.PRIVACY_LINK,
+          },
+        ],
+      ],
+    },
   });
 });
 

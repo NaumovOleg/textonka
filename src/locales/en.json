@@ -124,5 +124,13 @@
       },
       "welcome": "<b>📸 Send a photo — and we'll create the perfect caption for your post</b>\n\n🧠 Our neural network will analyze the image and generate matching text."
     }
-  }
+  },
+  "legal_info": {
+    "text": "<b>⚖️ Legal Information</b>",
+    "buttons": {
+      "offer": "Privacy Policy",
+      "privacy": "Public Offer"
+    }
+  },
+  "error": "❌ An error occurred. Please try again later."
 }

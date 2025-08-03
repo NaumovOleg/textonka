@@ -1,10 +1,5 @@
 import Config from '@conf';
-import {
-  BotContext,
-  COMMON_COMMANDS,
-  SUBSCRIPTION_COMMANDS,
-  WIZARD_COMMANDS,
-} from '@util';
+import { BotContext, COMMON_COMMANDS, SUBSCRIPTION_COMMANDS } from '@util';
 import { Middleware, Telegraf, session } from 'telegraf';
 import {
   locales,
@@ -30,6 +25,7 @@ export class Textonka extends Telegraf<BotContext> {
       userMiddleware,
       subscriptionMiddleware,
     ]);
+
     this.initRoutes([commonRouter, subscriptionRouter, paymentsRouter]);
     this.initWizards([stage.middleware(), wizardRouter]);
 
@@ -39,19 +35,17 @@ export class Textonka extends Telegraf<BotContext> {
       this.launch();
       console.log('Bot launched in polling mode');
     }
+
     process.once('SIGINT', () => this.stop('SIGINT'));
     process.once('SIGTERM', () => this.stop('SIGTERM'));
     this.initialized = true;
 
     this.catch((err, ctx) => {
       console.error(err);
-      console.error(
-        '❌ Unhandled error occurred:',
-        JSON.stringify(err, null, 2),
-      );
+      console.error('Unhandled error occurred:', JSON.stringify(err, null, 2));
       console.error('📩 Context info:', ctx.update);
 
-      ctx.reply?.('Произошла ошибка. Попробуйте позже.');
+      ctx.reply?.(ctx.i18n.t('error'));
     });
   }
 
@@ -69,17 +63,21 @@ export class Textonka extends Telegraf<BotContext> {
 
   initCommands() {
     this.telegram.setMyCommands([
-      {
-        command: WIZARD_COMMANDS.smartwizard,
-        description: 'Start smart wizard',
-      },
-      {
-        command: WIZARD_COMMANDS.quickwizard,
-        description: 'Start quick wizard',
-      },
+      // {
+      //   command: WIZARD_COMMANDS.smartwizard,
+      //   description: 'Start smart wizard',
+      // },
+      // {
+      //   command: WIZARD_COMMANDS.quickwizard,
+      //   description: 'Start quick wizard',
+      // },
       {
         command: SUBSCRIPTION_COMMANDS.subscription,
         description: 'Subscription',
+      },
+      {
+        command: COMMON_COMMANDS.info,
+        description: 'Info',
       },
       { command: COMMON_COMMANDS.samples, description: 'Samples' },
       { command: COMMON_COMMANDS.help, description: 'Help' },

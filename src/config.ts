@@ -26,6 +26,8 @@ class Config {
   IMAGE_AI_MODEL = process.env.IMAGE_AI_MODEL ?? '';
   TEXT_AI_MODEL = process.env.TEXT_AI_MODEL ?? '';
   AI_URL = process.env.AI_URL ?? '';
+  PRIVACY_LINK = process.env.PRIVACY_LINK ?? '';
+  OFFER_LINK = process.env.OFFER_LINK ?? '';
 }
 
 export default new Config();

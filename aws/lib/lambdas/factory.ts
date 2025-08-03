@@ -34,7 +34,8 @@ export const LambdaFactoryConstruct = (scope: Construct, id: string, props: Part
             IMAGE_AI_MODEL: Conf.IMAGE_AI_MODEL,
             TEXT_AI_MODEL: Conf.TEXT_AI_MODEL,
             AI_URL: Conf.AI_API_KEY,
-          
+            OFFER_LINK: Conf.OFFER_LINK,
+            PRIVACY_LINK: Conf.PRIVACY_LINK,   
         },
         ...props,
     });

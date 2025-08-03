@@ -11,6 +11,9 @@ export const COMMON_COMMANDS = {
   quit: 'quit',
   samples: 'samples',
   help: 'help',
+  info: 'info',
+  startSmartWizard: 'Start smart wizard',
+  startQuickWizard: 'Start quick wizard',
 };
 
 export const WIZARD_COMMANDS = {
