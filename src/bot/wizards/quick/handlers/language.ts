@@ -5,7 +5,7 @@ import {
   isFinishButtonPressed,
   processButtons,
 } from '../helper';
-import { ImageContent, LanguageContent } from './content.drawer';
+import { ImageContent } from './content.drawer';
 
 export const languageHandler = async (ctx: BotContext) => {
   if (isFinishButtonPressed(ctx)) {
@@ -23,6 +23,4 @@ export const languageHandler = async (ctx: BotContext) => {
     ctx.wizard.next();
     return ImageContent(ctx);
   }
-
-  return LanguageContent(ctx);
 };

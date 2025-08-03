@@ -10,6 +10,7 @@ export const COMMON_COMMANDS = {
   start: 'start',
   quit: 'quit',
   samples: 'samples',
+  help: 'help',
 };
 
 export const WIZARD_COMMANDS = {

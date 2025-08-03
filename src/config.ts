@@ -21,6 +21,9 @@ class Config {
   REGION = process.env.REGION ?? 'eu-west-1';
   WEBHOOK_SECRET = process.env.WEBHOOK_SECRET ?? '';
   PAYMENT_TOKEN = process.env.PAYMENT_TOKEN ?? '';
+  MAX_AVAILABLE_VIDEO_SIZE = parseInt(
+    process.env.MAX_AVAILABLE_VIDEO_SIZE ?? '300',
+  );
 }
 
 export default new Config();

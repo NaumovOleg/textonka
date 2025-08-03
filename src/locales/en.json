@@ -118,7 +118,9 @@
         }
       },
       "text": {
-        "language": "🌐 What language should the post be generated in?"
+        "language": "🌐 What language should the post be generated in?",
+        "image": "<b>📸 Send a photo, video or animation </b>",
+        "tooBigVideo": "⚠️ <b>The file is too large.</b>\nPlease try reducing the file size and send it again."
       },
       "welcome": "<b>📸 Send a photo — and we'll create the perfect caption for your post</b>\n\n🧠 Our neural network will analyze the image and generate matching text."
     }

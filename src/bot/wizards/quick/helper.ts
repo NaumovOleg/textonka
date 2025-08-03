@@ -1,4 +1,6 @@
+import Conf from '@conf';
 import {
+  Attachment,
   BotContext,
   QuickWizardButtons,
   QuickWizardGeneralButtons,
@@ -42,4 +44,44 @@ export const clearMessageText = async (ctx: BotContext) => {
     return ctx.telegram.deleteMessage(ctx.chat.id, ctx.message.message_id);
   }
   return null;
+};
+
+export const getAttachment = async (ctx: BotContext) => {
+  if (!ctx.message) {
+    return null;
+  }
+
+  let attachment: Attachment | undefined;
+
+  console.log(JSON.stringify(ctx.message, null, 1.5));
+
+  if ('photo' in ctx.message && Array.isArray(ctx.message.photo)) {
+    const photoArray = ctx.message.photo;
+    const photo = photoArray[photoArray.length - 1];
+    attachment = {
+      fileId: photo?.file_id,
+      type: 'photo',
+      file: photo,
+    };
+  }
+  if ('animation' in ctx.message) {
+    attachment = {
+      fileId: ctx.message.animation.file_id,
+      type: 'animation',
+      file: ctx.message.animation,
+    };
+  }
+  if ('video' in ctx.message && ctx.message.video) {
+    const size = ctx.message.video.file_size;
+    attachment = {
+      fileId: ctx.message.video.file_id,
+      type: 'video',
+      file: ctx.message.video,
+    };
+    if (size && size > Conf.MAX_AVAILABLE_VIDEO_SIZE) {
+      attachment.error = 'wizards.quick-wizard.text.tooBigVideo';
+    }
+  }
+
+  return attachment;
 };

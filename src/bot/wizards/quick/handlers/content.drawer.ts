@@ -37,7 +37,10 @@ export const LanguageContent = async (ctx: BotContext) => {
 };
 
 export const ImageContent = async (ctx: BotContext) => {
-  return ctx.reply(ctx.i18n.t(`wizards.${QuickWizardName}.welcome`), {
+  const finishButton = buildFinishButton(ctx);
+
+  return ctx.reply(ctx.i18n.t(`wizards.${QuickWizardName}.text.image`), {
     parse_mode: 'HTML',
+    reply_markup: Markup.inlineKeyboard([finishButton]).reply_markup,
   });
 };

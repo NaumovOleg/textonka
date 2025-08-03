@@ -5,6 +5,7 @@ import { isFinishButtonPressed } from '../helper';
 import { LanguageContent, WelcomeContent } from './content.drawer';
 
 export const welcomeHandler = async (ctx: BotContext) => {
+  console.log('dddddd');
   if (isFinishButtonPressed(ctx)) {
     await ByeContent(ctx);
     return ctx.scene.leave();
@@ -22,6 +23,8 @@ export const welcomeHandler = async (ctx: BotContext) => {
   }
 
   ctx.wizard.next();
+
+  console.log('eeeee');
 
   await WelcomeContent(ctx);
   return LanguageContent(ctx);

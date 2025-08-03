@@ -35,7 +35,6 @@ export default defineConfig([
         'error',
         {
           ignoreRestArgs: true,
-          catchClause: false,
         },
       ],
       'lines-between-class-members': [

@@ -1,5 +1,5 @@
+import { Animation, PhotoSize, Video } from 'telegraf/types';
 import { WIZARD_LANGUAGES } from '../common';
-
 export const QuickWizardName = 'quick-wizard';
 
 export type QuickWizardSession = Partial<{
@@ -18,4 +18,11 @@ export const QuickWizardButtons = {
     [`${QuickWizardName}_language_${WIZARD_LANGUAGES.uk}`]: WIZARD_LANGUAGES.uk,
     [`${QuickWizardName}_language_${WIZARD_LANGUAGES.pl}`]: WIZARD_LANGUAGES.pl,
   },
+};
+
+export type Attachment = {
+  fileId: string;
+  type: 'photo' | 'video' | 'animation';
+  file: Animation | PhotoSize | Video;
+  error?: string;
 };
