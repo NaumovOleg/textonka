@@ -1,14 +1,41 @@
 import Conf from '@conf';
-import { type BotContext, COMMON_COMMANDS } from '@util';
+import { type BotContext, COMMON_COMMANDS, SUBSCRIPTION_COMMANDS } from '@util';
 import { Composer, Markup } from 'telegraf';
 
 const composer = new Composer<BotContext>();
 
-composer.start((ctx) => {
+composer.start(async (ctx) => {
+  console.log({
+    command: SUBSCRIPTION_COMMANDS.subscription,
+    description: ctx.i18n.t('commands.subscription'),
+  });
+
+  await ctx.telegram.setMyCommands([
+    {
+      command: SUBSCRIPTION_COMMANDS.subscription,
+      description: ctx.i18n.t('commands.subscription'),
+    },
+    {
+      command: COMMON_COMMANDS.info,
+      description: ctx.i18n.t('commands.legacy_info'),
+    },
+    {
+      command: COMMON_COMMANDS.samples,
+      description: ctx.i18n.t('commands.samples'),
+    },
+    {
+      command: COMMON_COMMANDS.help,
+      description: ctx.i18n.t('commands.help'),
+    },
+  ]);
+
   return ctx.reply(
     ctx.i18n.t('welcome_message'),
     Markup.keyboard([
-      [COMMON_COMMANDS.startQuickWizard, COMMON_COMMANDS.startSmartWizard],
+      [
+        ctx.i18n.t('commands.startQuickWizard'),
+        ctx.i18n.t('commands.startSmartWizard'),
+      ],
     ]).resize(),
   );
 });

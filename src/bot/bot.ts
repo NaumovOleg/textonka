@@ -29,8 +29,6 @@ export class Textonka extends Telegraf<BotContext> {
     this.initRoutes([commonRouter, subscriptionRouter, paymentsRouter]);
     this.initWizards([stage.middleware(), wizardRouter]);
 
-    this.initCommands();
-
     if (Config.LAUNCH_STATE === 'local') {
       this.launch();
       console.log('Bot launched in polling mode');

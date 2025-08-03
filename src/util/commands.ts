@@ -12,9 +12,18 @@ export const COMMON_COMMANDS = {
   samples: 'samples',
   help: 'help',
   info: 'info',
-  startSmartWizard: 'Start smart wizard',
-  startQuickWizard: 'Start quick wizard',
 };
+
+export const QUICK_WIZARD_START_ROUTES = [
+  'Quick генерация',
+  'Quick генерація',
+  'Quick wizard',
+];
+export const SMART_WIZARD_START_ROUTES = [
+  'Smart генерация',
+  'Smart генерація',
+  'Smart wizard',
+];
 
 export const WIZARD_COMMANDS = {
   smartwizard: 'smartwizard',

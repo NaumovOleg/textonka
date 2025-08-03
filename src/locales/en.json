@@ -132,5 +132,13 @@
       "privacy": "Public Offer"
     }
   },
-  "error": "❌ An error occurred. Please try again later."
+  "error": "❌ An error occurred. Please try again later.",
+  "commands": {
+    "subscription": "Subscription",
+    "legacy_info": "Legal Information",
+    "samples": "Examples",
+    "help": "Help",
+    "startQuickWizard": "Quick wizard",
+    "startSmartWizard": "Smart wizard"
+  }
 }
