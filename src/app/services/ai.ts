@@ -41,11 +41,10 @@ export class AiService {
   }
 
   async generateAiResponse<T extends WizardType>(type: T, data: Session<T>) {
-    const prompt = this.prompts[type](data);
-    console.log('Using prompt:', prompt);
-    const { choices } = await this.getCompletion(prompt, this.models[type]);
-    const resp = choices[0].message.content;
-    console.log('Response:', resp);
-    return resp;
+    const { choices } = await this.getCompletion(
+      this.prompts[type](data),
+      this.models[type],
+    );
+    return choices[0].message.content;
   }
 }

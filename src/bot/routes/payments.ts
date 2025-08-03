@@ -4,9 +4,9 @@ import {
   type BotContext,
   INVOICE_STATUS,
   PAYMENT_PAYLOAD,
-  QUICK_GENERATIONS,
+  QUICK_PRODUCTS,
   QUICK_SUBSCRIPTION_BUTTONS,
-  SMART_GENERATIONS,
+  SMART_PRODUCTS,
   SMART_SUBSCRIPTION_BUTTONS,
 } from '@util';
 import { Composer } from 'telegraf';
@@ -30,8 +30,8 @@ composer.on(message('successful_payment'), async (ctx) => {
   const payment = ctx.message.successful_payment;
   const payload: PAYMENT_PAYLOAD = JSON.parse(payment.invoice_payload);
   const product =
-    SMART_GENERATIONS[payload.product as SMART_SUBSCRIPTION_BUTTONS] ??
-    QUICK_GENERATIONS[payload.product as QUICK_SUBSCRIPTION_BUTTONS];
+    SMART_PRODUCTS[payload.product as SMART_SUBSCRIPTION_BUTTONS] ??
+    QUICK_PRODUCTS[payload.product as QUICK_SUBSCRIPTION_BUTTONS];
 
   const createInvoice = createInvoiceUC.execute({
     user: ctx.state.user.id,

@@ -31,7 +31,7 @@
         "quick": "Buy Quick wizard"
       }
     },
-    "title": "<b>🔔 Your subscription:</b>\nYou have the following generations left:\n<b>🧠 Smart Wizard:</b> <code>${smartWizard}</code>\n<b>🪄 Simple Wizard:</b> <code>${simpleWizard}</code>\n<a>🛒 Buy more generations</a>"
+    "title": "<b>🔔 Your subscription:</b>\nYou have the following generations left:\n<b>🧠 Smart Wizard:</b> <code>${smartWizard}</code>\n<b>🪄 Quick Wizard:</b> <code>${quickWizard}</code>\n<a>🛒 Buy more generations</a>"
   },
   "welcome_message": "👋 Hi! Welcome to our bot! Here you can easily create the perfect social media post — just answer a few simple questions ✍️ We’ll help you choose a style, emotion, and format the text in your desired language 🌍 📌 Want to see how it works? You can check out some example posts before you begin. Ready to create your own post?",
   "wizards": {

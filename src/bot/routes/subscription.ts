@@ -2,9 +2,9 @@ import Conf from '@conf';
 import { Subscription } from '@entities';
 import {
   PACKAGES,
-  QUICK_GENERATIONS,
+  QUICK_PRODUCTS,
   QUICK_SUBSCRIPTION_BUTTONS,
-  SMART_GENERATIONS,
+  SMART_PRODUCTS,
   SMART_SUBSCRIPTION_BUTTONS,
   splitByChunks,
   SUBSCRIPTION_COMMANDS,
@@ -18,10 +18,11 @@ const composer = new Composer<BotContext>();
 composer.command(SUBSCRIPTION_COMMANDS.subscription, async (ctx) => {
   ctx.session = {};
   const subscription = ctx.state.subscription as Subscription;
-  const text = ctx.i18n.t('subscription.title', {
-    smartWizard: subscription.availableGenerations.smartWizard,
-    simpleWizard: 0,
-  });
+
+  const text = ctx.i18n.t(
+    'subscription.title',
+    subscription.availableGenerations,
+  );
 
   const buttons = [
     Markup.button.callback(
@@ -48,8 +49,8 @@ composer.action(SUBSCRIPTION_COMMANDS.price_list, async (ctx) => {
 
   const key = ctx.callbackQuery.data.split('-')[0] as PACKAGES;
   const generationsMap = {
-    [PACKAGES.smart]: SMART_GENERATIONS,
-    [PACKAGES.quick]: QUICK_GENERATIONS,
+    [PACKAGES.smart]: SMART_PRODUCTS,
+    [PACKAGES.quick]: QUICK_PRODUCTS,
   };
 
   const buttons = Object.values(generationsMap[key]).map((product) =>
@@ -74,8 +75,8 @@ composer.action(SUBSCRIPTION_COMMANDS.invoice, async (ctx) => {
     | SMART_SUBSCRIPTION_BUTTONS;
 
   const product =
-    SMART_GENERATIONS[command as SMART_SUBSCRIPTION_BUTTONS] ??
-    QUICK_GENERATIONS[command as QUICK_SUBSCRIPTION_BUTTONS];
+    SMART_PRODUCTS[command as SMART_SUBSCRIPTION_BUTTONS] ??
+    QUICK_PRODUCTS[command as QUICK_SUBSCRIPTION_BUTTONS];
 
   return ctx.replyWithInvoice({
     title: ctx.i18n.t(product.titleT, { count: product.count }),
@@ -87,8 +88,7 @@ composer.action(SUBSCRIPTION_COMMANDS.invoice, async (ctx) => {
     provider_token: Conf.PAYMENT_TOKEN,
     currency: product.currency,
     prices: [{ label: product.currency, amount: product.price }],
-    photo_url:
-      'https://media.licdn.com/dms/image/v2/D4D12AQGgMCavCcCbEg/article-cover_image-shrink_600_2000/article-cover_image-shrink_600_2000/0/1711086616356?e=2147483647&v=beta&t=1N65UooE_qsxL1jn9bwI0x1CFp7-czZxArntN8jCIps',
+    photo_url: product.image,
     photo_width: 300,
     photo_height: 200,
     need_email: true,
