@@ -54,7 +54,8 @@ export const handleExtraSelection = async (ctx: BotContext) => {
       ctx.i18n.t(`wizards.${SmartWizardName}.text.finalStep`),
     );
 
-    const prompt = await aiService.generatePostWizardText(
+    const prompt = await aiService.generateAiResponse(
+      WizardType.smart_wizard,
       ctx.scene.session[WizardType.smart_wizard],
     );
 

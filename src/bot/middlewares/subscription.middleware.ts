@@ -6,7 +6,6 @@ export const subscriptionMiddleware: MiddlewareFn<BotContext> = async (
   ctx,
   next,
 ) => {
-  console.log('subscriptionMiddleware');
   if (!ctx.from) return next();
 
   const user = ctx.state.user?.id;

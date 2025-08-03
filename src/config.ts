@@ -15,12 +15,13 @@ class Config {
     process.env.QUICK_WIZARD_FREE_GENERATIONS ?? '5',
   );
   AI_API_KEY = process.env.AI_API_KEY ?? '';
-  AI_MODEL = process.env.AI_MODEL ?? '';
   NODE_ENV = process.env.NODE_ENV ?? 'dev';
   AWS_ACCOUNT = process.env.AWS_ACCOUNT ?? '';
   REGION = process.env.REGION ?? 'eu-west-1';
   WEBHOOK_SECRET = process.env.WEBHOOK_SECRET ?? '';
   PAYMENT_TOKEN = process.env.PAYMENT_TOKEN ?? '';
+  IMAGE_AI_MODEL = process.env.IMAGE_AI_MODEL ?? '';
+  TEXT_AI_MODEL = process.env.TEXT_AI_MODEL ?? '';
   MAX_AVAILABLE_VIDEO_SIZE = parseInt(
     process.env.MAX_AVAILABLE_VIDEO_SIZE ?? '300',
   );

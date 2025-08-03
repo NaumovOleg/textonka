@@ -1,5 +1,9 @@
 /* eslint-disable max-len */
-import { SmartWizardEmoji, SmartWizardSession } from './scene';
+import {
+  QuickWizardSession,
+  SmartWizardEmoji,
+  SmartWizardSession,
+} from './scene';
 import { Prompt } from './type';
 
 export type SmartWizardPrompt = {
@@ -109,5 +113,19 @@ export const generateSmartWizardPrompt = (
   return [
     { role: 'system', content: smartWizardSystemPrompt },
     { role: 'user', content: JSON.stringify(mapData(input)) },
+  ];
+};
+
+export const generateQuickWizardPrompt = (data: QuickWizardSession): Prompt => {
+  return [
+    {
+      role: 'system',
+      content:
+        'You are a social media assistant that analyzes photos and generates engaging, emotional social media captions with emojis. Your captions should be relevant to the content of the image and written in the language provided by the user. Be expressive, concise, and creative.',
+    },
+    {
+      role: 'user',
+      content: `Analyze the photo at this URL:\n${data.attachmentUrl}\n\nPlease generate a short, emotional caption in ${data.language} with emojis. The goal is to make it suitable for posting on Instagram or Telegram.\n\nLanguage: ${data.language}`,
+    },
   ];
 };
